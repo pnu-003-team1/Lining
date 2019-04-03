@@ -24,6 +24,6 @@ app.post('/user', function(req, res) {
 	res.send('id: ' + userID + 'pw: ' + userPW)
 })
 
-app.listen(3000, function() {
-	console.log("server starting with 3000")
+app.listen(3001, function() {
+	console.log("server starting with 3001")
 })
