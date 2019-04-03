@@ -1,6 +1,7 @@
 /*
 * create(): POST /join
 * login(): POST/login
+* checkRep(): POST/repetition
 **/
 
 // temporal buser data
@@ -74,3 +75,18 @@ exports.login = (req, res) => {
 	res.status(200).send();
 };
 
+exports.checkRep = (req, res) => {
+	const email = req.body.email;
+	
+	if (!email.length) {
+		return res.status(400).json({error: 'email length 0'});
+	}
+	
+	let user = users.filter(user => user.email === email)[0]
+	
+	if (user) {
+		return res.status(400).json({error: 'Email repetition'});
+	}
+	
+	res.status(200).send();
+};
