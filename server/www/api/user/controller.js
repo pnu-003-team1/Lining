@@ -97,5 +97,19 @@ exports.create = (req, res) => {
 	
 	users.push(newUser);
 	
-	return res.status(201).json(newUser);
+	return res.status(200).json(newUser);
+};
+
+exports.login = (req, res) => {
+	const email = req.body.email;
+	const pw = req.body.pw;
+	
+	if (!email.length) {
+		return res.status(400).json({error: 'email length 0'});
+	}
+	
+	if (!pw.length) {
+		return res.status(400).json({error: 'pw length 0'});
+	}
+	res.status(200).send();
 };
