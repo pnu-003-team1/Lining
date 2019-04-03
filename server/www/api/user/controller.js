@@ -12,15 +12,10 @@
 let users = [
  {
  	id: 1,
- 	name: "Alice"
- },
- {
- 	id: 2,
- 	name: "Bek"
- },
- {
- 	id: 3,
- 	name: "Chris"
+ 	name: "Alice",
+ 	email: "abc@abc.com",
+ 	phone: "101-231-2341",
+ 	pw: "pqwe1"
  }
 ];
 
@@ -93,7 +88,10 @@ exports.create = (req, res) => {
 	
 	const newUser = {
 		id: id,
-		name: name
+		name: name,
+		pw: pw,
+		email: email,
+		phone: phone
 	};
 	
 	users.push(newUser);
