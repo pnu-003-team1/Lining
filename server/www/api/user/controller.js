@@ -65,11 +65,25 @@ exports.delete = (req, res) => {
 };
 
 exports.create = (req, res) => {
-	const name = req.body.name || ''; // undefined 시  ''
+	const name = req.body.name; // undefined 시  ''
+	const email = req.body.email;
+	const pw = req.body.pw;
+	const phone = req.body.phone;
 	
 	if (!name.length) {
-		console.log('name: ' + name)
 		return res.status(400).json({error: 'name length 0'});
+	}
+	
+	if (!email.length) {
+		return res.status(400).json({error: 'email length 0'});
+	}
+	
+	if (!pw.length) {
+		return res.status(400).json({error: 'pw length 0'});
+	}
+	
+	if (!phone.length) {
+		return res.status(400).json({error: 'phone length 0'});
 	}
 	
 	const id = users.reduce((maxId, user) => {
