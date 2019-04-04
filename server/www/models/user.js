@@ -3,9 +3,6 @@ var Schema = mongoose.Schema;
 
 var userSchema = new Schema ({
 	name: String,
-	/*email: String,
-	phone: String,
-	pw: String*/
 });
 
 userSchema.static.create = function (payload) {
