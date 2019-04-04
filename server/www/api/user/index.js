@@ -7,6 +7,9 @@ const controller = require('./controller')
 //router.delete('/:id', controller.delete);
 router.post('/join', controller.create);
 router.post('/login', controller.login);
+router.post('/repetition', controller.checkRep);
+
+// for mongoDB connection test
 router.post('/dbtest', controller.dbtest);
 
 module.exports = router;
