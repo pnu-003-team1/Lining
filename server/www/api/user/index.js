@@ -7,6 +7,8 @@ const controller = require('./controller')
 //router.delete('/:id', controller.delete);
 router.post('/join', controller.create);
 router.post('/login', controller.login);
+router.post('/dbtest', controller.dbtest);
+
 module.exports = router;
 
 // 함수 체이닝->함수를 체인처럼 연결해서 사용

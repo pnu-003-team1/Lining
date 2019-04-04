@@ -7,7 +7,7 @@
  */
 //req: 클라이언트로부터 넘어온 데이터 저장된 객체
 //res: 클라이언트로 결과를 넘겨주기 위한 객체
-
+const User = require('../../models/user');
 // temporal user database
 let users = [
  {
@@ -112,3 +112,11 @@ exports.login = (req, res) => {
 	}
 	res.status(200).send();
 };
+
+exports.dbtest = (req, res) => {
+	const name = req.body.name;
+	
+	User.create(req.body)
+		.then(user => res.send(user))
+		.catch(err => res.status(500).send(err));
+}
