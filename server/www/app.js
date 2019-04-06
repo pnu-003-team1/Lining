@@ -1,5 +1,5 @@
 // Server-side: app.js
-const express    = require('express')
+const express = require('express')
 const app = express()
 const bodyParser = require('body-parser') // post 위함
 const usersRouter = require('./api/user/index')
@@ -16,8 +16,8 @@ app.get('/', function (req, res) {
 app.use('/users', usersRouter)
 app.use('/buser', buserRouter)
 
-app.listen(3001, function() {
-	console.log("server starting with 3001")
+app.listen(3000, function() {
+	console.log("server starting with 3000")
 })
 
 var db = mongoose.connection;
@@ -27,6 +27,6 @@ db.once('open', function() {
 	console.log("Connected to mongodb server");
 });
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost/mongodb_tutorial');
+mongoose.connect('mongodb://localhost/mongodb_tutorial',{useNewUrlParser : true});
 
 module.exports = app;

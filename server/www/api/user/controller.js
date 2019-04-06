@@ -8,7 +8,9 @@
 //req: 클라이언트로부터 넘어온 데이터 저장된 객체
 //res: 클라이언트로 결과를 넘겨주기 위한 객체
 
+const router = require('express').Router();
 const User = require('../../models/user');
+
 // temporal user database
 let users = [
  {
@@ -100,6 +102,7 @@ exports.create = (req, res) => {
 	return res.status(200).json(newUser);
 };
 
+
 exports.login = (req, res) => {
 	const email = req.body.email;
 	const pw = req.body.pw;
@@ -111,8 +114,10 @@ exports.login = (req, res) => {
 	if (!pw.length) {
 		return res.status(400).json({error: 'pw length 0'});
 	}
+	
 	res.status(200).send();
 };
+
 
 exports.checkRep = (req, res) => {
 	const email = req.body.email;
@@ -131,32 +136,48 @@ exports.checkRep = (req, res) => {
 };
 
 exports.dbtest = (req, res) => {
-   User.add(req.body)
-      .then(user => res.send(user))
-      .catch(err => res.status(500).send(err));
+	User.add(req.body)
+		.then(user => res.send(user))
+		.catch(err => res.status(500).send(err));
+};
+
+exports.dbtest1 = (req, res) => {
+	User.findAll()
+		.then((user) => {
+      if (!user.length) return res.status(404).send({ err: 'User not found' });
+      res.send(`findOne successfully: ${user}`);
+    })
+    .catch(err => res.status(500).send({ msg: 'errr', err: err}));
 };
 
 exports.dbtest2 = (req, res) => {
-   User.findEmail(req.body.email)
-      .then((user) => {
+	User.checkid(req.body.email)
+		.then((user) => {
       if (!user) return res.status(404).send({ err: 'User not found' });
-      res.send(`findOne successfully: ${user}`);
+      res.send(`find successfully: ${user}`);
     })
     .catch(err => res.status(500).send(err));
 };
-
-
-/*
+exports.dbtest5 = (req, res) => {
+	User.checkpw(req.body.pw)
+		.then((user) => {
+      if (!user) return res.status(404).send({ err: 'User not found' });
+      res.send(`find successfully: ${user}`);
+    })
+    .catch(err => res.status(500).send(err));
+};
 exports.dbtest3 = (req, res) => {
-   User.deleteEmail(req.body.email)
-      .then((user) => {res.sendStatus(200);
-      res.send(`findOne successfully: ${todo}`); })
-       .catch(err => res.status(500).send(err));
+	User.deleteEmail(req.body.email)
+		.then((user) => {res.sendStatus(200);
+		res.send(`find successfully: ${user}`); })
+    	.catch(err => res.status(500).send(err));
 };
 
 exports.dbtest4 = (req, res) => {
-   User.userlogin(req.body)
-      .then(user => res.send(user))
-      .catch(err => res.status(500).send(err));
+	User.userlogin(req.body.email,req.body.pw)
+		.then((user) => {
+      if (!user) return res.status(404).send({ err: 'User not found' });
+      res.send(`find successfully: ${user}`);
+    })
+    .catch(err => res.status(500).send(err));
 };
-*/
