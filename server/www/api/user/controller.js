@@ -7,6 +7,7 @@
  */
 //req: 클라이언트로부터 넘어온 데이터 저장된 객체
 //res: 클라이언트로 결과를 넘겨주기 위한 객체
+
 const User = require('../../models/user');
 // temporal user database
 let users = [
@@ -113,10 +114,49 @@ exports.login = (req, res) => {
 	res.status(200).send();
 };
 
-exports.dbtest = (req, res) => {
-	const name = req.body.name;
+exports.checkRep = (req, res) => {
+	const email = req.body.email;
 	
-	User.create(req.body)
-		.then(user => res.send(user))
-		.catch(err => res.status(500).send(err));
-}
+	if (!email.length) {
+		return res.status(400).json({error: 'email length 0'});
+	}
+	
+	let user = users.filter(user => user.email === email)[0]
+	
+	if (user) {
+		return res.status(400).json({error: 'Email repetition'});
+	}
+	
+	res.status(200).send();
+};
+
+exports.dbtest = (req, res) => {
+   User.add(req.body)
+      .then(user => res.send(user))
+      .catch(err => res.status(500).send(err));
+};
+
+exports.dbtest2 = (req, res) => {
+   User.findEmail(req.body.email)
+      .then((user) => {
+      if (!user) return res.status(404).send({ err: 'User not found' });
+      res.send(`findOne successfully: ${user}`);
+    })
+    .catch(err => res.status(500).send(err));
+};
+
+
+/*
+exports.dbtest3 = (req, res) => {
+   User.deleteEmail(req.body.email)
+      .then((user) => {res.sendStatus(200);
+      res.send(`findOne successfully: ${todo}`); })
+       .catch(err => res.status(500).send(err));
+};
+
+exports.dbtest4 = (req, res) => {
+   User.userlogin(req.body)
+      .then(user => res.send(user))
+      .catch(err => res.status(500).send(err));
+};
+*/
