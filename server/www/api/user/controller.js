@@ -133,32 +133,43 @@ exports.dbtest = (req, res) => {
 
 exports.dbtest1 = (req, res) => {
 	User.findAll()
-		.then((users) => {
-      if (!users.length) return res.status(404).send({ err: 'User not found' });
+		.then((user) => {
+      if (!user.length) return res.status(404).send({ err: 'User not found' });
       res.send(`findOne successfully: ${user}`);
     })
-    .catch(err => res.status(500).send(err));
+    .catch(err => res.status(500).send({ msg: 'errr', err: err}));
 };
 
 exports.dbtest2 = (req, res) => {
 	User.checkid(req.body.email)
 		.then((user) => {
       if (!user) return res.status(404).send({ err: 'User not found' });
-      res.send(`findOne successfully: ${user}`);
+      res.send(`find successfully: ${user}`);
+    })
+    .catch(err => res.status(500).send(err));
+};
+exports.dbtest5 = (req, res) => {
+	User.checkpw(req.body.pw)
+		.then((user) => {
+      if (!user) return res.status(404).send({ err: 'User not found' });
+      res.send(`find successfully: ${user}`);
     })
     .catch(err => res.status(500).send(err));
 };
 exports.dbtest3 = (req, res) => {
 	User.deleteEmail(req.body.email)
 		.then((user) => {res.sendStatus(200);
-		res.send(`findOne successfully: ${todo}`); })
+		res.send(`find successfully: ${user}`); })
     	.catch(err => res.status(500).send(err));
 };
 
 exports.dbtest4 = (req, res) => {
 	User.userlogin(req.body.email,req.body.pw)
-		.then(user => res.send(user))
-		.catch(err => res.status(500).send(err));
+		.then((user) => {
+      if (!user) return res.status(404).send({ err: 'User not found' });
+      res.send(`find successfully: ${user}`);
+    })
+    .catch(err => res.status(500).send(err));
 };
 
 

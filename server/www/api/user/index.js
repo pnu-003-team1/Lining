@@ -12,6 +12,7 @@ router.post('/dbtest1', controller.dbtest1);
 router.post('/dbtest2', controller.dbtest2);
 router.post('/dbtest3', controller.dbtest3);
 router.post('/dbtest4', controller.dbtest4);
+router.post('/dbtest5', controller.dbtest5);
 module.exports = router;
 
 // 함수 체이닝->함수를 체인처럼 연결해서 사용
