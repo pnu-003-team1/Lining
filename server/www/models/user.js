@@ -15,11 +15,11 @@ userSchema.statics.add = function (payload) {
 };
 
 userSchema.statics.checkid = function (email){
-   return this.findOne({email});
+   return this.find({email});
 };
 
 userSchema.statics.checkpw = function (pw){
-   return this.findOne({pw});
+   return this.find({pw});
 };
 
 userSchema.statics.findAll = function(payload) {
