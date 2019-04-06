@@ -1,0 +1,38 @@
+doctype html
+head
+  meta(charset='UTF-8')
+  title 사업자 회원가입
+br
+form(action='http://54.180.123.67:3000/buser/join', method='post')
+  | 아이디:
+  br
+  input(name='email', type='email')
+  |   
+  input#chk_email(type='button', value='중복확인')
+  br
+  |   비밀번호:
+  br
+  input(name='pw', type='password')
+  br
+  |   비밀번호 확인:
+  br
+  input(type='password')
+  br
+  |   가계 이름:
+  br
+  input(name='bname', type='text')
+  br
+  |   가계 전화번호:
+  br
+  input(name='tel', type='text')
+  br
+  |   가계 주소:
+  br
+  input(name='addr', type='text')
+  br
+  br
+  input(type='submit', value='회원 가입')
+script.
+  function web_SignUp() {
+  var userId = document.getElementById("w_id").value;
+  }
