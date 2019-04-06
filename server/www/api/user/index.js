@@ -11,6 +11,8 @@ router.post('/repetition', controller.checkRep);
 
 // for mongoDB connection test
 router.post('/dbtest', controller.dbtest);
+router.post('/dbtest2', controller.dbtest2);
+//router.post('/dbtest3', controller.dbtest3);
 
 module.exports = router;
 
