@@ -4,6 +4,9 @@
 * checkRep(): POST/repetition
 **/
 
+const router = require('express').Router();
+const Buser = require('../../models/buser');
+
 // temporal buser data
 let users = [
  {
@@ -43,22 +46,9 @@ exports.create = (req, res) => {
 		return res.status(400).json({error: 'addr length 0'});
 	}
 	
-	const id = users.reduce((maxId, user) => {
-		return user.id > maxId ? user.id : maxId
-	}, 0) + 1;
-	
-	const newUser = {
-		id: id,
-		bname: bname,
-		email: email,
-		pw: pw,
-		tel: tel,
-		addr: addr
-	};
-	
-	users.push(newUser);
-	
-	return res.status(200).json(newUser);
+	Buser.addbuser(req.body)
+		.then(user => res.send(user))
+		.catch(err => res.status(400).send({error: 'fail to add'}));
 };
 
 exports.login = (req, res) => {
@@ -72,7 +62,17 @@ exports.login = (req, res) => {
 	if (!pw.length) {
 		return res.status(400).json({error: 'pw length 0'});
 	}
-	res.status(200).send();
+	
+	Buser.buserlogin(req.body.email,req.body.pw)
+		.then((user) => {
+      if (user.length < 1){
+      	return res.status(400).send({ error: 'User not found' });
+      }
+      else {
+      	return res.status(200).send();
+      }
+    })
+    .catch(err => res.status(500).send(err));
 };
 
 exports.checkRep = (req, res) => {
@@ -88,5 +88,11 @@ exports.checkRep = (req, res) => {
 		return res.status(400).json({error: 'Email repetition'});
 	}
 	
-	res.status(200).send();
+	Buser.checkbid(req.body.email)
+		.then((user) => {
+			console.log("result len", user.length);
+      if (user.length < 1) return res.status(200).send();
+      else res.status(400).send({error: 'email repetition'});
+    })
+    .catch(err => res.status(500).send({error: 'server error'}));
 };
