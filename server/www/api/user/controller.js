@@ -11,17 +11,6 @@
 const router = require('express').Router();
 const User = require('../../models/user');
 
-// temporal user database
-let users = [
- {
- 	id: 1,
- 	name: "Alice",
- 	email: "abc@abc.com",
- 	phone: "101-231-2341",
- 	pw: "pqwe1"
- }
-];
-
 exports.index = (req, res) => {
 	console.log(req.params.id);
 	const id = parseInt(req.params.id, 10);
@@ -41,7 +30,6 @@ exports.index = (req, res) => {
 };
 
 exports.show = (req, res) => {
-	//res.send("show ok");
 	return res.json(users);
 };
 
@@ -84,22 +72,6 @@ exports.create = (req, res) => {
 	if (!phone.length) {
 		return res.status(400).json({error: 'phone length 0'});
 	}
-	/* // for tmep data
-	const id = users.reduce((maxId, user) => {
-		return user.id > maxId ? user.id : maxId
-	}, 0) + 1;
-	
-	const newUser = {
-		id: id,
-		name: name,
-		pw: pw,
-		email: email,
-		phone: phone
-	};
-	
-	users.push(newUser);
-	
-	return res.status(200).json(newUser);*/
 	
 	User.add(req.body)
 		.then(user => res.send(user))
@@ -119,14 +91,17 @@ exports.login = (req, res) => {
 		return res.status(400).json({error: 'pw length 0'});
 	}
 	
-	//res.status(200).send();
-	
 	User.userlogin(req.body.email,req.body.pw)
 		.then((user) => {
-      if (!user) return res.status(400).send({ error: 'User not found' });
-      return res.status(200).send();
+      if (user.length < 1){
+      	return res.status(400).send({ error: 'User not found' });
+      }
+      else {
+      	return res.status(200).send();
+      }
     })
     .catch(err => res.status(500).send(err));
+    
 };
 
 
@@ -137,66 +112,11 @@ exports.checkRep = (req, res) => {
 		return res.status(400).json({error: 'email length 0'});
 	}
 	
-	/* // for temp data
-	let user = users.filter(user => user.email === email)[0]
-	
-	if (user) {
-		return res.status(400).json({error: 'Email repetition'});
-	}
-	
-	res.status(200).send();*/
-	
 	User.checkid(req.body.email)
 		.then((user) => {
-      if (!user) return res.status(200).send();
-      return res.status(400).send({error: 'email repetition'});
+			console.log("result len", user.length);
+      if (user.length < 1) return res.status(200).send();
+      else res.status(400).send({error: 'email repetition'});
     })
     .catch(err => res.status(500).send({error: 'server error'}));
-};
-
-exports.dbtest = (req, res) => {
-	User.add(req.body)
-		.then(user => res.send(user))
-		.catch(err => res.status(500).send(err));
-};
-
-exports.dbtest1 = (req, res) => {
-	User.findAll()
-		.then((user) => {
-      if (!user.length) return res.status(404).send({ err: 'User not found' });
-      res.send(`findOne successfully: ${user}`);
-    })
-    .catch(err => res.status(500).send({ msg: 'errr', err: err}));
-};
-
-exports.dbtest2 = (req, res) => {
-	User.checkid(req.body.email)
-		.then((user) => {
-      if (!user) return res.status(404).send({ err: 'User not found' });
-      res.send(`find successfully: ${user}`);
-    })
-    .catch(err => res.status(500).send(err));
-};
-exports.dbtest5 = (req, res) => {
-	User.checkpw(req.body.pw)
-		.then((user) => {
-      if (!user) return res.status(404).send({ err: 'User not found' });
-      res.send(`find successfully: ${user}`);
-    })
-    .catch(err => res.status(500).send(err));
-};
-exports.dbtest3 = (req, res) => {
-	User.deleteEmail(req.body.email)
-		.then((user) => {res.sendStatus(200);
-		res.send(`find successfully: ${user}`); })
-    	.catch(err => res.status(500).send(err));
-};
-
-exports.dbtest4 = (req, res) => {
-	User.userlogin(req.body.email,req.body.pw)
-		.then((user) => {
-      if (!user) return res.status(404).send({ err: 'User not found' });
-      res.send(`find successfully: ${user}`);
-    })
-    .catch(err => res.status(500).send(err));
 };

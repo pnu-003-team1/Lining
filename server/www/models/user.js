@@ -35,9 +35,7 @@ userSchema.statics.deleteEmail = function (email) {
 };
 
 userSchema.statics.userlogin = function (email,pw) {
-	//console.log("ok");
-	return this.find({email,pw});
-		
+	return this.find({email, pw});
 };
 	
 module.exports = mongoose.model('User', userSchema);
