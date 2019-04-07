@@ -22,6 +22,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(bodyParser.urlencoded({extended: true}));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
@@ -41,6 +42,14 @@ app.use(function(err, req, res, next) {
   // render the error page
   res.status(err.status || 500);
   res.render('error');
+});
+
+app.post('http://54.180.123.67:3000/buser/join', function(req, res) {
+  console.log(req.body);
+});
+
+app.post('http://54.180.123.67:3000/buser/repetition', function(req, res) {
+  console.log(req.body);
 });
 
 module.exports = app;

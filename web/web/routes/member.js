@@ -1,23 +1,18 @@
 var express = require('express');
 var router = express.Router();
-var app = express();
+// var Client = require('node-rest-client').Client;
+// var client = new Client();
 
 router.get('/', function(req, res) {
   res.render('member');
   console.log('sign up page');
 });
 
-app.post('http://54.180.123.67:3000/buser/join', function(req, res){
-  var success = req.body.success;
-
-  console.log(success);
+router.post('/', function(req, res, next) {
+  console.log('POST 방식으로 서버 호출됨');
+  var msg = req.body.msg;
+  msg = '[echo]' + msg;
+  res.send({result:true, msg:msg});
 });
-
-app.post('http://54.180.123.67:3000/buser/repetition', function(req, res, next) {
-  var success = req.body.success;
-
-  console.log(success);
-});
-
 
 module.exports = router;

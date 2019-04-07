@@ -53,9 +53,9 @@ script(type='text/javascript').
   }
   function checkEMAIL() {
   var obj1 = fr.email.value;
-  if(obj1 == "")
+  if (obj1 == "")
   alert("please write your email down");
-  else{
+  else {
   var form = document.createElement("form");
   form.setAttribute("method", "post");
   form.setAttribute("action", "http://54.180.123.67:3000/buser/repetition");
@@ -73,3 +73,19 @@ script(type='text/javascript').
   form.submit();
   }
   }
+  // $('#ajax_test').click( function() {
+  //   var obj1 = fr.email.value;
+  //   #('#result').html('');
+  //   $.ajax([
+  //     url: 'http://54.180.123.67:3000/buser/repetition',
+  //     dataType: 'json',
+  //     type: 'POST',
+  //     data: {'msg':$('#msg').val()},
+  //     success: function(result) {
+  //       if(result['result'] == true){
+  //         $('#result').html(result['msg']);
+  //       }
+  //     }
+  //     ]);
+  // })
+  // }
