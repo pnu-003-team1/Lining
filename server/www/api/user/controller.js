@@ -12,6 +12,7 @@ const router = require('express').Router();
 const User = require('../../models/user');
 
 exports.index = (req, res) => {
+	console.log("index");
 	console.log(req.params.id);
 	const id = parseInt(req.params.id, 10);
 	
@@ -52,52 +53,54 @@ exports.delete = (req, res) => {
 };
 
 exports.create = (req, res) => {
+	console.log("create", req.body.email);
 	const name = req.body.name; // undefined 시  ''
 	const email = req.body.email;
 	const pw = req.body.pw;
 	const phone = req.body.phone;
 	
 	if (!name.length) {
-		return res.status(400).json({error: 'name length 0'});
+		return res.status(200).json({success: false, error: 'name length 0'});
 	}
 	
 	if (!email.length) {
-		return res.status(400).json({error: 'email length 0'});
+		return res.status(200).json({success: false, error: 'email length 0'});
 	}
 	
 	if (!pw.length) {
-		return res.status(400).json({error: 'pw length 0'});
+		return res.status(200).json({success: false, error: 'pw length 0'});
 	}
 	
 	if (!phone.length) {
-		return res.status(400).json({error: 'phone length 0'});
+		return res.status(200).json({success: false, error: 'phone length 0'});
 	}
 	
 	User.add(req.body)
-		.then(user => res.send(user))
-		.catch(err => res.status(400).send({error: 'fail to add'}));
+		.then(user => res.status(200).send({success: true}))
+		.catch(err => res.status(200).send({success: false, error: 'fail to add'}));
 };
 
 
 exports.login = (req, res) => {
+	console.log("login", req.body.email);
 	const email = req.body.email;
 	const pw = req.body.pw;
 	
 	if (!email.length) {
-		return res.status(400).json({error: 'email length 0'});
+		return res.status(200).json({success: false, error: 'email length 0'});
 	}
 	
 	if (!pw.length) {
-		return res.status(400).json({error: 'pw length 0'});
+		return res.status(200).json({success: false, error: 'pw length 0'});
 	}
 	
 	User.userlogin(req.body.email,req.body.pw)
 		.then((user) => {
       if (user.length < 1){
-      	return res.status(400).send({ error: 'User not found' });
+      	return res.status(200).send({ success: false, error: 'User not found' });
       }
       else {
-      	return res.status(200).send();
+      	return res.status(200).send({success: true});
       }
     })
     .catch(err => res.status(500).send(err));
@@ -106,17 +109,18 @@ exports.login = (req, res) => {
 
 
 exports.checkRep = (req, res) => {
+	console.log("checkRep", req.body.email);
 	const email = req.body.email;
 	
 	if (!email.length) {
-		return res.status(400).json({error: 'email length 0'});
+		return res.status(200).json({success: false, error: 'email length 0'});
 	}
 	
 	User.checkid(req.body.email)
 		.then((user) => {
 			console.log("result len", user.length);
-      if (user.length < 1) return res.status(200).send();
-      else res.status(400).send({error: 'email repetition'});
+      if (user.length < 1) return res.status(200).send({success: true});
+      else res.status(200).send({success: false, error: 'email repetition'});
     })
     .catch(err => res.status(500).send({error: 'server error'}));
 };
