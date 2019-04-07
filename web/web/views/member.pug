@@ -1,34 +1,75 @@
 doctype html
 head
   meta(charset='UTF-8')
-  title 사업자 회원가입
+  title sign up
 br
-form(action='http://54.180.123.67:3000/buser/join', method='post')
-  | 아이디:
+form(name='fr', action='http://54.180.123.67:3000/buser/join', method='post')
+  | Email:
   br
-  input(name='email', type='email')
-  |
-  input#chk_email(type='button', value='중복확인', onclick="")
+  input#email(name='email', type='email')
+  input#chk_email(type='button', value='confirm email', onclick='checkEMAIL()')
   br
-  |   비밀번호:
+  | Password:
   br
   input(name='pw', type='password')
   br
-  |   비밀번호 확인:
+  | confirm Password:
   br
-  input(type='password')
+  input(name='chk_pw', type='password')
   br
-  |   가계 이름:
+  | store
+  |     name:
   br
   input(name='bname', type='text')
   br
-  |   가계 전화번호:
+  | store tel:
   br
   input(name='tel', type='text')
   br
-  |   가계 주소:
+  | store address:
   br
   input(name='addr', type='text')
   br
   br
-  input(type='submit', value='회원 가입')
+  input(type='submit', value='submit', onsubmit='return check()')
+script(type='text/javascript').
+  var emailChecked = false;
+  function checkPW() {
+  if (fr.pw.value == "" || fr.chk_pw.value == "") {
+  alert("Enter password.");
+  fr.pw.focus();
+  return false;
+  }
+  if (fr.pw.value != fr.chk_pw.value) {
+  alert("password incorrect.");
+  fr.pw.focus();
+  return false;
+  }
+  if (emailChecked == false) {
+  alert("please press the email check button.");
+  return false;
+  }
+  return true;
+  }
+  function checkEMAIL() {
+  var obj1 = fr.email.value;
+  if(obj1 == "")
+  alert("please write your email down");
+  else{
+  var form = document.createElement("form");
+  form.setAttribute("method", "post");
+  form.setAttribute("action", "http://54.180.123.67:3000/buser/repetition");
+  var hiddenField = document.createElement("input");
+  hiddenField.setAttribute("type", "hidden");
+  hiddenField.setAttribute("name", "email");
+  hiddenField.setAttribute("value", obj1);
+  form.appendChild(hiddenField);
+  var url = "http://54.180.123.67:3000/buser/repetition";
+  var title = "sign up";
+  var status = "toolbar=no,directories=no,scrollbars=no,resizable=no,status=no,menubar=no,width=200, height=200, top=50,left=50";
+  window.open("", title, status);
+  form.target = title;
+  document.body.appendChild(form);
+  form.submit();
+  }
+  }

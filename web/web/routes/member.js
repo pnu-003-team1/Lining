@@ -1,29 +1,23 @@
 var express = require('express');
 var router = express.Router();
-var request = require('request');
-
-// var port = '3000';
-// var api_host = 'http://54.180.123.67' + port;
-// // var Client = require('node-rest-client').Client;
-// var client = new Client();
-// var object = {};
+var app = express();
 
 router.get('/', function(req, res) {
   res.render('member');
+  console.log('sign up page');
 });
-//
-// var jsonheaders = {
-//   "Authorization": "Bearer " +
-// }
-//
-// var api_url = api_host + 'buser/join';
-// object.headers = jsonheaders;
-//
-// client.registerMethod("queryUserMethod", api_url, 'POST');
-// client.methods.queryUserMethod(object, function(data, response) {
-//   var statusCode = response.statusCode;
-//   console.log('data : ' + data);
-//   console.log('statusCode : ' + statusCode);
-// });
-//
+
+app.poat('http://54.180.123.67:3000/buser/join', function(req, res){
+  var success = req.body.success;
+
+  console.log(success);
+});
+
+app.poat('http://54.180.123.67:3000/buser/repetition', function(req, res, next) {
+  var success = req.body.success;
+
+  console.log(success);
+});
+
+
 module.exports = router;
