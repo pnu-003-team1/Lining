@@ -75,7 +75,7 @@ exports.create = (req, res) => {
 	}
 	
 	User.add(req.body)
-		.then(user => res.send(200).json({success: true}))
+		.then(user => res.status(200).send({success: true}))
 		.catch(err => res.status(200).send({success: false, error: 'fail to add'}));
 };
 
@@ -86,11 +86,11 @@ exports.login = (req, res) => {
 	const pw = req.body.pw;
 	
 	if (!email.length) {
-		return res.status(200).json({success: false, error: 'email length 0'});
+		return res.status(200).send({success: false, error: 'email length 0'});
 	}
 	
 	if (!pw.length) {
-		return res.status(200).json({success: false, error: 'pw length 0'});
+		return res.status(200).send({success: false, error: 'pw length 0'});
 	}
 	
 	User.userlogin(req.body.email,req.body.pw)
@@ -112,13 +112,13 @@ exports.checkRep = (req, res) => {
 	const email = req.body.email;
 	
 	if (!email.length) {
-		return res.status(200).json({success: false, error: 'email length 0'});
+		return res.status(200).send({success: false, error: 'email length 0'});
 	}
 	
 	User.checkid(req.body.email)
 		.then((user) => {
 			console.log("result len", user.length);
-      if (user.length < 1) return res.status(200).send({success: false});
+      if (user.length < 1) return res.status(200).send({success: true});
       else res.status(200).send({success: false, error: 'email repetition'});
     })
     .catch(err => res.status(500).send({error: 'server error'}));
