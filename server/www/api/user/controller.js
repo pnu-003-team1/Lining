@@ -17,13 +17,13 @@ exports.index = (req, res) => {
 	const id = parseInt(req.params.id, 10);
 	
 	if(!id) { // id == NaN, id 숫자인지 검증
-		return res.status(400).json({error: 'Incorrect Id'});
+		return res.status(200).json({success: false, error: 'Incorrect Id'});
 	}
 	
 	let user = users.filter(user => user.id === id)[0]
 	
 	if (!user) {
-		return res.status(404).json({error: 'Unknown user'});
+		return res.status(200).json({success: false, error: 'Unknown user'});
 	}
 	console.log('user:' + user);
 	
@@ -53,7 +53,11 @@ exports.delete = (req, res) => {
 };
 
 exports.create = (req, res) => {
+<<<<<<< HEAD
 	console.log("create", req.body.email);
+=======
+	console.log("user create: ", req.body.name);
+>>>>>>> byj
 	const name = req.body.name; // undefined 시  ''
 	const email = req.body.email;
 	const pw = req.body.pw;
@@ -82,22 +86,38 @@ exports.create = (req, res) => {
 
 
 exports.login = (req, res) => {
+<<<<<<< HEAD
 	console.log("login", req.body.email);
+=======
+	console.log("user login: ", req.body.email);
+>>>>>>> byj
 	const email = req.body.email;
 	const pw = req.body.pw;
 	
 	if (!email.length) {
+<<<<<<< HEAD
 		return res.status(200).json({success: false, error: 'email length 0'});
 	}
 	
 	if (!pw.length) {
 		return res.status(200).json({success: false, error: 'pw length 0'});
+=======
+		return res.status(200).send({success: false, error: 'email length 0'});
+	}
+	
+	if (!pw.length) {
+		return res.status(200).send({success: false, error: 'pw length 0'});
+>>>>>>> byj
 	}
 	
 	User.userlogin(req.body.email,req.body.pw)
 		.then((user) => {
       if (user.length < 1){
+<<<<<<< HEAD
       	return res.status(200).send({ success: false, error: 'User not found' });
+=======
+      	return res.status(200).send({success: false, error: 'User not found' });
+>>>>>>> byj
       }
       else {
       	return res.status(200).send({success: true});
@@ -109,11 +129,19 @@ exports.login = (req, res) => {
 
 
 exports.checkRep = (req, res) => {
+<<<<<<< HEAD
 	console.log("checkRep", req.body.email);
 	const email = req.body.email;
 	
 	if (!email.length) {
 		return res.status(200).json({success: false, error: 'email length 0'});
+=======
+	console.log("user checkRep: ", req.body.email);
+	const email = req.body.email;
+	
+	if (!email.length) {
+		return res.status(200).send({success: false, error: 'email length 0'});
+>>>>>>> byj
 	}
 	
 	User.checkid(req.body.email)

@@ -35,7 +35,11 @@ exports.create = (req, res) => {
 		return res.status(200).json({success: false, error: 'addr length 0'});
 	}
 	
+<<<<<<< HEAD
 	Buser.adduser(req.body)
+=======
+	Buser.addbuser(req.body)
+>>>>>>> byj
 		.then(user => res.status(200).send({success: true}))
 		.catch(err => res.status(200).send({success: false, error: 'fail to add'}));
 };
