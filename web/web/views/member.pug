@@ -3,7 +3,7 @@ head
   meta(charset='UTF-8')
   title sign up
 br
-form(name='fr', action='http://54.180.123.67:3000/buser/join', method='post')
+form(name='fr', action='/member', method='post', onsubmit="checkPW()")
   | Email:
   br
   input#email(name='email', type='email')
@@ -31,23 +31,26 @@ form(name='fr', action='http://54.180.123.67:3000/buser/join', method='post')
   input(name='addr', type='text')
   br
   br
-  input(type='submit', value='submit', onsubmit='return check()')
+  input(type='submit', value='submit')
 script(type='text/javascript').
   var emailChecked = false;
+
+
+
   function checkPW() {
   if (fr.pw.value == "" || fr.chk_pw.value == "") {
   alert("Enter password.");
-  fr.pw.focus();
-  return false;
+    fr.pw.focus();
+    return false;
   }
   if (fr.pw.value != fr.chk_pw.value) {
   alert("password incorrect.");
-  fr.pw.focus();
-  return false;
+    fr.pw.focus();
+    return false;
   }
   if (emailChecked == false) {
-  alert("please press the email check button.");
-  return false;
+    alert("please press the email check button.");
+    return false;
   }
   return true;
   }
@@ -58,7 +61,7 @@ script(type='text/javascript').
   else {
   var form = document.createElement("form");
   form.setAttribute("method", "post");
-  form.setAttribute("action", "http://54.180.123.67:3000/buser/repetition");
+  form.setAttribute("action", "/member/repetition");
   var hiddenField = document.createElement("input");
   hiddenField.setAttribute("type", "hidden");
   hiddenField.setAttribute("name", "email");
@@ -73,19 +76,3 @@ script(type='text/javascript').
   form.submit();
   }
   }
-  // $('#ajax_test').click( function() {
-  //   var obj1 = fr.email.value;
-  //   #('#result').html('');
-  //   $.ajax([
-  //     url: 'http://54.180.123.67:3000/buser/repetition',
-  //     dataType: 'json',
-  //     type: 'POST',
-  //     data: {'msg':$('#msg').val()},
-  //     success: function(result) {
-  //       if(result['result'] == true){
-  //         $('#result').html(result['msg']);
-  //       }
-  //     }
-  //     ]);
-  // })
-  // }
