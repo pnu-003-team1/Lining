@@ -1,0 +1,26 @@
+extends layout
+
+block content
+  //h3 FASTRACK
+  //div
+  //form(action='/action_page.php')
+  //input#email(type='text' name='email' placeholder='E-MAIL')
+  //input#password(type='text' name='password' placeholder='PASSWORD')
+  //input(type='submit' value='Submit')
+
+
+
+
+  div
+    .logo
+    img(src='/images/logo_real.png' alt='logo' width='400' height='222')
+  div
+    input#email(type='text' name='email' placeholder='E-MAIL')
+    br
+    input#password(type='text' name='password' placeholder='PASSWORD')
+    br
+    input#ex_chk(type='checkbox' style='vertical-align:left')
+    label(for='ex_chk') &#xC790;&#xB3D9;&#xB85C;&#xADF8;&#xC778;
+  .button_submit
+    input(type='submit' value='login' style='float:middle')
+    input#signup(type='submit' name='signup' value='sign up' style='float:middle')
