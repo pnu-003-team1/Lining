@@ -25,7 +25,7 @@ var invoke_user = function(fcn, args, callback){
       console.log("data : " + JSON.stringify(data));
       callback(data);
    });
-}
+};
 
 router.get('/', function(req, res) {
   res.render('member');
@@ -36,7 +36,7 @@ router.post('/repetition', function(req, res, next){
   var email = req.body.email;
   var args = {
     email : email
-  }
+  };
   console.log('email' + email);
   invoke_user('repetition', args, function(data){
            if(data.success){
@@ -45,7 +45,7 @@ router.post('/repetition', function(req, res, next){
              res.send("이미 존재하는 이메일 입니다.");
            }
         });
-})
+});
 
 router.post('/', function(req, res, next) {
   console.log('POST 방식으로 서버 호출됨');
@@ -61,9 +61,13 @@ router.post('/', function(req, res, next) {
     bname : bname,
     addr : addr,
     tel : tel
-  }
+  };
   invoke_user('join', args, function(data){
-           res.redirect('/');
+      if(data.success){
+        res.redirect('/');
+      }else{
+        res.send('회원가입 실패');
+    }
         });
 
 });
