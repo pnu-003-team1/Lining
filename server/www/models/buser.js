@@ -6,7 +6,8 @@ var buserSchema = new Schema ({
    bname : String,
    pw : {type : String, required : true},
    tel : {type : String, required : true},
-   addr : {type : String, required : true}
+   addr : {type : String, required : true},
+   full : {type : Boolean, default: false}
 });
 
 buserSchema.statics.addbuser = function (payload) {
@@ -40,6 +41,11 @@ buserSchema.statics.buserlogin = function (email,pw) {
 	//console.log("ok");
 	return this.find({email,pw});
 		
+};
+
+buserSchema.statics.getBusersInfo = function (payload) {
+	console.log("DB getBusersInfo");
+	return this.find({}).select("-_id bname tel addr full");
 };
 	
 module.exports = mongoose.model('Buser', buserSchema);
