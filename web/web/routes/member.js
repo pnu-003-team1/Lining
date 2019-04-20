@@ -5,7 +5,7 @@ var client = new Client();
 var temp;
 /* json 파일 object 파일로 변환 */
 var object = {};
-
+var emailChecked = false;
 
 
 
@@ -37,8 +37,10 @@ router.post('/repetition', function(req, res, next){
   var args = {
     email : email
   };
-  console.log('email' + email);
+  console.log('email : ' + email);
   invoke_user('repetition', args, function(data){
+           emailChecked = data.success;
+           console.log("emailChecked : " + emailChecked);
            if(data.success){
              res.send("사용 가능한 이메일 입니다.");
            }else{
@@ -63,10 +65,17 @@ router.post('/', function(req, res, next) {
     tel : tel
   };
   invoke_user('join', args, function(data){
+      console.log("repeition check : [" + emailChecked + "]");
       if(data.success){
-        res.redirect('/');
+        if(emailChecked){
+          emailChecked = false;
+          res.redirect('/');
+        }
+        else{
+          res.send('<script type="text/javascript">alert("이메일 중복 확인을 해주세요.");</script>');
+        }
       }else{
-        res.send('회원가입 실패');
+        res.send('<script type="text/javascript">alert("회원가입 실패");</script>');
     }
         });
 
