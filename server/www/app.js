@@ -15,7 +15,6 @@ app.get('/', function (req, res) {
 
 app.use('/users', usersRouter)
 app.use('/buser', buserRouter)
-
 app.listen(3000, function() {
 	console.log("server starting with 3000")
 })
