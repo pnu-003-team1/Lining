@@ -1,0 +1,96 @@
+doctype html
+head
+  meta(charset='UTF-8')
+  title sign up
+br
+form(name='fr', action='/menu/modify', method='post', onsubmit='onModify()')
+  | Email
+  br
+  input#email(type='text', name='email')
+  br
+  |   Food name
+  br
+  input#food(type='text', name='food')
+  br
+  |   Food price
+  br
+  input#price(type='number', name='price')
+  br
+  br
+  input#join(type='button', value='join', onclick='onJoin()')
+  input#remove(type='button', value='remove', onclick='onRemove()')
+  input#modify(type='submit', value='modify')
+script(type='text/javascript').
+  function onModify() {
+  if(fr.food.value == "" || fr.price.value == ""){
+  alert("Enter all Info.");
+  return false;
+  }
+  return true;
+  }
+  function onJoin() {
+  var email = fr.email.value;
+  var food = fr.food.value;
+  var price = fr.price.value;
+  if(email == "" || food == "" || price == ""){
+  alert("Enter Info.");
+  return false;
+  }
+  else {
+  console.log("온 조인");
+  var form = document.createElement("form");
+  form.setAttribute("method", "post");
+  form.setAttribute("action", "/menu/join");
+  var hiddenEmailField = document.createElement("input");
+  hiddenEmailField.setAttribute("type", "hidden");
+  hiddenEmailField.setAttribute("name", "email");
+  hiddenEmailField.setAttribute("value", email);
+  var hiddenFoodField = document.createElement("input");
+  hiddenFoodField.setAttribute("type", "hidden");
+  hiddenFoodField.setAttribute("name", "food");
+  hiddenFoodField.setAttribute("value", food);
+  var hiddenPriceField = document.createElement("input");
+  hiddenPriceField.setAttribute("type", "hidden");
+  hiddenPriceField.setAttribute("name", "price");
+  hiddenPriceField.setAttribute("value", price);
+  form.appendChild(hiddenEmailField);
+  form.appendChild(hiddenFoodField);
+  form.appendChild(hiddenPriceField);
+  var url = "http://54.180.123.67:3001/menu/join";
+  var title = "Munu Join";
+  var status = "toolbar=no,directories=no,scrollbars=no,resizable=no,status=no,menubar=no,width=200, height=200, top=50,left=50";
+  window.open("", title, status);
+  form.target = title;
+  document.body.appendChild(form);
+  form.submit();
+  }
+  }
+  function onRemove(){
+  var email = fr.email.value;
+  var food = fr.food.value;
+  if(email == "" || food == ""){
+  alert("Enter all Info.")
+  return false;
+  }
+  console.log("온 리무브");
+  var form = document.createElement("form");
+  form.setAttribute("method", "post");
+  form.setAttribute("action", "/menu/remove");
+  var hiddenEmailField = document.createElement("input");
+  hiddenEmailField.setAttribute("type", "hidden");
+  hiddenEmailField.setAttribute("name", "email");
+  hiddenEmailField.setAttribute("value", email);
+  var hiddenFoodField = document.createElement("input");
+  hiddenFoodField.setAttribute("type", "hidden");
+  hiddenFoodField.setAttribute("name", "food");
+  hiddenFoodField.setAttribute("value", food);
+  form.appendChild(hiddenEmailField);
+  form.appendChild(hiddenFoodField);
+  var url = "http://54.180.123.67:3001/menu/remove";
+  var title = "Munu Remove";
+  var status = "toolbar=no,directories=no,scrollbars=no,resizable=no,status=no,menubar=no,width=200, height=200, top=50,left=50";
+  window.open("", title, status);
+  form.target = title;
+  document.body.appendChild(form);
+  form.submit();
+  }

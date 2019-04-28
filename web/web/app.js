@@ -8,6 +8,7 @@ var bodyParser = require("body-parser");
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var memberRouter = require('./routes/member');
+var menuRouter = require('./routes/menu');
 
 var app = express();
 
@@ -27,6 +28,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/member', memberRouter);
+app.use('/menu', menuRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -44,12 +46,5 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-app.post('http://54.180.123.67:3000/buser/join', function(req, res) {
-  console.log(req.body);
-});
-
-app.post('http://54.180.123.67:3000/buser/repetition', function(req, res) {
-  console.log(req.body);
-});
 
 module.exports = app;
