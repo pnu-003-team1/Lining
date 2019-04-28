@@ -143,13 +143,12 @@ exports.dbtest = (req, res) => {
 exports.getbuserList = (req, res) => {
 	console.log("user buserList");
 
-	Buser.findAll()
+	Buser.getBusersInfo()
 		.then((user) => {
       	if (!user.length) return res.status(200).send({success: false, error: 'No busers' });
-      	res.status(200).send({success: true, $user});
+      	res.send({suceess: true, list: [`${user}`]});
     })
-    .catch(err => res.status(500).send({ msg: 'errr', err: err}));
-   
+    .catch(err => res.send({ success: false, error: 'fail to get data from DB'}));
 };
 
 exports.removeall = (req, res) => {

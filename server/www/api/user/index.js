@@ -8,7 +8,7 @@ const controller = require('./controller')
 router.post('/join', controller.create);
 router.post('/login', controller.login);
 router.post('/repetition', controller.checkRep);
-router.post('/dbtest', controller.dbtest);
+router.get('/dbtest', controller.dbtest);
 router.get('/buserList', controller.getbuserList);
 router.get('/removeall', controller.removeall);
 module.exports = router;

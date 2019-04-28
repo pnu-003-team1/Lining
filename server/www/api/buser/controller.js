@@ -117,4 +117,13 @@ exports.removeall = (req, res) => {
       res.send(`find successfully: ${user}`);
     })
     .catch(err => res.status(500).send({ msg: 'errr', err: err}));
+    
+exports.fullCheck = (req, res) => {
+	const email = req.body.email;
+	const full = req.body.full;
+	
+	console.log("busr fullCheck: ", email, full);
+	Buser.fullCheck(req.body)
+		.then(user => res.status(200).send({success: true}))
+		.catch(err => res.status(200).send({success: false, error: 'fail to revise DB'}));
 };

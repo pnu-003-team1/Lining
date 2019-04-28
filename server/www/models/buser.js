@@ -51,6 +51,11 @@ buserSchema.statics.buserlogin = function (email,pw) {
 	return this.find({email,pw});
 		
 };
+
+buserSchema.statics.getBusersInfo = function (payload) {
+	console.log("DB getBusersInfo");
+	return this.find({}).select("-_id bname tel addr full");
+};
 	
 module.exports = mongoose.model('Buser', buserSchema);
 
