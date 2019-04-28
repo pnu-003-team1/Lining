@@ -6,9 +6,16 @@ var buserSchema = new Schema ({
    bname : String,
    pw : {type : String, required : true},
    tel : {type : String, required : true},
-   addr : {type : String, required : true}
+   addr : {type : String, required : true},
+   full : {type : Boolean, default: false}
 });
 
+buserSchema.statics.fullCheck = function (payload){
+	console.log('fullCheck');
+	var user = this.find({payload});
+	user.full = this.find({payload}).full;
+	return user.save();
+}
 buserSchema.statics.addbuser = function (payload) {
    // this === Model
    console.log("Buser connect");
@@ -20,7 +27,7 @@ buserSchema.statics.checkbid = function (email){
 	console.log("email: ", email);
 	var test = this.find({email});
 	console.log("test: ", email);
-   return this.find({email});
+    return this.find({email});
 };
 
 buserSchema.statics.checkbpw = function (pw){
@@ -31,6 +38,9 @@ buserSchema.statics.findAll = function(payload) {
 	return this.find({});
 };
 
+buserSchema.statics.deleteAll = function (payload){
+   return this.remove({});
+};
 
 buserSchema.statics.deleteEmail = function (email) {
   return this.remove({ "email" : email });

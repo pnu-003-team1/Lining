@@ -14,47 +14,62 @@ exports.create = (req, res) => {
 	const pw = req.body.pw;
 	const tel = req.body.tel;
 	const addr = req.body.addr;
-	
+
 	if (!bname.length) {
-		return res.status(200).json({success: false, error: 'bname length 0'});
+		return res.status(200).send({success: false, error: 'bname length 0'});
 	}
 	
 	if (!email.length) {
-		return res.status(200).json({success: false, error: 'email length 0'});
+		return res.status(200).send({success: false, error: 'email length 0'});
 	}
 	
 	if (!pw.length) {
-		return res.status(200).json({success: false, error: 'pw length 0'});
+		return res.status(200).send({success: false, error: 'pw length 0'});
 	}
 	
 	if (!tel.length) {
-		return res.status(200).json({success: false, error: 'tel length 0'});
+		return res.status(200).send({success: false, error: 'tel length 0'});
 	}
 	
 	if (!addr.length) {
-		return res.status(200).json({success: false, error: 'addr length 0'});
+		return res.status(200).send({success: false, error: 'addr length 0'});
 	}
 	
-<<<<<<< HEAD
-	Buser.adduser(req.body)
-=======
 	Buser.addbuser(req.body)
->>>>>>> byj
 		.then(user => res.status(200).send({success: true}))
 		.catch(err => res.status(200).send({success: false, error: 'fail to add'}));
 };
 
+exports.fullCheck = (req, res) => {
+	const email = req.body.email;
+	const full = req.body.full;
+	
+	if (!email.length) {
+		return res.send({success: false, error: 'email length 0'});
+	}
+	
+	if (!full.length) {
+		return res.send({success: false, error: 'full을 입력하세용'});
+	}
+	
+
+	console.log("busr fullCheck: ", email, full);
+	Buser.fullCheck(req.body)
+		.then(user => res.status(200).send({success: true}))
+		.catch(err => res.status(400).send({success: false, error: 'fail to revise DB'}));
+};
+
 exports.login = (req, res) => {
-	console.log("busr login: ", req.body.email);
+	console.log("busr login: ", req.body.email , req.body.pw);
 	const email = req.body.email;
 	const pw = req.body.pw;
 	
 	if (!email.length) {
-		return res.status(200).json({success: false, error: 'email length 0'});
+		return res.status(200).send({success: false, error: 'email length 0'});
 	}
 	
 	if (!pw.length) {
-		return res.status(200).json({success: false, error: 'pw length 0'});
+		return res.status(200).send({success: false, error: 'pw length 0'});
 	}
 	
 	Buser.buserlogin(req.body.email,req.body.pw)
@@ -74,7 +89,7 @@ exports.checkRep = (req, res) => {
 	const email = req.body.email;
 	
 	if (!email.length) {
-		return res.status(200).json({success: false, error: 'email length 0'});
+		return res.status(200).send({success: false, error: 'email length 0'});
 	}
 	
 	Buser.checkbid(req.body.email)
@@ -84,4 +99,22 @@ exports.checkRep = (req, res) => {
       else res.status(200).send({success: false, error: 'email repetition'});
     })
     .catch(err => res.status(500).send({success: false, error: 'server error'}));
+};
+
+exports.dbtest = (req, res) => {
+   Buser.findAll()
+      .then((user) => {
+      if (!user.length) return res.status(404).send({ err: 'User not found' });
+      res.send(`find successfully: ${user}`);
+    })
+    .catch(err => res.status(500).send({ msg: 'errr', err: err}));
+};
+
+exports.removeall = (req, res) => {
+   Buser.deleteAll()
+      .then((user) => {
+      if (!user.length) return res.status(404).send({ err: 'User not found' });
+      res.send(`find successfully: ${user}`);
+    })
+    .catch(err => res.status(500).send({ msg: 'errr', err: err}));
 };

@@ -10,6 +10,7 @@
 
 const router = require('express').Router();
 const User = require('../../models/user');
+const Buser = require('../../models/buser');
 
 exports.index = (req, res) => {
 	console.log("index");
@@ -53,30 +54,26 @@ exports.delete = (req, res) => {
 };
 
 exports.create = (req, res) => {
-<<<<<<< HEAD
-	console.log("create", req.body.email);
-=======
 	console.log("user create: ", req.body.name);
->>>>>>> byj
 	const name = req.body.name; // undefined 시  ''
 	const email = req.body.email;
 	const pw = req.body.pw;
 	const phone = req.body.phone;
 	
 	if (!name.length) {
-		return res.status(200).json({success: false, error: 'name length 0'});
+		return res.status(200).send({success: false, error: 'name length 0'});
 	}
 	
 	if (!email.length) {
-		return res.status(200).json({success: false, error: 'email length 0'});
+		return res.status(200).send({success: false, error: 'email length 0'});
 	}
 	
 	if (!pw.length) {
-		return res.status(200).json({success: false, error: 'pw length 0'});
+		return res.status(200).send({success: false, error: 'pw length 0'});
 	}
 	
 	if (!phone.length) {
-		return res.status(200).json({success: false, error: 'phone length 0'});
+		return res.status(200).send({success: false, error: 'phone length 0'});
 	}
 	
 	User.add(req.body)
@@ -86,38 +83,27 @@ exports.create = (req, res) => {
 
 
 exports.login = (req, res) => {
-<<<<<<< HEAD
-	console.log("login", req.body.email);
-=======
 	console.log("user login: ", req.body.email);
->>>>>>> byj
+
 	const email = req.body.email;
 	const pw = req.body.pw;
 	
 	if (!email.length) {
-<<<<<<< HEAD
-		return res.status(200).json({success: false, error: 'email length 0'});
+		return res.status(200).send({success: false, error: 'email length 0'});
 	}
 	
 	if (!pw.length) {
-		return res.status(200).json({success: false, error: 'pw length 0'});
-=======
 		return res.status(200).send({success: false, error: 'email length 0'});
 	}
 	
 	if (!pw.length) {
 		return res.status(200).send({success: false, error: 'pw length 0'});
->>>>>>> byj
 	}
 	
 	User.userlogin(req.body.email,req.body.pw)
 		.then((user) => {
       if (user.length < 1){
-<<<<<<< HEAD
-      	return res.status(200).send({ success: false, error: 'User not found' });
-=======
       	return res.status(200).send({success: false, error: 'User not found' });
->>>>>>> byj
       }
       else {
       	return res.status(200).send({success: true});
@@ -129,19 +115,11 @@ exports.login = (req, res) => {
 
 
 exports.checkRep = (req, res) => {
-<<<<<<< HEAD
-	console.log("checkRep", req.body.email);
-	const email = req.body.email;
-	
-	if (!email.length) {
-		return res.status(200).json({success: false, error: 'email length 0'});
-=======
 	console.log("user checkRep: ", req.body.email);
 	const email = req.body.email;
 	
 	if (!email.length) {
 		return res.status(200).send({success: false, error: 'email length 0'});
->>>>>>> byj
 	}
 	
 	User.checkid(req.body.email)
@@ -151,4 +129,34 @@ exports.checkRep = (req, res) => {
       else res.status(200).send({success: false, error: 'email repetition'});
     })
     .catch(err => res.status(500).send({error: 'server error'}));
+};
+
+exports.dbtest = (req, res) => {
+   User.findAll()
+      .then((user) => {
+      if (!user.length) return res.status(404).send({ err: 'User not found' });
+      res.send(`find successfully: ${user}`);
+    })
+    .catch(err => res.status(500).send({ msg: 'errr', err: err}));
+};
+
+exports.getbuserList = (req, res) => {
+	console.log("user buserList");
+
+	Buser.findAll()
+		.then((user) => {
+      	if (!user.length) return res.status(200).send({success: false, error: 'No busers' });
+      	res.status(200).send({success: true, $user});
+    })
+    .catch(err => res.status(500).send({ msg: 'errr', err: err}));
+   
+};
+
+exports.removeall = (req, res) => {
+   User.deleteAll()
+      .then((user) => {
+      if (!user.length) return res.status(404).send({ err: 'User not found' });
+      res.send(`find successfully: ${user}`);
+    })
+    .catch(err => res.status(500).send({ msg: 'errr', err: err}));
 };

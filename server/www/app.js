@@ -17,7 +17,7 @@ app.use('/users', usersRouter)
 app.use('/buser', buserRouter)
 
 app.listen(3000, function() {
-	console.log("server starting with 3000")
+	console.log("server starting with 3001")
 })
 
 var db = mongoose.connection;
