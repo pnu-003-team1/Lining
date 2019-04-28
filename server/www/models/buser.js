@@ -10,6 +10,12 @@ var buserSchema = new Schema ({
    full : {type : Boolean, default: false}
 });
 
+buserSchema.statics.fullCheck = function (payload){
+	console.log('fullCheck');
+	var user = this.find({payload});
+	user.full = this.find({payload}).full;
+	return user.;
+}
 buserSchema.statics.addbuser = function (payload) {
    // this === Model
    console.log("Buser connect");
@@ -21,7 +27,7 @@ buserSchema.statics.checkbid = function (email){
 	console.log("email: ", email);
 	var test = this.find({email});
 	console.log("test: ", email);
-   return this.find({email});
+    return this.find({email});
 };
 
 buserSchema.statics.checkbpw = function (pw){
@@ -32,6 +38,9 @@ buserSchema.statics.findAll = function(payload) {
 	return this.find({});
 };
 
+buserSchema.statics.deleteAll = function (payload){
+   return this.remove({});
+};
 
 buserSchema.statics.deleteEmail = function (email) {
   return this.remove({ "email" : email });
@@ -41,11 +50,6 @@ buserSchema.statics.buserlogin = function (email,pw) {
 	//console.log("ok");
 	return this.find({email,pw});
 		
-};
-
-buserSchema.statics.getBusersInfo = function (payload) {
-	console.log("DB getBusersInfo");
-	return this.find({}).select("-_id bname tel addr full");
 };
 	
 module.exports = mongoose.model('Buser', buserSchema);
