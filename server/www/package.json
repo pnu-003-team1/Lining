@@ -11,8 +11,10 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.18.3",
+    "date-utils": "^1.2.21",
     "express": "^4.16.4",
     "mongoose": "^5.4.21",
+    "mongoose-auto-increment": "^5.0.1",
     "vhost": "^3.0.2",
     "vhttps": "^0.1.1"
   }

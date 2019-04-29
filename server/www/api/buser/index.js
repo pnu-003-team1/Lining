@@ -7,5 +7,6 @@ router.post('/login', controller.login);
 router.post('/repetition', controller.checkRep);
 router.post('/dbtest', controller.dbtest);
 router.post('/fullCheck', controller.fullCheck);
+router.get('/getReservation', controller.getReservation);
 
 module.exports = router;
