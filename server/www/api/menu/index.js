@@ -3,10 +3,9 @@ const router = express.Router();
 const controller = require('./controller')
 
 router.post('/join', controller.create);
-router.post('/login', controller.login);
-router.post('/repetition', controller.checkRep);
 router.post('/dbtest', controller.dbtest);
-router.post('/fullCheck', controller.fullCheck);
-router.post('/removeall', controller.removeall);
+router.post('/remove', controller.remove);
+router.post('/modify', controller.modify);
+
 
 module.exports = router;

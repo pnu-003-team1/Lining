@@ -40,6 +40,12 @@ exports.create = (req, res) => {
 		.catch(err => res.status(200).send({success: false, error: 'fail to add'}));
 };
 
+exports.fullCheck = (req, res) => {
+	Buser.fullCheck(req.body.email,req.body)
+    .then(user => res.send(user))
+    .catch(err => res.status(400).send(err));
+};
+
 exports.login = (req, res) => {
 	console.log("busr login: ", req.body.email , req.body.pw);
 	const email = req.body.email;
@@ -91,12 +97,34 @@ exports.dbtest = (req, res) => {
     .catch(err => res.status(500).send({ msg: 'errr', err: err}));
 };
 
-exports.fullCheck = (req, res) => {
-	const email = req.body.email;
-	const full = req.body.full;
-	
-	console.log("busr fullCheck: ", email, full);
-	Buser.fullCheck(req.body)
-		.then(user => res.status(200).send({success: true}))
-		.catch(err => res.status(200).send({success: false, error: 'fail to revise DB'}));
+exports.removeall = (req, res) => {
+   Buser.deleteAll()
+      .then((user) => {
+      if (!user.length) return res.status(404).send({ err: 'User not found' });
+      res.send(`find successfully: ${user}`);
+    })
+    .catch(err => res.status(500).send({ msg: 'errr', err: err}));
+};
+
+exports.addOfflineGuest = (req, res) => {
+   console.log("addOfflineGuest");
+   const email = req.body.email;
+   const gphone = req.body.gphone;
+   const total = req.body.total;
+   
+   if (!email.length) {
+      return res.status(200).send({success: false, error: 'email length 0'});
+   }
+   
+   if (!gphone.length) {
+      return res.status(200).send({success: false, error: 'gphone length 0'});
+   }
+   
+   if (!total.length) {
+      return res.status(200).send({success: false, error: 'total length 0'});
+   }
+   
+   Reservation.addGuest(email, req.body)
+      .then(result => res.status(200).send({success: true}))
+      .catch(err => res.status(200).send({success: false, error: 'fail to revise DB'}));
 };
