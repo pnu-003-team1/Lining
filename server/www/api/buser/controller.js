@@ -6,7 +6,6 @@
 
 const router = require('express').Router();
 const Buser = require('../../models/buser');
-const Reservation = require('../../models/reservation')
 
 exports.create = (req, res) => {
 	console.log("busr create: ", req.body.bname);
@@ -39,6 +38,29 @@ exports.create = (req, res) => {
 	Buser.addbuser(req.body)
 		.then(user => res.status(200).send({success: true}))
 		.catch(err => res.status(200).send({success: false, error: 'fail to add'}));
+};
+
+exports.fullCheck = (req, res) => {
+	const email = req.body.email;
+	const full = req.body.full;
+	
+	if (!email.length) {
+		return res.send({success: false, error: 'email length 0'});
+	}
+	
+	if (!full.length) {
+		return res.send({success: false, error: 'full을 입력하세용'});
+	}
+	
+
+	console.log("busr fullCheck: ", email, full);
+	Buser.fullCheck(req.body)
+		.then(user => res.status(200).send({success: true}))
+		.catch(err => res.status(400).send({success: false, error: 'fail to revise DB'}));
+
+	Buser.fullCheck(req.body.email,req.body)
+    .then(user => res.send(user))
+    .catch(err => res.status(400).send(err));
 };
 
 exports.login = (req, res) => {
@@ -92,7 +114,15 @@ exports.dbtest = (req, res) => {
     .catch(err => res.status(500).send({ msg: 'errr', err: err}));
 };
 
-exports.fullCheck = (req, res) => {
+exports.removeall = (req, res) => {
+   Buser.deleteAll()
+      .then((user) => {
+      if (!user.length) return res.status(404).send({ err: 'User not found' });
+      res.send(`find successfully: ${user}`);
+    })
+    .catch(err => res.status(500).send({ msg: 'errr', err: err}));
+};
+/*exports.fullCheck = (req, res) => {
 	const email = req.body.email;
 	const full = req.body.full;
 	
@@ -100,14 +130,4 @@ exports.fullCheck = (req, res) => {
 	Buser.fullCheck(req.body)
 		.then(user => res.status(200).send({success: true}))
 		.catch(err => res.status(200).send({success: false, error: 'fail to revise DB'}));
-};
-
-exports.getReservation = (req, res) => {
-	console.log("get Reservation DB");
-	Reservation.findAll()
-    	.then((user) => {
-      	if (!user.length) return res.status(404).send({ err: 'User not found' });
-      	res.send(`find successfully: ${user}`);
-    })
-    .catch(err => res.status(500).send({ msg: 'errr', err: err}));
-};
+};*/
