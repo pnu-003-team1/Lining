@@ -134,10 +134,10 @@ exports.checkRep = (req, res) => {
 exports.dbtest = (req, res) => {
    User.findAll()
       .then((user) => {
-      if (!user.length) return res.status(404).send({ error: 'User not found' });
+      if (!user.length) return res.status(404).send({ err: 'User not found' });
       res.send(`find successfully: ${user}`);
     })
-    .catch(err => res.status(500).send({ msg: 'errr', error: err}));
+    .catch(err => res.status(500).send({ msg: 'errr', err: err}));
 };
 
 exports.getbuserList = (req, res) => {
@@ -149,7 +149,6 @@ exports.getbuserList = (req, res) => {
       	res.send({list: [`${user}`]});
     })
     .catch(err => res.send({ list: []}));
-   
 };
 
 exports.removeall = (req, res) => {

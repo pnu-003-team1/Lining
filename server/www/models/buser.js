@@ -2,13 +2,18 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var buserSchema = new Schema ({
-   email : {type : String, required : false, unique: true},
+   email : {type : String, required : true,unique : true, index : true},
    bname : String,
    pw : {type : String, required : true},
    tel : {type : String, required : true},
    addr : {type : String, required : true},
    full : {type : Boolean, default: false}
 });
+
+buserSchema.statics.fullCheck = function(email,payload){
+	return this.findOneAndUpdate({email}, payload,
+	{new : true});
+};
 
 buserSchema.statics.addbuser = function (payload) {
    // this === Model
@@ -19,22 +24,25 @@ buserSchema.statics.addbuser = function (payload) {
 
 buserSchema.statics.checkbid = function (email){
 	console.log("email: ", email);
-	var test = this.find({email});
-	console.log("test: ", test.length);
-   return this.find({email});
+    return this.find({email});
 };
-
+buserSchema.statics.checkEmail = function(email) {
+	return this.find({email});
+};
 buserSchema.statics.checkbpw = function (pw){
    return this.find({pw});
 };
 
-buserSchema.statics.findAll = function(payload) {
+buserSchema.statics.findAll = function() {
 	return this.find({});
 };
 
+buserSchema.statics.deleteAll = function (payload){
+   return this.remove({});
+};
 
 buserSchema.statics.deleteEmail = function (email) {
-  return this.remove({ "email" : email });
+  return this.remove({ email });
 };
 
 buserSchema.statics.buserlogin = function (email,pw) {
