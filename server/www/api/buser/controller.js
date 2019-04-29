@@ -6,6 +6,7 @@
 
 const router = require('express').Router();
 const Buser = require('../../models/buser');
+const Reservation = require('../../models/reservation')
 
 exports.create = (req, res) => {
 	console.log("busr create: ", req.body.bname);
@@ -131,26 +132,3 @@ exports.removeall = (req, res) => {
 		.then(user => res.status(200).send({success: true}))
 		.catch(err => res.status(200).send({success: false, error: 'fail to revise DB'}));
 };*/
-
-exports.addOfflineGuest = (req, res) => {
-   console.log("addOfflineGuest");
-   const email = req.body.email;
-   const gphone = req.body.gphone;
-   const total = req.body.total;
-   
-   if (!email.length) {
-      return res.status(200).send({success: false, error: 'email length 0'});
-   }
-   
-   if (!gphone.length) {
-      return res.status(200).send({success: false, error: 'gphone length 0'});
-   }
-   
-   if (!total.length) {
-      return res.status(200).send({success: false, error: 'total length 0'});
-   }
-   
-   Reservation.addGuest(email, req.body)
-      .then(result => res.status(200).send({success: true}))
-      .catch(err => res.status(200).send({success: false, error: 'fail to revise DB'}));
-};

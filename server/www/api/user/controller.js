@@ -145,10 +145,10 @@ exports.getbuserList = (req, res) => {
 
 	Buser.getBusersInfo()
 		.then((user) => {
-      	if (!user.length) return res.status(200).send({success: false, error: 'No busers' });
-      	res.send({suceess: true, list: [`${user}`]});
+      	if (!user.length) return res.status(200).send({list: []});
+      	res.send({list: [`${user}`]});
     })
-    .catch(err => res.send({ success: false, error: 'fail to get data from DB'}));
+    .catch(err => res.send({ list: []}));
 };
 
 exports.removeall = (req, res) => {

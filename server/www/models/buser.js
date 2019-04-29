@@ -24,8 +24,6 @@ buserSchema.statics.addbuser = function (payload) {
 
 buserSchema.statics.checkbid = function (email){
 	console.log("email: ", email);
-	var test = this.find({email});
-	console.log("test: ", email);
     return this.find({email});
 };
 buserSchema.statics.checkEmail = function(email) {
