@@ -22,8 +22,8 @@ app.use('/buser', buserRouter)
 app.use('/menu', menuRouter)
 app.use('/reservation', reserRouter)
 app.use('/dbtest', dbtestRouter)
-app.listen(3000, function() {
-	console.log("server starting with 3001")
+app.listen(3002, function() {
+	console.log("server starting with 3002")
 })
 
 var db = mongoose.connection;

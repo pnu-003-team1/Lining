@@ -122,7 +122,7 @@ exports.removeall = (req, res) => {
       res.send(`find successfully: ${user}`);
     })
     .catch(err => res.status(500).send({ msg: 'errr', err: err}));
-    
+};
 /*exports.fullCheck = (req, res) => {
 	const email = req.body.email;
 	const full = req.body.full;
