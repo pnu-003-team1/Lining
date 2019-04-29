@@ -6,7 +6,6 @@
 
 const router = require('express').Router();
 const Buser = require('../../models/buser');
-const Reservation = require('../../models/reservation')
 
 exports.create = (req, res) => {
 	console.log("busr create: ", req.body.bname);
