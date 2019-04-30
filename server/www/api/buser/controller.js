@@ -41,25 +41,27 @@ exports.create = (req, res) => {
 };
 
 exports.fullCheck = (req, res) => {
-	const email = req.body.email;
-	const full = req.body.full;
-	
-	if (!email.length) {
-		return res.send({success: false, error: 'email length 0'});
-	}
-	
-	if (!full.length) {
-		return res.send({success: false, error: 'full을 입력하세용'});
-	}
-	
+   const email = req.body.email;
+   const full = req.body.full;
+   
+   if (!email.length) {
+      return res.send({success: false, error: 'email length 0'});
+   }
+   
+   if (!full.length) {
+      return res.send({success: false, error: 'full을 입력하세용'});
+   }
+   
 
-	console.log("busr fullCheck: ", email, full);
-	Buser.fullCheck(req.body)
-		.then(user => res.status(200).send({success: true}))
-		.catch(err => res.status(400).send({success: false, error: 'fail to revise DB'}));
-
-	Buser.fullCheck(req.body.email,req.body)
-    .then(user => res.send(user))
+   console.log("busr fullCheck: ", email, full);
+   Buser.fullCheck(req.body.email,req.body)
+    .then(buser => {if (buser.full === true||buser.full === false){
+         return res.status(200).send({ success : true });
+      }
+      else {
+         return res.status(200).send({success : true});
+      }
+    })
     .catch(err => res.status(400).send(err));
 };
 
@@ -122,12 +124,3 @@ exports.removeall = (req, res) => {
     })
     .catch(err => res.status(500).send({ msg: 'errr', err: err}));
 };
-/*exports.fullCheck = (req, res) => {
-	const email = req.body.email;
-	const full = req.body.full;
-	
-	console.log("busr fullCheck: ", email, full);
-	Buser.fullCheck(req.body)
-		.then(user => res.status(200).send({success: true}))
-		.catch(err => res.status(200).send({success: false, error: 'fail to revise DB'}));
-};*/
