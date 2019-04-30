@@ -140,15 +140,46 @@ exports.dbtest = (req, res) => {
     .catch(err => res.status(500).send({ msg: 'errr', err: err}));
 };
 
+
 exports.getbuserList = (req, res) => {
 	console.log("user buserList");
-
 	Buser.getBusersInfo()
 		.then((user) => {
-      	if (!user.length) return res.status(200).send({list: []});
-      	res.send({list: [`${user}`]});
+      		if(!user.length){
+      			var list = new Array();
+      			var result = {
+      				success: false,
+      				list: list
+      			};
+      			var jsonData = JSON.stringify(result);
+      			return res.status(200).send(jsonData);
+      		}
+      		else {
+      			var bInfo = new Object();
+	      		var list = new Array();
+	      		var i = user.length;
+	      		
+	      		user.forEach(function (item, index){
+	      			console.log('each item #', index, item.full);
+	      			console.log('each item #', index, item.bname);
+	      			console.log('each item #', index, item.tel);
+	      			console.log('each item #', index, item.addr);
+	      			
+	      			list.push(item);
+	      				
+	      		});
+	      		
+	      		console.log("list length", list.length);
+	      		var result = {
+	      			success: true,
+	      			list : list
+	      		};
+	      		var jsonData = JSON.stringify(result);
+	      		
+	      		res.send(jsonData);	
+      		}	      	
     })
-    .catch(err => res.send({ list: []}));
+    .catch(err => res.send({sccuess: false, list: [], error: err}));
 };
 
 exports.removeall = (req, res) => {
