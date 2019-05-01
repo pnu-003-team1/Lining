@@ -26,11 +26,9 @@ menuSchema.statics.menumodify = function(email,food,payload){
 	{new : false});
 };
 
-
-
-
-
-
-
+menuSchema.statics.getMenuList = function (email) {
+	console.log("menuSchema getMenuList");
+	return this.find({email});
+}
 
 module.exports = mongoose.model('Menu', menuSchema);
