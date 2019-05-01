@@ -47,13 +47,12 @@ buserSchema.statics.deleteEmail = function (email) {
 
 buserSchema.statics.buserlogin = function (email,pw) {
 	//console.log("ok");
-	return this.find({email,pw});
-		
+	return this.find({email,pw});		
 };
 
 buserSchema.statics.getBusersInfo = function (payload) {
 	console.log("DB getBusersInfo");
-	return this.find({}).select("-_id bname tel addr full");
+	return this.find({}).select("-_id bname tel addr full email");
 };
 	
 module.exports = mongoose.model('Buser', buserSchema);
