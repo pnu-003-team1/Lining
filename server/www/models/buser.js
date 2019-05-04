@@ -42,12 +42,16 @@ buserSchema.statics.deleteAll = function (payload){
 };
 
 buserSchema.statics.deleteEmail = function (email) {
-  return this.remove({ email });
+  return this.deleteOne({ email });
 };
 
 buserSchema.statics.buserlogin = function (email,pw) {
 	//console.log("ok");
 	return this.find({email,pw});		
+};
+buserSchema.statics.busermodify = function(email,bname,payload){
+	return this.findOneAndUpdate({email,bname}, payload,
+	{new : false});
 };
 
 buserSchema.statics.getBusersInfo = function (payload) {

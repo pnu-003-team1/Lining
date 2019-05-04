@@ -143,6 +143,7 @@ exports.dbtest = (req, res) => {
 
 
 exports.getbuserList = (req, res) => {
+<<<<<<< HEAD
 	console.log("user buserList");
 	Buser.getBusersInfo()
 		.then((user) => {
@@ -180,8 +181,26 @@ exports.getbuserList = (req, res) => {
 	      		
 	      		res.send(jsonData);	
       		}	      	
-    })
     .catch(err => res.send({sccuess: false, list: [], error: err}));
+};
+
+
+exports.modify = (req, res) => {
+	User.usermodify(req.body.email,req.body.name,req.body)
+    .then((user) => {
+      if (req.body.pw === user.pw && req.body.phone === user.phone) return res.status(200).send({ success : false });
+      res.send({ success : true });
+    })
+    .catch(err => res.status(500).send({ msg: 'errr', err: err}));
+};
+
+exports.remove = (req, res) => {
+   User.deleteEmail(req.body.email)
+      .then((user) => {
+      if (user.n===0) return res.status(200).send({ success : false });
+      else{res.json({ success : true })};
+    })
+    .catch(err => res.status(500).send({ msg: 'errr', err: err}));
 };
 
 exports.removeall = (req, res) => {

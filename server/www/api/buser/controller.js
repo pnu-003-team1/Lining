@@ -41,25 +41,25 @@ exports.create = (req, res) => {
 };
 
 exports.fullCheck = (req, res) => {
-   const email = req.body.email;
-   const full = req.body.full;
-   
-   if (!email.length) {
-      return res.send({success: false, error: 'email length 0'});
-   }
-   
-   if (!full.length) {
-      return res.send({success: false, error: 'full을 입력하세용'});
-   }
-   
+	const email = req.body.email;
+	const full = req.body.full;
+	
+	if (!email.length) {
+		return res.send({success: false, error: 'email length 0'});
+	}
+	
+	if (!full.length) {
+		return res.send({success: false, error: 'full을 입력하세용'});
+	}
+	
 
-   console.log("busr fullCheck: ", email, full);
-   Buser.fullCheck(req.body.email,req.body)
+	console.log("busr fullCheck: ", email, full);
+	Buser.fullCheck(req.body.email,req.body)
     .then(buser => {if (buser.full === true||buser.full === false){
-         return res.status(200).send({ success : true });
+      	return res.status(200).send({ success : true });
       }
       else {
-         return res.status(200).send({success : true});
+      	return res.status(200).send({success : true});
       }
     })
     .catch(err => res.status(400).send(err));
@@ -116,11 +116,28 @@ exports.dbtest = (req, res) => {
     .catch(err => res.status(500).send({ msg: 'errr', err: err}));
 };
 
+exports.modify = (req, res) => {
+	Buser.busermodify(req.body.email,req.body.bname,req.body)
+    .then((buser) => {
+      if (req.body.pw === buser.pw && req.body.tel === buser.tel && req.body.addr === buser.addr) return res.status(200).send({ success : false });
+      res.send({ success : true });
+    })
+    .catch(err => res.status(500).send({ msg: 'errr', err: err}));
+};
+
+exports.remove = (req, res) => {
+   Buser.deleteEmail(req.body.email)
+      .then((buser) => {
+      if (buser.n===0) return res.status(200).send({ success : false });
+      else{res.json({ success : true })};
+    })
+    .catch(err => res.status(500).send({ msg: 'errr', err: err}));
+};
 exports.removeall = (req, res) => {
    Buser.deleteAll()
       .then((user) => {
       if (!user.length) return res.status(404).send({ err: 'User not found' });
       res.send(`find successfully: ${user}`);
-    })
-    .catch(err => res.status(500).send({ msg: 'errr', err: err}));
+   })
+   .catch(err => res.status(500).send({ msg: 'errr', err: err}));
 };
