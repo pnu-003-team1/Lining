@@ -10,5 +10,7 @@ router.post('/login', controller.login);
 router.post('/repetition', controller.checkRep);
 router.get('/dbtest', controller.dbtest);
 router.get('/buserList', controller.getbuserList);
-router.get('/removeall', controller.removeall);
+router.post('/removeall', controller.removeall);
+router.post('/remove', controller.remove);
+router.post('/modify', controller.modify);
 module.exports = router;

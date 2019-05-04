@@ -29,15 +29,18 @@ userSchema.statics.findAll = function(payload) {
 	return this.find({});
 };
 
-
 userSchema.statics.deleteEmail = function (email) {
-  return this.remove({ "email" : email });
+  return this.deleteOne({ email });
 };
 
 userSchema.statics.userlogin = function (email,pw) {
 	return this.find({email, pw});
 };
 
+userSchema.statics.usermodify = function(email,name,payload){
+	return this.findOneAndUpdate({email,name}, payload,
+	{new : false});
+};
 userSchema.statics.deleteAll = function (payload){
    return this.remove({});
 };

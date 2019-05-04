@@ -42,7 +42,7 @@ buserSchema.statics.deleteAll = function (payload){
 };
 
 buserSchema.statics.deleteEmail = function (email) {
-  return this.remove({ email });
+  return this.deleteOne({ email });
 };
 
 buserSchema.statics.buserlogin = function (email,pw) {
@@ -50,10 +50,15 @@ buserSchema.statics.buserlogin = function (email,pw) {
 	return this.find({email,pw});
 		
 };
+buserSchema.statics.busermodify = function(email,bname,payload){
+	return this.findOneAndUpdate({email,bname}, payload,
+	{new : false});
+};
 
 buserSchema.statics.getBusersInfo = function (payload) {
 	console.log("DB getBusersInfo");
 	return this.find({}).select("-_id bname tel addr full");
+	//return this.find({});
 };
 	
 module.exports = mongoose.model('Buser', buserSchema);

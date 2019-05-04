@@ -9,7 +9,7 @@ exports.create = (req, res) => {
 	const price = req.body.price;
 
 	if (!email.length) {
-		return res.status(200).send({success: false, error: 'bname length 0'});
+		return res.status(200).send({success: false, error: 'email length 0'});
 	}
 	
 	if (!food.length) {
