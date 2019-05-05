@@ -1,0 +1,21 @@
+extends layout
+
+block content
+
+  div
+    .logo
+    img(src='/images/logo_real.png' alt='logo' width='400' height='222')
+  div
+    h5 아이디 또는 비밀번호가 일치하지 않습니다.
+    h5 로그인을 다시 시도해주세요
+    form(action='/login', method = 'post')
+      input#email(type='email' name='email' placeholder='E-MAIL')
+      br
+      input#pw(type='password' name='pw' placeholder='PASSWORD')
+      br
+      input#ex_chk(type='checkbox' style='vertical-align:left')
+      label(for='ex_chk') &#xC790;&#xB3D9;&#xB85C;&#xADF8;&#xC778;
+      .button_submit
+        input(type='submit' value='login' style='float:middle')
+      a(href='/member') 회원가입
+    //  input#signup(type='submit' name='signup' value='sign up' style='float:middle')

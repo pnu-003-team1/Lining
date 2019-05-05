@@ -1,0 +1,23 @@
+doctype html
+head
+  meta(charset='UTF-8')
+  title MyPage
+  link(rel='stylesheet', href='/stylesheets/bootstrap.css')
+  link(rel='stylesheet', href='/stylesheets/reservation.css')
+
+body
+  nav.navbar.navbar-expand-md.navbar-dark.fixed-top.bg-dark
+    ul.navbar-nav.mr-auto
+      li.nav-item
+        a.nav-link(href='/main') 대기리스트
+      li.nav-item
+        a.nav-link(href='/reservation') 오프라인 예약
+      li.nav-item
+        a.nav-link.disabled(href='') 내 정보 수정
+      li.nav-item
+        a.nav-link(href='#') 우리가게 메뉴
+      li.nav-item
+        a.nav-link(href='#') 로그아웃
+
+  main.container(role='main')
+    .jumbotron

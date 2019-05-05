@@ -1,0 +1,37 @@
+doctype html
+head
+  meta(charset='UTF-8')
+  title login
+  link(rel='stylesheet', href='/stylesheets/dh_style.css')
+body
+
+  div
+    .logo
+    img(src='/images/logo_real.png' alt='logo' width='400' height='222')
+  div
+    form(name="login_fr", action='/login', method = 'post', onsubmit="return check()")
+      input#email(type='email' name='email' placeholder='E-MAIL')
+      br
+      input#pw(type='password' name='pw' placeholder='PASSWORD')
+      br
+      input#ex_chk(type='checkbox' style='vertical-align:left')
+      label(for='ex_chk') &#xC790;&#xB3D9;&#xB85C;&#xADF8;&#xC778;
+      .button_submit
+        input(type='submit' value='login' style='float:middle')
+
+      a(href='/member') 회원가입
+
+    script(type='text/javascript').
+      function check(){
+        if (login_fr.email.value =="" ){
+          alert("이메일을 입력하세요");
+          login_fr.email.focus();
+          return false;
+        }
+        if (login_fr.pw.value==""){
+          alert("비밀번호를 입력하세요");
+          login_fr.pw.focus();
+          return false;
+        }
+        return true;
+      }
