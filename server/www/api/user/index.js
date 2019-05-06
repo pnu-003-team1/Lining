@@ -8,8 +8,8 @@ const controller = require('./controller')
 router.post('/join', controller.create);
 router.post('/login', controller.login);
 router.post('/repetition', controller.checkRep);
-router.post('/menuList', controller.getMenuList);
 
+router.get('/menuList', controller.getMenuList);
 router.get('/menudb', controller.menuDBtest);
 router.get('/dbtest', controller.dbtest);
 router.get('/buserList', controller.getbuserList);
