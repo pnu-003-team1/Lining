@@ -59,7 +59,7 @@ exports.fullCheck = (req, res) => {
       	return res.status(200).send({ success : true });
       }
       else {
-      	return res.status(200).send({success : true});
+      	return res.status(200).send({success : false});
       }
     })
     .catch(err => res.status(400).send(err));
@@ -119,7 +119,7 @@ exports.dbtest = (req, res) => {
 exports.modify = (req, res) => {
 	Buser.busermodify(req.body.email,req.body.bname,req.body)
     .then((buser) => {
-      if (req.body.pw === buser.pw && req.body.tel === buser.tel && req.body.addr === buser.addr) return res.status(200).send({ success : false });
+      if (!req.body.pw.length || !req.body.tel.legnth && !req.body.addr.length) return res.status(200).send({ success : false });
       res.send({ success : true });
     })
     .catch(err => res.status(500).send({ msg: 'errr', err: err}));
