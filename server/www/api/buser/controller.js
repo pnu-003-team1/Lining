@@ -59,7 +59,7 @@ exports.fullCheck = (req, res) => {
       	return res.status(200).send({ success : true });
       }
       else {
-      	return res.status(200).send({success : true});
+      	return res.status(200).send({success : false});
       }
     })
     .catch(err => res.status(400).send(err));
@@ -119,7 +119,7 @@ exports.dbtest = (req, res) => {
 exports.modify = (req, res) => {
 	Buser.busermodify(req.body.email,req.body.bname,req.body)
     .then((buser) => {
-      if (req.body.pw === buser.pw && req.body.tel === buser.tel && req.body.addr === buser.addr) return res.status(200).send({ success : false });
+      if (!req.body.pw.length || !req.body.tel.legnth && !req.body.addr.length) return res.status(200).send({ success : false });
       res.send({ success : true });
     })
     .catch(err => res.status(500).send({ msg: 'errr', err: err}));
@@ -141,7 +141,46 @@ exports.removeall = (req, res) => {
    })
    .catch(err => res.status(500).send({ msg: 'errr', err: err}));
 };
-
+exports.getemailbuser = (req, res) => {
+	console.log("All user buserList");
+	Buser.checkEmail(req.body.email)
+		.then((user) => {
+      		if(!user.length){
+      			var list = new Array();
+      			var result = {
+      				success: false,
+      				list: list
+      			};
+      			var jsonData = JSON.stringify(result);
+      			return res.status(200).send(jsonData);
+      		}
+      		else {
+      			var bInfo = new Object();
+	      		var list = new Array();
+	      		
+	      		user.forEach(function (item, index){
+	      			console.log('each item #', index, item.full);
+	      			console.log('each item #', index, item.bname);
+	      			console.log('each item #', index, item.tel);
+	      			console.log('each item #', index, item.addr);
+	      			
+	      			
+	      			list.push(item);
+	      				
+	      		});
+	      		
+	      		console.log("list length", list.length);
+	      		var result = {
+	      			success: true,
+	      			list : list
+	      		};
+	      		var jsonData = JSON.stringify(result);
+	      		
+	      		res.send(jsonData);	
+      		}	      	
+    })
+    .catch(err => res.send({sccuess: false, list: [], error: err}));
+};
 exports.getallbuserList = (req, res) => {
 	console.log("All user buserList");
 	Buser.getallBusersInfo()
