@@ -14,7 +14,7 @@ router.get('/menudb', controller.menuDBtest);
 router.get('/dbtest', controller.dbtest);
 router.get('/buserList', controller.getbuserList);
 router.get('/removeall', controller.removeall);
-
+router.get('/userInfo', controller.getUserInfo);
 router.post('/remove', controller.remove);
 router.post('/modify', controller.modify);
 

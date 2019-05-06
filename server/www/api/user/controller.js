@@ -185,12 +185,34 @@ exports.getbuserList = (req, res) => {
 
 
 exports.modify = (req, res) => {
+	console.log("user modify", req.body.email);
+	
+	const name = req.body.name;
+	const email = req.body.email;
+	const pw = req.body.pw;
+	const phone = req.body.phone;
+	
+	if (!name.length) {
+		return res.status(200).send({success: false, error: 'name length 0'});
+	}
+	
+	if (!email.length) {
+		return res.status(200).send({success: false, error: 'email length 0'});
+	}
+	
+	if (!pw.length) {
+		return res.status(200).send({success: false, error: 'pw length 0'});
+	}
+	
+	if (!phone.length) {
+		return res.status(200).send({success: false, error: 'phone length 0'});
+	}
+	
 	User.usermodify(req.body.email,req.body.name,req.body)
     .then((user) => {
-      if (req.body.pw === user.pw && req.body.phone === user.phone) return res.status(200).send({ success : false });
       res.send({ success : true });
     })
-    .catch(err => res.status(500).send({ msg: 'errr', err: err}));
+    .catch(err => res.status(500).send({ success: false, err: err}));
 };
 
 exports.remove = (req, res) => {
@@ -212,14 +234,14 @@ exports.removeall = (req, res) => {
 };
 
 exports.getMenuList = (req, res) => {
-	console.log("user getMenuList: ", req.body.email);
-	const bEmail = req.body.bEmail;
+	console.log("user getMenuList: ", req.query.bemail);
+	const bemail = req.query.bemail;
 	
-	if (!bEmail.length) {
+	if (!bemail.length) {
 		return res.status(200).send({success: false, error: 'email length 0'});
 	}
 	
-	Menu.getMenuList(bEmail)
+	Menu.getMenuList(bemail)
 		.then((user) => {
       		if(!user.length){
       			var list = new Array();
@@ -233,7 +255,6 @@ exports.getMenuList = (req, res) => {
       		else {
       			var menuInfo = new Object();
 	      		var list = new Array();
-	      		var i = user.length;
 	      		
 	      		user.forEach(function (item, index){
 	      			menuInfo = {
@@ -267,3 +288,29 @@ exports.menuDBtest = (req, res) => {
     .catch(err => res.status(500).send({ msg: 'errr', err: err}));
 };
 
+exports.getUserInfo = (req, res) => {
+	console.log("getUserInfo", req.query.email);
+	const email = req.query.email;
+	
+   	User.getUserInfo(email)
+      .then((user) => {
+      if (!user.length) return res.send({success: false, err: 'User not found' });
+      else {
+      	var info = new Object();
+            	
+  		user.forEach(function (item, index){
+      		info = {
+	    		email: item.email,
+		      	name: item.name,
+		      	pw: item.pw,
+		      	phone: item.phone	      				
+	    	};
+  		});
+      	console.log("info: ", info.email, info.name, info.pw, info.phone);
+
+	   	var jsonData = JSON.stringify(info);
+	    res.send(jsonData);
+      }
+    });
+    //.catch(err => res.status(500).send({ msg: 'errr', err: err}));
+};
