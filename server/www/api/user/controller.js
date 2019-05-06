@@ -143,7 +143,6 @@ exports.dbtest = (req, res) => {
 
 
 exports.getbuserList = (req, res) => {
-<<<<<<< HEAD
 	console.log("user buserList");
 	Buser.getBusersInfo()
 		.then((user) => {
@@ -181,6 +180,7 @@ exports.getbuserList = (req, res) => {
 	      		
 	      		res.send(jsonData);	
       		}	      	
+    })
     .catch(err => res.send({sccuess: false, list: [], error: err}));
 };
 
