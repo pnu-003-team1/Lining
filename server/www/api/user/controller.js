@@ -11,6 +11,7 @@
 const router = require('express').Router();
 const User = require('../../models/user');
 const Buser = require('../../models/buser');
+const Menu = require('../../models/menu');
 
 exports.index = (req, res) => {
 	console.log("index");
@@ -140,17 +141,46 @@ exports.dbtest = (req, res) => {
     .catch(err => res.status(500).send({ msg: 'errr', err: err}));
 };
 
-exports.getbuserList = (req, res) => {
-   console.log("user buserList");
 
-   Buser.getBusersInfo()
-      .then((user) => {
-         if (!user.length) return res.status(200).send({list: []});
-         var jsonData = JSON.stringify(user);
-         console.log("json: ", jsonData);
-         res.send({list: `${jsonData}`});
+exports.getbuserList = (req, res) => {
+	console.log("user buserList");
+	Buser.getBusersInfo()
+		.then((user) => {
+      		if(!user.length){
+      			var list = new Array();
+      			var result = {
+      				success: false,
+      				list: list
+      			};
+      			var jsonData = JSON.stringify(result);
+      			return res.status(200).send(jsonData);
+      		}
+      		else {
+      			var bInfo = new Object();
+	      		var list = new Array();
+	      		
+	      		user.forEach(function (item, index){
+	      			console.log('each item #', index, item.full);
+	      			console.log('each item #', index, item.bname);
+	      			console.log('each item #', index, item.tel);
+	      			console.log('each item #', index, item.addr);
+	      			console.log('each item #', index, item.email);
+	      			
+	      			list.push(item);
+	      				
+	      		});
+	      		
+	      		console.log("list length", list.length);
+	      		var result = {
+	      			success: true,
+	      			list : list
+	      		};
+	      		var jsonData = JSON.stringify(result);
+	      		
+	      		res.send(jsonData);	
+      		}	      	
     })
-    .catch(err => res.send({ list: []}));
+    .catch(err => res.send({sccuess: false, list: [], error: err}));
 };
 
 
@@ -180,3 +210,60 @@ exports.removeall = (req, res) => {
     })
     .catch(err => res.status(500).send({ msg: 'errr', err: err}));
 };
+
+exports.getMenuList = (req, res) => {
+	console.log("user getMenuList: ", req.body.email);
+	const bEmail = req.body.bEmail;
+	
+	if (!bEmail.length) {
+		return res.status(200).send({success: false, error: 'email length 0'});
+	}
+	
+	Menu.getMenuList(bEmail)
+		.then((user) => {
+      		if(!user.length){
+      			var list = new Array();
+      			var result = {
+      				success: true,
+      				list: list
+      			};
+      			var jsonData = JSON.stringify(result);
+      			return res.status(200).send(jsonData);
+      		}
+      		else {
+      			var menuInfo = new Object();
+	      		var list = new Array();
+	      		var i = user.length;
+	      		
+	      		user.forEach(function (item, index){
+	      			menuInfo = {
+	      				food: item.food,
+	      				price: item.price
+	      			};
+	      			console.log('menuInfo: ', menuInfo.food, menuInfo.price);      			
+	      			list.push(menuInfo);
+	      		});
+	      		
+	      		console.log("list length", list.length);
+	      		var result = {
+	      			success: true,
+	      			list : list
+	      		};
+	      		var jsonData = JSON.stringify(result);
+	      		
+	      		res.send(jsonData);	
+      		}	      	
+    })
+    .catch(err => res.send({sccuess: false, list: [], error: err}));
+};
+
+exports.menuDBtest = (req, res) => {
+	console.log("menuDBtest");
+   	Menu.findAll()
+      .then((user) => {
+      if (!user.length) return res.status(404).send({ err: 'Menu not found' });
+      res.send(`find successfully: ${user}`);
+    })
+    .catch(err => res.status(500).send({ msg: 'errr', err: err}));
+};
+

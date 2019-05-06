@@ -5,7 +5,8 @@ var resInfoSchema = new Schema ({
    email : String,
    phone: {type : String, unique : true, required: true},
    total: Number,
-   date: Date
+   date: Date,
+   bemail: String
 });
 
 resInfoSchema.statics.addGuest = function (payload) {
@@ -17,6 +18,7 @@ resInfoSchema.statics.addGuest = function (payload) {
 		email: payload.email,
 		phone : payload.phone,
 		total : payload.total,
+		bemail: payload.bemail,
 		date : now
 	});
 		

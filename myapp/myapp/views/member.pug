@@ -1,0 +1,66 @@
+doctype html
+head
+  meta(charset='UTF-8')
+  title sign up
+  link(rel='stylesheet', href='/stylesheets/member.css')
+br
+form(name='fr', action='/member', method='post', onsubmit="checkPW()")
+  input#email(name='email', type='email' placeholder='E-MAIL')
+  input#chk_email(type='button', value='confirm email', onclick='checkEMAIL()')
+  br
+  input(name='pw', type='password' placeholder='PASSWORD')
+  br
+  input(name='chk_pw', type='password' placeholder='PASSWORD_CHECK')
+  br
+  input(name='bname', type='text' placeholder='STORE_NAME')
+  br
+  input(name='tel', type='text' placeholder='STORE_TEL')
+  br
+  input(name='addr', type='text' placeholder='STORE_ADDRESS')
+  br
+  br
+  input(type='submit', value='submit')
+script(type='text/javascript').
+  var emailChecked = false;
+
+
+
+  function checkPW() {
+  if (fr.pw.value == "" || fr.chk_pw.value == "") {
+  alert("Enter password.");
+    fr.pw.focus();
+    return false;
+  }
+  if (fr.pw.value != fr.chk_pw.value) {
+  alert("password incorrect.");
+    fr.pw.focus();
+    return false;
+  }
+  if (emailChecked == false) {
+    alert("please press the email check button.");
+    return false;
+  }
+  return true;
+  }
+  function checkEMAIL() {
+  var obj1 = fr.email.value;
+  if (obj1 == "")
+  alert("please write your email down");
+  else {
+  var form = document.createElement("form");
+  form.setAttribute("method", "post");
+  form.setAttribute("action", "/member/repetition");
+  var hiddenField = document.createElement("input");
+  hiddenField.setAttribute("type", "hidden");
+  hiddenField.setAttribute("name", "email");
+  hiddenField.setAttribute("value", obj1);
+  form.appendChild(hiddenField);
+  var url = "http://54.180.123.67:3000/buser/repetition";
+  var title = "sign up";
+  var status = "toolbar=no,directories=no,scrollbars=no,resizable=no,status=no,menubar=no,width=200, height=200, top=50,left=50";
+  window.open("", title, status);
+  form.target = title;
+  document.body.appendChild(form);
+  form.submit();
+  }
+  }
