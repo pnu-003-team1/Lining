@@ -141,3 +141,44 @@ exports.removeall = (req, res) => {
    })
    .catch(err => res.status(500).send({ msg: 'errr', err: err}));
 };
+
+exports.getallbuserList = (req, res) => {
+	console.log("All user buserList");
+	Buser.getallBusersInfo()
+		.then((user) => {
+      		if(!user.length){
+      			var list = new Array();
+      			var result = {
+      				success: false,
+      				list: list
+      			};
+      			var jsonData = JSON.stringify(result);
+      			return res.status(200).send(jsonData);
+      		}
+      		else {
+      			var bInfo = new Object();
+	      		var list = new Array();
+	      		
+	      		user.forEach(function (item, index){
+	      			console.log('each item #', index, item.full);
+	      			console.log('each item #', index, item.bname);
+	      			console.log('each item #', index, item.tel);
+	      			console.log('each item #', index, item.addr);
+	      			
+	      			
+	      			list.push(item);
+	      				
+	      		});
+	      		
+	      		console.log("list length", list.length);
+	      		var result = {
+	      			success: true,
+	      			list : list
+	      		};
+	      		var jsonData = JSON.stringify(result);
+	      		
+	      		res.send(jsonData);	
+      		}	      	
+    })
+    .catch(err => res.send({sccuess: false, list: [], error: err}));
+};

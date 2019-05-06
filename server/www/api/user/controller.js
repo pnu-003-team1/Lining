@@ -158,7 +158,6 @@ exports.getbuserList = (req, res) => {
       		else {
       			var bInfo = new Object();
 	      		var list = new Array();
-	      		var i = user.length;
 	      		
 	      		user.forEach(function (item, index){
 	      			console.log('each item #', index, item.full);
