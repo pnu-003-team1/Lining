@@ -1,0 +1,26 @@
+doctype html
+head
+  meta(charset='UTF-8')
+  title #{title}
+  link(rel='stylesheet', href='/stylesheets/bootstrap.css')
+  link(rel='stylesheet', href='/stylesheets/form-validation.css')
+
+body.bg-light
+  .container
+    br
+    h3.mb-3 새로운 메뉴 추가
+    form.needs-validation(novalidate='', name='addmenu_fr', action='/addmenu/join', method='post', onsubmit='')
+        .mb-3
+          label(for='food') Food Name
+          input#food.form-control(type='text', name='food', required='')
+          .invalid-feedback
+            | 음식 이름을 입력하세요
+
+        .mb-3
+          label(for='price') Food Price
+          input#price.form-control(type='number', name='price', required='')
+          .invalid-feedback
+            | Please enter your shipping address.
+
+        br
+        button.btn.btn-info.btn-lg.btn-block(type='submit', onclick='onJoin()') 메뉴 추가하기

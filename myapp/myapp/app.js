@@ -14,8 +14,9 @@ var memberRouter = require('./routes/member');
 var reloginRouter = require('./routes/relogin');
 var reservationRouter = require('./routes/reservation');
 var myPageRouter = require('./routes/mypage');
-var reserve_sucRouter = require('./routes/reserve_suc');
-
+var mymenuRouter = require('./routes/mymenu');
+var addmenuRouter = require('./routes/addmenu');
+var successRouter = require('./routes/success');
 
 var app = express();
 
@@ -43,8 +44,22 @@ app.use('/member', memberRouter);
 app.use('/relogin', reloginRouter);
 app.use('/reservation', reservationRouter);
 app.use('/mypage', myPageRouter);
-app.use('/reserve_suc' , reserve_sucRouter);
+app.use('/mymenu' , mymenuRouter);
+app.use('/addmenu' , addmenuRouter);
+app.use('/success' , successRouter);
 //app.use('/ajax', ajax);
+
+app.post('http://54.164.52.65:3000/users/fullCheck', function(req, res) {
+
+   var email = req.body.email;
+   var full = req.body.full;
+
+   var result = 'Email : ' + email + ' and ' + full;
+
+   console.log(result);
+
+   //res.send({email:email});
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
