@@ -1,3 +1,4 @@
+
 // Server-side: app.js
 const express = require('express')
 const app = express()
@@ -22,11 +23,7 @@ app.use('/menu', menuRouter)
 app.use('/reservation', reserRouter)
 
 app.listen(3000, function() {
-<<<<<<< HEAD
-	console.log("server starting with 3002")
-=======
 	console.log("server starting with 3000")
->>>>>>> 6e342ba2ccc7d8b4c6e68abaeb09f2089988274a
 })
 
 var db = mongoose.connection;
