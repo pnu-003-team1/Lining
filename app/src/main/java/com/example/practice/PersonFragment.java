@@ -17,10 +17,6 @@ import android.widget.ListView;
 import android.support.v4.app.ListFragment;
 import android.widget.Toast;
 
-/**
- * Created by Soo on 2019-04-29.
- */
-
 public class PersonFragment extends ListFragment {
     /*@Nullable
     @Override
