@@ -1,10 +1,3 @@
-/*
- * index(): GET /users
- * show(): GET /usres/:id
- * delete(): DELETE /users/:id
- * create(): POST /join
- * login(): POST/login
- */
 //req: 클라이언트로부터 넘어온 데이터 저장된 객체
 //res: 클라이언트로 결과를 넘겨주기 위한 객체
 
@@ -12,7 +5,6 @@ const router = require('express').Router();
 const User = require('../../models/user');
 const Buser = require('../../models/buser');
 const Menu = require('../../models/menu');
-//const Fav = require('../../models/fav');
 const Favor = require('../../models/favor');
 exports.index = (req, res) => {
 	console.log("index");
@@ -108,7 +100,22 @@ exports.login = (req, res) => {
       	return res.status(200).send({success: false, error: 'User not found' });
       }
       else {
-      	return res.status(200).send({success: true});
+      	var userInfo = new Object();
+      	user.forEach(function (item, index){
+  			console.log('each item #', index, item.phone);
+  			console.log('each item #', index, item.email);
+  			userInfo = {
+  				phone: item.phone,
+  				email: item.email	
+  			};
+  		});
+  		console.log("userInfo-",userInfo.phone, userInfo.email);
+  		var result = {
+  			success: true,
+  			userInfo: userInfo
+  		};
+  		var jsonData = JSON.stringify(result);
+      	return res.status(200).send(jsonData);
       }
     })
     .catch(err => res.status(500).send(err));
@@ -378,4 +385,23 @@ exports.getFavList = (req, res) => {
 		}
 })
 .catch(err => res.send({success: false, list: [], error: err}));
+};
+
+exports.delFavOne = (req, res) => {
+	console.log("user-delFavOne", req.body.email, req.body.bemail);
+	const email = req.body.email;
+	const bemail = req.body.bemail;
+	if (!bemail.length) {
+		return res.status(200).send({success: false, error: 'bemail length 0'});
+	}
+	if (!email.length) {
+		return res.status(200).send({success: false, error: 'email length 0'});
+	}
+	console.log(email, bemail);
+	Favor.delOne(email, bemail)
+		.then((fav) => {
+			if (fav.n === 0) return res.json({success: false});
+			else return res.json({success: true});
+		})
+		.catch(err => res.send({success:false, err: err}));
 };

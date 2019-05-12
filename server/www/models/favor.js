@@ -22,5 +22,10 @@ favorSchema.statics.getList = function (email) {
 	return this.find({email}).select("-_id bemail");
 }
 
+favorSchema.statics.delOne = function (email, bemail) {
+	console.log("favSchema-deleteOne",email,bemail);
+	return this.deleteOne({email, bemail});
+}
+
 module.exports = mongoose.model('Favor', favorSchema);
 
