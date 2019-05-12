@@ -28,7 +28,7 @@ buserSchema.statics.checkbid = function (email){
 };
 buserSchema.statics.checkEmail = function(email) {
 	console.log("email: ", email);
-	return this.find({email}).select("-_id tel addr full email");;
+	return this.find({email}).select("-_id bname tel addr full email");;
 };
 buserSchema.statics.checkbpw = function (pw){
    return this.find({pw});

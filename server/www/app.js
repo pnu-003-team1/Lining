@@ -9,6 +9,12 @@ const menuRouter = require('./api/menu/index')
 const reserRouter = require('./api/reservation/index')
 const mongoose = require('mongoose')
 
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: GET,POST,PUT,DELETE,OPTIOS
+Access-Control-Max-Age: 3600
+Access-Control-Allow-Headers: Origin,Accept,X-Requested-With,
+Content-Type,Access-Control-Request-Method,Access-Control-Request-Headers,Authorization
+
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}))
 
@@ -21,8 +27,8 @@ app.use('/buser', buserRouter)
 app.use('/menu', menuRouter)
 app.use('/reservation', reserRouter)
 
-app.listen(3000, function() {
-	console.log("server starting with 3000")
+app.listen(3001, function() {
+	console.log("server starting with 3001")
 })
 
 var db = mongoose.connection;
