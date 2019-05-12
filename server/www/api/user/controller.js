@@ -101,7 +101,22 @@ exports.login = (req, res) => {
       	return res.status(200).send({success: false, error: 'User not found' });
       }
       else {
-      	return res.status(200).send({success: true});
+      	var userInfo = new Object();
+      	user.forEach(function (item, index){
+  			console.log('each item #', index, item.phone);
+  			console.log('each item #', index, item.email);
+  			userInfo = {
+  				phone: item.phone,
+  				email: item.email	
+  			};
+  		});
+  		console.log("userInfo-",userInfo.phone, userInfo.email);
+  		var result = {
+  			success: true,
+  			userInfo: userInfo
+  		};
+  		var jsonData = JSON.stringify(result);
+      	return res.status(200).send(jsonData);
       }
     })
     .catch(err => res.status(500).send(err));
