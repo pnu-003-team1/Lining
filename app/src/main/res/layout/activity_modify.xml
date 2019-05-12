@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:orientation="vertical"
+android:background="#FFFFFF"
+android:padding="16dp"
+tools:context=".ModifyActivity">
+
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <ImageButton
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:background="#FFFFFF"
+        android:src="@drawable/ic_arrow_back_black_24dp"/>
+</LinearLayout>
+
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:layout_marginLeft="16dp"
+        android:text="정  보  수  정"
+        android:textStyle="bold"
+        android:textColor="#000000"
+        android:textSize="30dp"/>
+</LinearLayout>
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    android:gravity="center_vertical"
+    android:layout_marginTop="50dp"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <EditText
+            android:id="@+id/email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Email"
+            style="@style/EditTExtStyle"
+            android:theme="@style/EditTExtStyle"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="50dp"
+            android:layout_weight="0.5"/>
+
+    </LinearLayout>
+
+</LinearLayout>
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    android:gravity="center_vertical">
+
+    <EditText
+        android:id="@+id/currentPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Current Password"
+        style="@style/EditTExtStyle"
+        android:theme="@style/EditTExtStyle"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="50dp"/>
+</LinearLayout>
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    android:gravity="center_vertical">
+
+    <EditText
+        android:id="@+id/newPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="New Password"
+        style="@style/EditTExtStyle"
+        android:theme="@style/EditTExtStyle"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="50dp"/>
+</LinearLayout>
+
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="50dp"
+        android:text="비밀번호는 8-20자 이내여야 하며, 영어문자와 숫자를 모두 포함해야합니다."
+        android:textColor="#ff7979" />
+</LinearLayout>
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    android:gravity="center_vertical">
+    <EditText
+        android:id="@+id/telnumber"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="TEL)"
+        style="@style/EditTExtStyle"
+        android:theme="@style/EditTExtStyle"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="50dp" />
+    //            android:clickable="false"
+    //            android:focusable="false" />
+</LinearLayout>
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    android:gravity="center_vertical">
+    <EditText
+        android:id="@+id/name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Name"
+        style="@style/EditTExtStyle"
+        android:theme="@style/EditTExtStyle"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="50dp"/>
+    //            android:clickable="false"
+    //            android:focusable="false"/>
+</LinearLayout>
+
+<LinearLayout
+    android:layout_width="354dp"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingRight="15dp"
+    android:paddingLeft="15dp">
+
+    <Button
+        android:id="@+id/modifybtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="50dp"
+        android:background="#8AB8D0"
+        android:text="정   보   수   정"
+        android:textColor="#FFFFFF" />
+
+</LinearLayout>
+
+</LinearLayout>
