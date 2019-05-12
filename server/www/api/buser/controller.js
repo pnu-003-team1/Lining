@@ -163,6 +163,7 @@ exports.getemailbuser = (req, res) => {
 	      			console.log('each item #', index, item.bname);
 	      			console.log('each item #', index, item.tel);
 	      			console.log('each item #', index, item.addr);
+	      			console.log('each item #', index, item.email);
 	      			
 	      			
 	      			list.push(item);
