@@ -37,10 +37,10 @@ userSchema.statics.userlogin = function (email,pw) {
 	return this.find({email, pw});
 };
 
-userSchema.statics.usermodify = function(email,name,payload){
-	console.log("usermodify ", email, name, payload.pw);
-	return this.findOneAndUpdate({email,name}, payload,
-	{new : false});
+userSchema.statics.usermodify = function(email,payload){
+	console.log("usermodify ", email);
+	return this.findOneAndUpdate({email}, payload,
+	{new : true});
 };
 
 userSchema.statics.deleteAll = function (payload){

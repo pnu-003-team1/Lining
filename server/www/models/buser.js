@@ -28,7 +28,7 @@ buserSchema.statics.checkbid = function (email){
 };
 buserSchema.statics.checkEmail = function(email) {
 	console.log("email: ", email);
-	return this.find({email}).select("-_id tel addr full email");;
+	return this.find({email}).select("-_id bname tel addr full email");;
 };
 buserSchema.statics.checkbpw = function (pw){
    return this.find({pw});
@@ -50,9 +50,9 @@ buserSchema.statics.buserlogin = function (email,pw) {
 	//console.log("ok");
 	return this.find({email,pw});		
 };
-buserSchema.statics.busermodify = function(email,bname,payload){
-	return this.findOneAndUpdate({email,bname}, payload,
-	{new : false});
+buserSchema.statics.busermodify = function(email,payload){
+	return this.findOneAndUpdate({email}, payload,
+	{new : true});
 };
 
 buserSchema.statics.getBusersInfo = function (payload) {
