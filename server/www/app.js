@@ -23,7 +23,7 @@ app.use('/menu', menuRouter)
 app.use('/reservation', reserRouter)
 
 app.listen(3000, function() {
-	console.log("server starting with 3002")
+	console.log("server starting with 3000")
 })
 
 var db = mongoose.connection;
