@@ -24,10 +24,11 @@ buserSchema.statics.addbuser = function (payload) {
 
 buserSchema.statics.checkbid = function (email){
 	console.log("email: ", email);
-    return this.find({email});
+    return this.find({email}).select("-_id tel addr full email");;
 };
 buserSchema.statics.checkEmail = function(email) {
-	return this.find({email});
+	console.log("email: ", email);
+	return this.find({email}).select("-_id tel addr full email");;
 };
 buserSchema.statics.checkbpw = function (pw){
    return this.find({pw});
