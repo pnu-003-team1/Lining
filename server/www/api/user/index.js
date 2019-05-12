@@ -2,13 +2,11 @@ const express = require('express');
 const router = express.Router();
 const controller = require('./controller')
 
-//router.get('/', controller.show);
-//router.get('/:id', controller.index);
-//router.delete('/:id', controller.delete);
 router.post('/join', controller.create);
 router.post('/login', controller.login);
 router.post('/repetition', controller.checkRep);
 router.post('/favorite', controller.addFav);
+router.post('/delfav', controller.delFavOne);
 
 router.get('/menuList', controller.getMenuList);
 router.get('/menudb', controller.menuDBtest);

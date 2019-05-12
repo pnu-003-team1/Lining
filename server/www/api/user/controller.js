@@ -5,7 +5,6 @@ const router = require('express').Router();
 const User = require('../../models/user');
 const Buser = require('../../models/buser');
 const Menu = require('../../models/menu');
-//const Fav = require('../../models/fav');
 const Favor = require('../../models/favor');
 exports.index = (req, res) => {
 	console.log("index");
@@ -390,4 +389,23 @@ exports.getFavList = (req, res) => {
 		}
 })
 .catch(err => res.send({success: false, list: [], error: err}));
+};
+
+exports.delFavOne = (req, res) => {
+	console.log("user-delFavOne", req.body.email, req.body.bemail);
+	const email = req.body.email;
+	const bemail = req.body.bemail;
+	if (!bemail.length) {
+		return res.status(200).send({success: false, error: 'bemail length 0'});
+	}
+	if (!email.length) {
+		return res.status(200).send({success: false, error: 'email length 0'});
+	}
+	console.log(email, bemail);
+	Favor.delOne(email, bemail)
+		.then((fav) => {
+			if (fav.n === 0) return res.json({success: false});
+			else return res.json({success: true});
+		})
+		.catch(err => res.send({success:false, err: err}));
 };
