@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="300dp">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:src="@drawable/food"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:text="Fastrak"
+            android:textColor="#FFFFFF"
+            android:textStyle="italic"
+            android:textSize="50sp"
+            android:layout_marginTop="100dp"
+            android:gravity="center_horizontal"/>
+
+    </FrameLayout>
+
+    <!--    // 5/2 추가
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/refreshButton"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:gravity="center_vertical"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:background="#8AB8D0"
+                android:textColor="#FFFFFF"/>
+                &lt;!&ndash;android:drawableStart="@drawable/ic_refresh_black_24dp"
+                android:drawableLeft="@drawable/ic_refresh_black_24dp"/>&ndash;&gt;
+
+            <TextView
+                android:id="@+id/noListItemText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="등록된 가게가 없어요"/>
+
+            <ListView
+                android:id="@+id/licenseListView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone">
+            </ListView>
+        </LinearLayout>-->
+
+    <ListView
+        android:id="@+id/homelistview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="20dp"></ListView>
+
+
+
+</LinearLayout>
