@@ -12,7 +12,8 @@ const router = require('express').Router();
 const User = require('../../models/user');
 const Buser = require('../../models/buser');
 const Menu = require('../../models/menu');
-
+//const Fav = require('../../models/fav');
+const Favor = require('../../models/favor');
 exports.index = (req, res) => {
 	console.log("index");
 	console.log(req.params.id);
@@ -313,4 +314,72 @@ exports.getUserInfo = (req, res) => {
       }
     });
     //.catch(err => res.status(500).send({ msg: 'errr', err: err}));
+};
+exports.addFav = (req, res) => {
+	console.log("User-addFav", req.body.email, req.body.bemail);
+	
+	const bemail = req.body.bemail;
+	const email = req.body.email;
+	
+	if (!bemail.length) {
+		return res.status(200).send({success: false, error: 'email length 0'});
+	}
+	
+	if (!email.length) {
+		return res.status(200).send({success: false, error: 'bemail length 0'});
+	}
+	
+	Favor.checkPair(email, bemail)
+		.then((result) => {
+			if(!result.length) {
+				console.log("no exist Pair");
+				Favor.add(req.body)
+				.then(fav => res.status(200).send({success: true}))
+				.catch(err => res.status(200).send({success: false, error: 'fail to add'}));
+			}
+			else {
+				console.log("already exist Pair");
+				return res.send({success: false, err: 'User already exist' });
+			}
+		})
+		.catch(err => res.status(500).send({msg: 'err', err: err}));
+};
+
+exports.getFavList = (req, res) => {
+	console.log("User-getFavList", req.query.email);
+
+	const email = req.query.email;
+	if(!email.length)	return res.send({success: false, error:'email length 0'});
+
+	Favor.getList(email)
+		.then((result) => {
+		if(!result.length) {
+			console.log("0 result");
+			var list = new Array();
+			var query = {
+				sucess: false,
+				list: list
+			};
+			var jsonData = JSON.stringify(query);
+			return res.send(jsonData);
+		}
+		
+		else {
+			console.log("find it");
+			var list = new Array();
+			result.forEach(function (item, index) {
+				console.log('each item #',index, item.bemail);
+				list.push(item);
+			});
+
+			console.log("list length: ", list.length);
+			var query = {
+				success: true,
+				list: list
+			};
+			var jsonData = JSON.stringify(query);
+			return res.send(jsonData);
+		}
+})
+.catch(err => res.send({success: false, list: [], error: err}));
 };
