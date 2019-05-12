@@ -27,8 +27,6 @@ body
           .mb-3
             label(for='email') E-mail
             input#email.form-control(type='email', name='email', required='', placeholder=user_email, disabled='')
-            .invalid-feedback
-              | 음식 이름을 입력하세요
 
           .mb-3
             label(for='pw') PASSWORD
@@ -44,19 +42,19 @@ body
 
           .mb-3
             label(for='bname') STORE_NAME
-            input#bname.form-control(type='text', name='bname', required='')
+            input#bname.form-control(type='text', name='bname', required='', placeholder=store_name)
             .invalid-feedback
               | Please enter your shipping address.
 
           .mb-3
             label(for='tel') STORE_TEL
-            input#tel.form-control(type='text', name='tel', required='')
+            input#tel.form-control(type='text', name='tel', required='', placeholder=store_tel)
             .invalid-feedback
               | Please enter your shipping address.
 
           .mb-3
             label(for='addr') STORE_ADDRESS
-            input#addr.form-control(type='text', name='addr', required='')
+            input#addr.form-control(type='text', name='addr', required='', placeholder=store_add)
             .invalid-feedback
               | Please enter your shipping address.
           br

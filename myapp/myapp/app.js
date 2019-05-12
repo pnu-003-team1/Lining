@@ -17,6 +17,7 @@ var myPageRouter = require('./routes/mypage');
 var mymenuRouter = require('./routes/mymenu');
 var addmenuRouter = require('./routes/addmenu');
 var successRouter = require('./routes/success');
+var logoutRouter = require('./routes/logout');
 
 var app = express();
 
@@ -36,6 +37,7 @@ app.use(session({
   resave: false,
   saveUninitialized: true
  }));
+
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/main', mainRouter);
@@ -47,19 +49,10 @@ app.use('/mypage', myPageRouter);
 app.use('/mymenu' , mymenuRouter);
 app.use('/addmenu' , addmenuRouter);
 app.use('/success' , successRouter);
+app.use('/logout' , logoutRouter);
 //app.use('/ajax', ajax);
 
-app.post('http://54.164.52.65:3000/users/fullCheck', function(req, res) {
 
-   var email = req.body.email;
-   var full = req.body.full;
-
-   var result = 'Email : ' + email + ' and ' + full;
-
-   console.log(result);
-
-   //res.send({email:email});
-});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

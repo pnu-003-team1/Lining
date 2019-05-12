@@ -8,7 +8,10 @@ router.get('/', function(req, res, next) {
 
   res.render('mypage', {
     title: 'MyPage' ,
-    user_email : email
+    user_email : email,
+    store_name : "hello",
+    store_tel : "051-934-2534",
+    store_add : "우리집"
   });
 });
 
