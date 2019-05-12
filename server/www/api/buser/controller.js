@@ -117,14 +117,35 @@ exports.dbtest = (req, res) => {
 };
 
 exports.modify = (req, res) => {
-	Buser.busermodify(req.body.email,req.body.bname,req.body)
-    .then((buser) => {
-      if (!req.body.pw.length || !req.body.tel.legnth && !req.body.addr.length) return res.status(200).send({ success : false });
+	console.log("buser modify", req.body.email);
+	
+	const bname = req.body.bname;
+	const addr = req.body.addr;
+	const pw = req.body.pw;
+	const tel = req.body.tel;
+	
+	if (!bname.length) {
+		return res.status(200).send({success: false, error: 'name length 0'});
+	}
+	
+	if (!addr.length) {
+		return res.status(200).send({success: false, error: 'addr length 0'});
+	}
+	
+	if (!pw.length) {
+		return res.status(200).send({success: false, error: 'pw length 0'});
+	}
+	
+	if (!tel.length) {
+		return res.status(200).send({success: false, error: 'tel length 0'});
+	}
+	
+	Buser.busermodify(req.body.email,req.body)
+    .then((user) => {
       res.send({ success : true });
     })
-    .catch(err => res.status(500).send({ msg: 'errr', err: err}));
+    .catch(err => res.status(500).send({ success: false, err: err}));
 };
-
 exports.remove = (req, res) => {
    Buser.deleteEmail(req.body.email)
       .then((buser) => {
@@ -142,7 +163,6 @@ exports.removeall = (req, res) => {
    .catch(err => res.status(500).send({ msg: 'errr', err: err}));
 };
 exports.getemailbuser = (req, res) => {
-	console.log("All user buserList");
 	Buser.checkEmail(req.body.email)
 		.then((user) => {
       		if(!user.length){

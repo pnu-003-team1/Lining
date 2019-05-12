@@ -10,12 +10,6 @@ const menuRouter = require('./api/menu/index')
 const reserRouter = require('./api/reservation/index')
 const mongoose = require('mongoose')
 
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: GET,POST,PUT,DELETE,OPTIOS
-Access-Control-Max-Age: 3600
-Access-Control-Allow-Headers: Origin,Accept,X-Requested-With,
-Content-Type,Access-Control-Request-Method,Access-Control-Request-Headers,Authorization
-
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}))
 

@@ -50,9 +50,9 @@ buserSchema.statics.buserlogin = function (email,pw) {
 	//console.log("ok");
 	return this.find({email,pw});		
 };
-buserSchema.statics.busermodify = function(email,bname,payload){
-	return this.findOneAndUpdate({email,bname}, payload,
-	{new : false});
+buserSchema.statics.busermodify = function(email,payload){
+	return this.findOneAndUpdate({email}, payload,
+	{new : true});
 };
 
 buserSchema.statics.getBusersInfo = function (payload) {

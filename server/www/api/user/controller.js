@@ -188,18 +188,9 @@ exports.getbuserList = (req, res) => {
 exports.modify = (req, res) => {
 	console.log("user modify", req.body.email);
 	
-	const name = req.body.name;
-	const email = req.body.email;
 	const pw = req.body.pw;
 	const phone = req.body.phone;
-	
-	if (!name.length) {
-		return res.status(200).send({success: false, error: 'name length 0'});
-	}
-	
-	if (!email.length) {
-		return res.status(200).send({success: false, error: 'email length 0'});
-	}
+	const name = req.body.name;
 	
 	if (!pw.length) {
 		return res.status(200).send({success: false, error: 'pw length 0'});
@@ -209,7 +200,12 @@ exports.modify = (req, res) => {
 		return res.status(200).send({success: false, error: 'phone length 0'});
 	}
 	
-	User.usermodify(req.body.email,req.body.name,req.body)
+	if (!name.length) {
+		return res.status(200).send({success: false, error: 'name length 0'});
+	}
+	
+	
+	User.usermodify(req.body.email,req.body)
     .then((user) => {
       res.send({ success : true });
     })
@@ -349,7 +345,7 @@ exports.getFavList = (req, res) => {
 	console.log("User-getFavList", req.query.email);
 
 	const email = req.query.email;
-	if(!email.length)	return res.send({success: false, error:'email length 0'});
+	//if(!email.length)	return res.send({success: false, error:'email length 0'});
 
 	Favor.getList(email)
 		.then((result) => {
