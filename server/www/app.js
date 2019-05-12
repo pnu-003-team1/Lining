@@ -1,5 +1,3 @@
-
-// Server-side: app.js
 const express = require('express')
 const app = express()
 const bodyParser = require('body-parser') // post 위함
