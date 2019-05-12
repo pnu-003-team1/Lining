@@ -1,10 +1,3 @@
-/*
- * index(): GET /users
- * show(): GET /usres/:id
- * delete(): DELETE /users/:id
- * create(): POST /join
- * login(): POST/login
- */
 //req: 클라이언트로부터 넘어온 데이터 저장된 객체
 //res: 클라이언트로 결과를 넘겨주기 위한 객체
 
