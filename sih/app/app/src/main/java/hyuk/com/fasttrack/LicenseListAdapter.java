@@ -36,17 +36,17 @@ public class LicenseListAdapter extends BaseAdapter {
     @Override
     public View getView(int i, View convertView, ViewGroup parent) {
         View v = View.inflate(context, R.layout.license, null);
-        TextView fullText = (TextView) v.findViewById(R.id.fullTextView);
+//        TextView fullText = (TextView) v.findViewById(R.id.fullTextView);
         TextView bnameText = (TextView) v.findViewById(R.id.bnameTextView);
         TextView addrText = (TextView) v.findViewById(R.id.addrTextView);
         TextView telText = (TextView) v.findViewById(R.id.telTextView);
 
-        String tmp;
-        if(licenseList.get(i).isFull())
-            tmp = "만석";
-        else
-            tmp = "공석";
-        fullText.setText(tmp);
+//        String tmp;
+//        if(licenseList.get(i).isFull())
+//            tmp = "만석";
+//        else
+//            tmp = "공석";
+//        fullText.setText(tmp);
         bnameText.setText(licenseList.get(i).getBname());
         addrText.setText(licenseList.get(i).getAddr());
         telText.setText(licenseList.get(i).getTel());

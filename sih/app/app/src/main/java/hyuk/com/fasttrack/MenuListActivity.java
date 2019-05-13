@@ -1,15 +1,20 @@
 package hyuk.com.fasttrack;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -30,12 +35,20 @@ import java.util.List;
 
 public class MenuListActivity extends AppCompatActivity {
 
+    private int count=0;
+
     private final int MAX_NUM_OF_PEOPLE = 300;
     private final int MIN_NUM_OF_PEOPLE = 1;
 
     private int total;
 
+    // 사업자 정보
     private String bemail;
+    private String bname;
+    private String bphone;
+    private String baddr;
+
+    // 사용자 정보
     private String email = "asd@asd.com";
     private String phone = "010-1313-1313";
 
@@ -48,19 +61,25 @@ public class MenuListActivity extends AppCompatActivity {
     private ImageButton additionButton;
     private TextView reservationButton;
     private TextView cancelButton;
+    private Button favorite_ON;
+    private Button favorite_OFF;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_list);
 
-        // 사업자 가게명 받아오기
+        // 사업자 정보 받아오기
         Intent intent = getIntent();
         bemail = intent.getStringExtra("bemail");
+        bname = intent.getStringExtra("bname");
+        baddr = intent.getStringExtra("baddr");
+        bphone = intent.getStringExtra("bphone");
         if (bemail == null) finish();
         // 사용자 이메일, 이름 받아오기
 //        email = intent.getStringExtra("email");
 //        phone = intent.getStringExtra("phone");
+
 
         // ListView 변수 초기화
         menuListView = (ListView) findViewById(R.id.menuListView);
@@ -74,6 +93,98 @@ public class MenuListActivity extends AppCompatActivity {
         subtractButton = (ImageButton) findViewById(R.id.subtractButton);
         totalText = (TextView) findViewById(R.id.totalText);
         additionButton = (ImageButton) findViewById(R.id.additionButton);
+
+        Response.Listener<String> favoriteListener = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try{
+                    JSONObject jsonObject = new JSONObject(response);
+                    if(jsonObject.getBoolean("success")){
+                        if(jsonObject.getBoolean("isFav")) {
+                            favorite_ON.setVisibility(View.VISIBLE);
+                            favorite_OFF.setVisibility(View.GONE);
+                        }
+                        else{
+                            favorite_ON.setVisibility(View.GONE);
+                            favorite_OFF.setVisibility(View.VISIBLE);
+                        }
+                    }
+                    else{
+                        Toast.makeText(MenuListActivity.this, "네트워크 통신 오류", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        };
+        FavoriteChkRequest favoriteChkRequest = new FavoriteChkRequest(bemail, bname, baddr, bphone, email, favoriteListener);
+        RequestQueue queue = Volley.newRequestQueue(MenuListActivity.this);
+        queue.add(favoriteChkRequest);
+
+
+        favorite_OFF = (Button) findViewById(R.id.favorite_OFF);
+        favorite_ON = (Button) findViewById(R.id.favorite_ON);
+
+        favorite_OFF.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Response.Listener<String> listener = new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d("확인", "add : " + response);
+                        try{
+                            JSONObject jsonObject = new JSONObject(response);
+                            boolean success = jsonObject.getBoolean("success");
+                            if(success){
+                                Toast.makeText(MenuListActivity.this, "즐겨찾기 추가", Toast.LENGTH_SHORT).show();
+                                Intent refreshIntent = getIntent();
+                                finish();
+                                startActivity(refreshIntent);
+                            }
+                        }
+                        catch (Exception e){
+                            e.printStackTrace();
+                        }
+                    }
+                };
+                FavoriteAddRequest favoriteAddRequest = new FavoriteAddRequest(bemail, bname, baddr, bphone, email, listener);
+                RequestQueue queue = Volley.newRequestQueue(MenuListActivity.this);
+                count++;
+                Log.d("확인", "즐겨찾기 추가 : " + Integer.toString(count));
+                queue.add(favoriteAddRequest);
+            }
+        });
+
+        favorite_ON.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Response.Listener<String> listener = new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d("확인", "delete : " + response);
+                        try{
+                            JSONObject jsonObject = new JSONObject(response);
+                            boolean success = jsonObject.getBoolean("success");
+                            if(success){
+                                Toast.makeText(MenuListActivity.this, "즐겨찾기 삭제", Toast.LENGTH_SHORT).show();
+                                Intent refreshIntent = getIntent();
+                                finish();
+                                startActivity(refreshIntent);
+                            }
+                        }
+                        catch (Exception e){
+                            e.printStackTrace();
+                        }
+                    }
+                };
+                FavoriteDelRequest favoriteDelRequest = new FavoriteDelRequest(bemail, email, listener);
+                RequestQueue queue = Volley.newRequestQueue(MenuListActivity.this);
+                count++;
+                Log.d("확인", "즐겨찾기 제거 : " + Integer.toString(count));
+                queue.add(favoriteDelRequest);
+            }
+        });
 
         new BackgroundTast().execute();
 
@@ -98,7 +209,7 @@ public class MenuListActivity extends AppCompatActivity {
             }
         };
         ReservCheckRequest reservCheckRequest = new ReservCheckRequest(phone, listener);
-        RequestQueue queue = Volley.newRequestQueue(MenuListActivity.this);
+        RequestQueue requestQueue = Volley.newRequestQueue(MenuListActivity.this);
         queue.add(reservCheckRequest);
 
         // 인원수 조정
@@ -263,6 +374,7 @@ public class MenuListActivity extends AppCompatActivity {
                 JSONObject jsonResponse = new JSONObject(result);
                 JSONArray jsonArray = jsonResponse.getJSONArray("list");
                 if (jsonResponse.getBoolean("success")) {
+                    // menuList
                     menuListView.setVisibility(View.VISIBLE);
                     noMenuText.setVisibility(View.GONE);
                     int count = 0;

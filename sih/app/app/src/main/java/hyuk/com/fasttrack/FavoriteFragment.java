@@ -1,6 +1,6 @@
 package hyuk.com.fasttrack;
 
-import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -21,6 +22,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -66,13 +68,13 @@ public class FavoriteFragment extends Fragment {
         return fragment;
     }
 
-    private ListView licenseListView;
+    private ListView favoriteListView;
     private LicenseListAdapter adapter;
-    private List<License> licenseList;
+    private List<License> favoriteList;
     private TextView noListItemText;
 
     // user
-    private String email;
+    private String email = "asd@asd.com";
     private String name;
     private String phone;
 
@@ -82,7 +84,7 @@ public class FavoriteFragment extends Fragment {
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
-            email = getArguments().getString("email");
+//            email = getArguments().getString("email");
             phone = getArguments().getString("phone");
         }
     }
@@ -90,6 +92,38 @@ public class FavoriteFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle b){
         super.onActivityCreated(b);
+
+        noListItemText = (TextView) getActivity().findViewById(R.id.noListItemText);
+
+        favoriteListView = (ListView) getActivity().findViewById(R.id.favoriteListView);
+        favoriteList = new ArrayList<License>();
+        adapter = new LicenseListAdapter(getActivity().getApplicationContext(), favoriteList);
+        favoriteListView.setAdapter(adapter);
+
+        new BackgroundTast().execute();
+
+        TextView search = (TextView) getActivity().findViewById(R.id.refreshButton);
+        search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                favoriteList.clear();
+                new BackgroundTast().execute();
+            }
+        });
+
+        favoriteListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int i, long id) {
+                Intent menuIntent = new Intent(getActivity(), MenuListActivity.class);
+                menuIntent.putExtra("bemail", favoriteList.get(i).getEmail());
+                menuIntent.putExtra("bname", favoriteList.get(i).getBname());
+                menuIntent.putExtra("baddr", favoriteList.get(i).getAddr());
+                menuIntent.putExtra("bphone", favoriteList.get(i).getTel());
+                menuIntent.putExtra("email", email);
+                menuIntent.putExtra("phone", phone);
+                startActivity(menuIntent);
+            }
+        });
     }
 
     @Override
@@ -148,7 +182,7 @@ public class FavoriteFragment extends Fragment {
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
 //                if(httpURLConnection != null){
 //                    httpURLConnection.setConnectTimeout(10000);
-//                    httpURLConnection.setRequestMethod("GET");
+                    httpURLConnection.setRequestMethod("GET");
 //                    httpURLConnection.setDoInput(true);
 //                    httpURLConnection.setRequestProperty("Accept-Charset", "UTF-8");
 //                }
@@ -179,35 +213,37 @@ public class FavoriteFragment extends Fragment {
 
         @Override
         public void onPostExecute(String result) {
+            TextView testing = (TextView) getActivity().findViewById(R.id.testing);
+            testing.setText(result);
             try {
                 JSONObject jsonResponse = new JSONObject(result);
                 JSONArray jsonArray = jsonResponse.getJSONArray("list");
                 if (jsonResponse.getBoolean("success")) {
-                    licenseListView.setVisibility(View.VISIBLE);
+                    favoriteListView.setVisibility(View.VISIBLE);
                     noListItemText.setVisibility(View.GONE);
                     int count = 0;
 
-                    boolean full;
-                    String email;
+//                    boolean full;
+                    String bemail;
                     String bname;
-                    String addr;
-                    String tel;
+                    String baddr;
+                    String bphone;
                     while (count < jsonArray.length()) {
                         JSONObject object = jsonArray.getJSONObject(count);
 
-                        full = object.getBoolean("full");
-                        email = object.getString("email");
+//                        full = object.getBoolean("full");
+                        bemail = object.getString("email");
                         bname = object.getString("bname");
-                        addr = object.getString("addr");
-                        tel = object.getString("tel");
+                        baddr = object.getString("addr");
+                        bphone = object.getString("tel");
 
-                        License license = new License(full, email, bname, addr, tel);
-                        licenseList.add(license);
+                        License license = new License(bemail, bname, baddr, bphone);
+                        favoriteList.add(license);
                         count++;
                     }
                 }
                 else{
-                    licenseListView.setVisibility(View.GONE);
+                    favoriteListView.setVisibility(View.GONE);
                     noListItemText.setVisibility(View.VISIBLE);
                 }
             }
