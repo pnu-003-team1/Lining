@@ -1,36 +1,58 @@
 doctype html
 head
   meta(charset='UTF-8')
-  title #{title}
+  title
   link(rel='stylesheet', href='/stylesheets/bootstrap.css')
-
-body
-  nav.navbar.navbar-expand-md.navbar-dark.fixed-top.bg-dark
-    #navbarCollapse.collapse.navbar-collapse
-      ul.navbar-nav.mr-auto
-        li.nav-item
-          a.nav-link(href='/main') 대기리스트
-        li.nav-item
-          a.nav-link(href='/reservation') 오프라인 예약
-        li.nav-item
-          a.nav-link(href='/mypage') 내 정보 수정
-        li.nav-item
-          a.nav-link.disabled(href='/mymenu') 우리가게 메뉴
-      form#fr.form-inline.mt-2.mt-md-0(action='/logout')
-        button.btn.btn-outline-info.my-2.my-sm-0(type='button', onclick='logout()') 로그아웃
-
-  main.container(role='main')
-    .jumbotron
-     br
-     button.btn.btn-outline-info.btn-lg.btn-block(type='button' name ='addmenu' onclick='location.href="/addmenu"' ) 메뉴 추가하기
-
-
+nav.navbar.navbar-expand-md.navbar-dark.fixed-top.bg-dark
+  ul.navbar-nav.mr-auto
+    li.nav-item
+      a.nav-link(href='/main') &#xB300;&#xAE30;&#xB9AC;&#xC2A4;&#xD2B8;
+    li.nav-item
+      a.nav-link(href='/reservation') &#xC624;&#xD504;&#xB77C;&#xC778; &#xC608;&#xC57D;
+    li.nav-item
+      a.nav-link(href='/mypage') &#xB0B4; &#xC815;&#xBCF4; &#xC218;&#xC815;
+    li.nav-item
+      a.nav-link.disabled(href='') &#xC6B0;&#xB9AC;&#xAC00;&#xAC8C; &#xBA54;&#xB274;
+    li.nav-item
+      a.nav-link(href='#') &#xB85C;&#xADF8;&#xC544;&#xC6C3;
+main.container(role='main')
+  .jumbotron
+    br
+    button.btn.btn-outline-info.btn-lg.btn-block(type='button', name='addmenu', onclick='location.href="/addmenu"') &#xBA54;&#xB274; &#xCD94;&#xAC00;&#xD558;&#xAE30;
+li #{foodArray}
+div(claas='table-responsive')
+  table.table.table-striped.table-sm
+    thead
+      tr
+        th &#xC74C;&#xC2DD; &#xC774;&#xB984;
+        th &#xC74C;&#xC2DD; &#xAC00;&#xACA9;
+        th &#xC218;&#xC815; &#xBC0F; &#xC0AD;&#xC81C;
+    tbody#tableBody
+script(src='http://code.jquery.com/jquery-1.10.2.js')
 script.
- function logout(){
-   var con = confirm("로그아웃 하시겠습니까?");
-   if(con){
-     location.href="/logout";
-   }
-   else{}
+  var temp1 = "";
+  var temp2 = "";
 
- }
+  var sibal = new Array();
+  var gaesibal = new Array();
+  sibal = '#{foodArray}';
+  gaesibal = '#{priceArray}';
+  
+  var fuck = sibal.split(',');
+  var fuxk = gaesibal.split(',');
+  $(document).ready(function(){
+    for(var i = 0; i < #{length}; i++) {
+      var tableBody = document.getElementById('tableBody');
+      var row = tableBody.insertRow(tableBody.rows.length);
+      var cell1 = row.insertCell(0);
+      var cell2 = row.insertCell(1);
+      var cell3 = row.insertCell(2);
+      
+      temp1 = fuck[i];
+      temp2 = fuxk[i];
+
+      cell1.innerHTML = temp1;
+      cell2.innerHTML = temp2;
+      cell3.innerHTML = "kkk";
+    }
+  });
