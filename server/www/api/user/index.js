@@ -7,6 +7,7 @@ router.post('/login', controller.login);
 router.post('/repetition', controller.checkRep);
 router.post('/favorite', controller.addFav);
 router.post('/delfav', controller.delFavOne);
+router.post('/isFav', controller.isFav);
 
 router.get('/menuList', controller.getMenuList);
 router.get('/menudb', controller.menuDBtest);
@@ -17,5 +18,5 @@ router.get('/userInfo', controller.getUserInfo);
 router.get('/favorite', controller.getFavList);
 router.post('/remove', controller.remove);
 router.post('/modify', controller.modify);
-
+router.post('/removeFavor', controller.removeFavor);
 module.exports = router;
