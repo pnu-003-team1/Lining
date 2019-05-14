@@ -55,9 +55,9 @@ buserSchema.statics.busermodify = function(email,payload){
 	{new : true});
 };
 
-buserSchema.statics.getBusersInfo = function (payload) {
+buserSchema.statics.getBusersInfo = function (email) {
 	console.log("DB getBusersInfo");
-	return this.find({}).select("-_id bname tel addr full email");
+	return this.find({email}).select("-_id bname tel addr full");
 };
 
 buserSchema.statics.getallBusersInfo = function (payload) {

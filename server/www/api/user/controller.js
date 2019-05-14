@@ -352,7 +352,7 @@ exports.getFavList = (req, res) => {
 	console.log("User-getFavList", req.query.email);
 
 	const email = req.query.email;
-	//if(!email.length)	return res.send({success: false, error:'email length 0'});
+	if(!email.length)	return res.send({success: false, error:'email length 0'});
 
 	Favor.getList(email)
 		.then((result) => {
