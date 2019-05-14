@@ -49,5 +49,13 @@ router.post('/fullCheck', function(req, res, next){
 
   });
 });
+ 
+router.post('/logout  ', function(req, res, next) {
+  console.log("hello logout")
+  req.session.destroy(function(){
+    req.session;
+  });
+  res.redirect('/index');
+});
 
 module.exports = router;
