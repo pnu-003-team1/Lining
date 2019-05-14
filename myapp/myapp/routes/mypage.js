@@ -15,7 +15,7 @@ var invoke_user_get = function(fcn, args, callback){
    object.headers = jsonheaders;
 
 
-   var api_url = 'http://54.164.52.65:3001/buser/'+fcn;
+   var api_url = 'http://54.164.52.65:3000/buser/'+fcn;
    var jsonContent = args;
    object.data = jsonContent;
 
@@ -35,7 +35,7 @@ var invoke_user = function(fcn, args, callback){
    object.headers = jsonheaders;
 
 
-   var api_url = 'http://54.164.52.65:3001/buser/'+fcn;
+   var api_url = 'http://54.164.52.65:3000/buser/'+fcn;
    var jsonContent = args;
    object.data = jsonContent;
 
