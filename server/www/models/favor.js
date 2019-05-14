@@ -3,7 +3,10 @@ var Schema = mongoose.Schema;
 
 var favorSchema = new Schema({
 	email: {type: String},
-	bemail: {type: String}
+	bemail: {type: String},
+	bphone: {type: String},
+	baddr: {type: String},
+	bname: {type: String}
 });
 
 favorSchema.statics.checkPair = function (email, bemail) {
@@ -19,13 +22,17 @@ favorSchema.statics.add = function (payload) {
 
 favorSchema.statics.getList = function (email) {
 	console.log("favSchema-getList");
-	return this.find({email}).select("-_id bemail");
+	return this.find({email}).select("-_id bemail bphone baddr bname");
 }
 
 favorSchema.statics.delOne = function (email, bemail) {
 	console.log("favSchema-deleteOne",email,bemail);
 	return this.deleteOne({email, bemail});
 }
+
+favorSchema.statics.deleteAll = function (payload) {
+	return this.remove({});	
+};
 
 module.exports = mongoose.model('Favor', favorSchema);
 
