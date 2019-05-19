@@ -7,9 +7,6 @@ import com.android.volley.toolbox.StringRequest;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by Soo on 2019-04-07.
- */
 
 public class RepetitionRequest extends StringRequest {
     final static private String URL = "http://54.164.52.65:3000/users/repetition";

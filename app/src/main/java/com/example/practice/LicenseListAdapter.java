@@ -8,9 +8,6 @@ import android.widget.TextView;
 
 import java.util.List;
 
-/**
- * Created by Soo on 2019-04-30.
- */
 
 public class LicenseListAdapter extends BaseAdapter {
     private Context context;

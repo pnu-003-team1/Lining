@@ -2,9 +2,6 @@ package com.example.practice;
 
 import android.graphics.drawable.Drawable;
 
-/**
- * Created by Soo on 2019-04-29.
- */
 
 public class ListViewItem {
     private Drawable iconDrawable ;

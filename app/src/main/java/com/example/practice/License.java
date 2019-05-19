@@ -1,9 +1,5 @@
 package com.example.practice;
 
-/**
- * Created by Soo on 2019-04-30.
- */
-
 public class License {
     private boolean full;
     private String bname;

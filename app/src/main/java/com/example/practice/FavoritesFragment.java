@@ -8,10 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-/**
- * Created by Soo on 2019-04-29.
- */
-
 public class FavoritesFragment extends Fragment{
     @Nullable
     @Override

@@ -24,10 +24,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Soo on 2019-04-29.
- */
-
 public class HomeFragment extends Fragment{
     /*@Nullable
     @Override
