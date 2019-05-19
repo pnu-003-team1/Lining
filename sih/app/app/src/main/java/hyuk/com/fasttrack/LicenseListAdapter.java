@@ -37,9 +37,9 @@ public class LicenseListAdapter extends BaseAdapter {
     public View getView(int i, View convertView, ViewGroup parent) {
         View v = View.inflate(context, R.layout.license, null);
 //        TextView fullText = (TextView) v.findViewById(R.id.fullTextView);
-        TextView bnameText = (TextView) v.findViewById(R.id.bnameTextView);
-        TextView addrText = (TextView) v.findViewById(R.id.addrTextView);
-        TextView telText = (TextView) v.findViewById(R.id.telTextView);
+        TextView bnameText = (TextView) v.findViewById(R.id.LICENSE_bnameTextView);
+        TextView addrText = (TextView) v.findViewById(R.id.LICENSE_addrTextView);
+        TextView telText = (TextView) v.findViewById(R.id.LICENSE_telTextView);
 
 //        String tmp;
 //        if(licenseList.get(i).isFull())

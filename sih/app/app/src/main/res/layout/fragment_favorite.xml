@@ -20,24 +20,18 @@
         />
 
     <TextView
-        android:id="@+id/testing"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="ddd"/>
-
-    <TextView
-        android:id="@+id/noFavoriteItemText"
+        android:id="@+id/noListItemText"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:visibility="gone"
+        android:visibility="visible"
         android:text="즐겨찾기 없음"/>
 
     <ListView
         android:id="@+id/favoriteListView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="visible">
+        android:visibility="gone">
     </ListView>
 
 </LinearLayout>

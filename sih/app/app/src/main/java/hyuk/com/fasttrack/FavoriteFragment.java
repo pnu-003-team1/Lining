@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -213,12 +214,11 @@ public class FavoriteFragment extends Fragment {
 
         @Override
         public void onPostExecute(String result) {
-            TextView testing = (TextView) getActivity().findViewById(R.id.testing);
-            testing.setText(result);
             try {
                 JSONObject jsonResponse = new JSONObject(result);
                 JSONArray jsonArray = jsonResponse.getJSONArray("list");
-                if (jsonResponse.getBoolean("success")) {
+                boolean success = jsonResponse.getBoolean("success");
+                if (success) {
                     favoriteListView.setVisibility(View.VISIBLE);
                     noListItemText.setVisibility(View.GONE);
                     int count = 0;
@@ -228,14 +228,15 @@ public class FavoriteFragment extends Fragment {
                     String bname;
                     String baddr;
                     String bphone;
+
                     while (count < jsonArray.length()) {
                         JSONObject object = jsonArray.getJSONObject(count);
 
 //                        full = object.getBoolean("full");
-                        bemail = object.getString("email");
+                        bemail = object.getString("bemail");
                         bname = object.getString("bname");
-                        baddr = object.getString("addr");
-                        bphone = object.getString("tel");
+                        baddr = object.getString("baddr");
+                        bphone = object.getString("bphone");
 
                         License license = new License(bemail, bname, baddr, bphone);
                         favoriteList.add(license);
