@@ -87,10 +87,6 @@ exports.login = (req, res) => {
 	}
 	
 	if (!pw.length) {
-		return res.status(200).send({success: false, error: 'email length 0'});
-	}
-	
-	if (!pw.length) {
 		return res.status(200).send({success: false, error: 'pw length 0'});
 	}
 	
@@ -104,9 +100,11 @@ exports.login = (req, res) => {
       	user.forEach(function (item, index){
   			console.log('each item #', index, item.phone);
   			console.log('each item #', index, item.email);
+  			console.log('each item #', index, item.name);
   			userInfo = {
   				phone: item.phone,
-  				email: item.email	
+  				email: item.email,
+  				name: item.name
   			};
   		});
   		console.log("userInfo-",userInfo.phone, userInfo.email);
@@ -118,7 +116,7 @@ exports.login = (req, res) => {
       	return res.status(200).send(jsonData);
       }
     })
-    .catch(err => res.status(500).send(err));
+    .catch(err => res.status(200).send({success: false}));
     
 };
 
