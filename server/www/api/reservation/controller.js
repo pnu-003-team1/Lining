@@ -11,6 +11,7 @@ exports.addGuest = (req, res) => {
 	const phone = req.body.phone;
 	const total = req.body.total;
 	const bemail = req.body.bemail;
+	const bname = req.body.bname;
 	
 	console.log("bemail length: ", bemail.length);
 	
@@ -26,6 +27,10 @@ exports.addGuest = (req, res) => {
 	
 	if (!bemail.length) {
 		return res.status(200).send({success: false, error: 'bemail length 0'});
+	}
+	
+	if (!bname.length) {
+		return res.status(200).send({success: false, error: 'bname length 0'});
 	}
 	
     Reser.addGuest(req.body)
@@ -123,3 +128,20 @@ exports.myRes = (req, res) => {
     })
     .catch(err => res.status(500).send({success: false, error: 'server error'}));
 };
+
+exports.myguest = (req, res) => {
+	console.log("busr email: ", req.query.bemail);
+	const bemail = req.query.bemail;
+	
+	if (!bemail.length) {
+		return res.status(200).send({success: false, error: 'phone length 0'});
+	}
+	
+	Reser.findguest(bemail)
+		.then((user) => {
+      if (!user.length) return res.status(404).send({ error: 'User not found' });
+      res.send(`find successfully: ${user}`);
+    })
+    .catch(err => res.status(500).send({ msg: 'errr', err: err}));
+};
+
