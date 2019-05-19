@@ -3,7 +3,7 @@ const Reser = require('../../models/resInfo');
 const Buser = require('../../models/buser');
 
 exports.addGuest = (req, res) => {
-console.log("add Guest: ", req.body.email);
+	console.log("add Guest: ", req.body.email);
 	console.log(req.body.phone,req.body.total);
 	console.log(req.body.bemail);
 	
@@ -154,4 +154,20 @@ exports.remain = (req, res) => {
 			}
 		})
 		.catch(err => res.status (200).send({success: false, error: err}));
+};
+
+exports.myguest = (req, res) => {
+	console.log("busr email: ", req.query.bemail);
+	const bemail = req.query.bemail;
+	
+	if (!bemail.length) {
+		return res.status(200).send({success: false, error: 'phone length 0'});
+	}
+	
+	Reser.findguest(bemail)
+		.then((user) => {
+      if (!user.length) return res.status(404).send({ error: 'User not found' });
+      res.send(`find successfully: ${user}`);
+    })
+    .catch(err => res.status(500).send({ msg: 'errr', err: err}));
 };

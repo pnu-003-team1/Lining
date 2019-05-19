@@ -10,5 +10,6 @@ router.post('/dbtest', controller.dbtest);
 router.post('/remove', controller.remove);
 router.post('/deleteDB', controller.deleteAll);
 router.post('/checkRes', controller.isRes);
+router.get('/myguest', controller.myguest);
 
 module.exports = router;
