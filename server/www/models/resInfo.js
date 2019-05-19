@@ -34,7 +34,7 @@ resInfoSchema.statics.findAll = function(payload) {
 
 resInfoSchema.statics.checkPhone = function(phone) {
 	console.log("reserInfo-checkPhone")
-	return this.find({phone});
+	return this.find({phone}).select("-_id email phone total bemail date");
 };
 
 resInfoSchema.statics.deletephone = function (phone) {

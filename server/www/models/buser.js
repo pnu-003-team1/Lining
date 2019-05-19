@@ -64,6 +64,12 @@ buserSchema.statics.getallBusersInfo = function (payload) {
 	console.log("DB getBusersInfo");
 	return this.find({}).select("-_id bname tel addr full");
 };
+
+buserSchema.statics.searchName = function (bname) {
+	console.log("searchName DB");
+	return this.find({'bname': {'$regex': bname, '$options': 'i'}}).select("-_id bname tel addr full email");
+};
+
 	
 module.exports = mongoose.model('Buser', buserSchema);
 
