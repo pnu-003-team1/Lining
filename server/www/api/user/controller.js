@@ -104,6 +104,7 @@ exports.login = (req, res) => {
   			userInfo = {
   				phone: item.phone,
   				email: item.email,
+  				pw: item.pw,
   				name: item.name
   			};
   		});

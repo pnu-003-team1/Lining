@@ -3,7 +3,7 @@ const Reser = require('../../models/resInfo');
 const Buser = require('../../models/buser');
 
 exports.addGuest = (req, res) => {
-	console.log("add Guest: ", req.body.email);
+console.log("add Guest: ", req.body.email);
 	console.log(req.body.phone,req.body.total);
 	console.log(req.body.bemail);
 	
@@ -11,6 +11,7 @@ exports.addGuest = (req, res) => {
 	const phone = req.body.phone;
 	const total = req.body.total;
 	const bemail = req.body.bemail;
+	const bname = req.body.bname;
 	
 	console.log("bemail length: ", bemail.length);
 	
@@ -26,6 +27,10 @@ exports.addGuest = (req, res) => {
 	
 	if (!bemail.length) {
 		return res.status(200).send({success: false, error: 'bemail length 0'});
+	}
+	
+	if (!bname.length) {
+		return res.status(200).send({success: false, error: 'bname length 0'});
 	}
 	
     Reser.addGuest(req.body)
@@ -122,4 +127,31 @@ exports.myRes = (req, res) => {
       } 
     })
     .catch(err => res.status(500).send({success: false, error: 'server error'}));
+};
+
+exports.remain = (req, res) => {
+	console.log("busr remain: ", req.query.phone);
+	const phone = req.query.phone;
+	
+	if (!phone.length) {
+		return res.status(200).send({success: false, error: 'phone length 0'});
+	}
+	
+	Reser.checkPhone(phone)
+		.then((user) => {
+			console.log("result len: ", user.length);
+			if (user.length < 1) {
+				var result = {
+					success: true,
+					isRes: false
+				};
+				var jsonData = JSON.stringify(result);
+				return res.status(200).send(jsonData);
+			}
+			else {
+				var bname;
+				
+			}
+		})
+		.catch(err => res.status (200).send({success: false, error: err}));
 };
