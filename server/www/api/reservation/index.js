@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const controller = require('./controller')
 
+router.get('/myres', controller.myRes);
+
 router.post('/add', controller.addGuest);
 router.post('/dbtest', controller.dbtest);
 router.post('/remove', controller.remove);

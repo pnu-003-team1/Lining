@@ -74,3 +74,52 @@ exports.deleteAll = (req, res) => {
 		.then(user => res.status(200).send({success: true}))
 		.catch(err => res.status (200).send({success: false, error: err}));
 };
+
+exports.myRes = (req, res) => {
+	console.log("busr myRes: ", req.query.phone);
+	const phone = req.query.phone;
+	
+	if (!phone.length) {
+		return res.status(200).send({success: false, error: 'phone length 0'});
+	}
+	
+	Reser.checkPhone(phone)
+		.then((user) => {
+			console.log("result len", user.length);
+      if (user.length < 1) {
+      	var list = new Array();
+      			var result = {
+      				success: true,
+      				isRes: false,
+      				list: list
+      			};
+		var jsonData = JSON.stringify(result);
+		return res.status(200).send(jsonData);
+      }
+      else {
+  		var list = new Array();
+  		
+  		user.forEach(function (item, index){
+  			console.log('each item #', index, item.email);
+  			console.log('each item #', index, item.total);
+  			console.log('each item #', index, item.phone);
+  			console.log('each item #', index, item.bemail);
+  			console.log('each item #', index, item.date);
+  			
+  			list.push(item);
+  				
+  		});
+  		
+  		console.log("list length", list.length);
+  		var result = {
+  			success: true,
+  			isRes: true,
+  			list : list
+  		};
+  		var jsonData = JSON.stringify(result);
+  		
+  		res.send(jsonData);	
+      } 
+    })
+    .catch(err => res.status(500).send({success: false, error: 'server error'}));
+};
