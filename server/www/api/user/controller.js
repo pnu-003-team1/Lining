@@ -106,7 +106,9 @@ exports.login = (req, res) => {
   			console.log('each item #', index, item.email);
   			userInfo = {
   				phone: item.phone,
-  				email: item.email	
+  				email: item.email,
+  				pw: item.pw,
+  				name: item.name
   			};
   		});
   		console.log("userInfo-",userInfo.phone, userInfo.email);

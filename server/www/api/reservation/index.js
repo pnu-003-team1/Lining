@@ -3,6 +3,7 @@ const router = express.Router();
 const controller = require('./controller')
 
 router.get('/myres', controller.myRes);
+//router.get('/remain', controller.remain);
 
 router.post('/add', controller.addGuest);
 router.post('/dbtest', controller.dbtest);
