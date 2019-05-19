@@ -10,5 +10,7 @@ router.post('/fullCheck', controller.fullCheck);
 router.post('/removeall', controller.removeall);
 router.post('/remove', controller.remove);
 router.post('/modify', controller.modify);
+router.get('/allbuserList', controller.getallbuserList);
+router.get('/getemailbuser', controller.getemailbuser);
 
 module.exports = router;

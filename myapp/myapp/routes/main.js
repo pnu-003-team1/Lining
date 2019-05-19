@@ -11,7 +11,7 @@ var invoke_user = function(fcn, args, callback){
    object.headers = jsonheaders;
 
 
-   var api_url = 'http://54.180.123.67:3000/buser/'+fcn;
+   var api_url = 'http://54.164.52.65:3000/buser/'+fcn;
    var jsonContent = args;
    object.data = jsonContent;
 
@@ -48,6 +48,14 @@ router.post('/fullCheck', function(req, res, next){
     console.log("fullChecked : " + fullChecked);
 
   });
+});
+ 
+router.post('/logout  ', function(req, res, next) {
+  console.log("hello logout")
+  req.session.destroy(function(){
+    req.session;
+  });
+  res.redirect('/index');
 });
 
 module.exports = router;

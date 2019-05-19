@@ -7,17 +7,19 @@ head
 
 body
   nav.navbar.navbar-expand-md.navbar-dark.fixed-top.bg-dark
-    ul.navbar-nav.mr-auto
-      li.nav-item
-        a.nav-link(href='/main') 대기리스트
-      li.nav-item
-        a.nav-link.disabled(href='') 오프라인 예약
-      li.nav-item
-        a.nav-link(href='/mypage') 내 정보 수정
-      li.nav-item
-        a.nav-link(href='#') 우리가게 메뉴
-      li.nav-item
-        a.nav-link(href='#') 로그아웃
+    #navbarCollapse.collapse.navbar-collapse
+      ul.navbar-nav.mr-auto
+        li.nav-item
+          a.nav-link(href='/main') 대기리스트
+        li.nav-item
+          a.nav-link.disabled(href='/reservation') 오프라인 예약
+        li.nav-item
+          a.nav-link(href='/mypage') 내 정보 수정
+        li.nav-item
+          a.nav-link(href='/mymenu') 우리가게 메뉴
+      form#fr.form-inline.mt-2.mt-md-0(action='/logout')
+        button.btn.btn-outline-info.my-2.my-sm-0(type='button', onclick='logout()') 로그아웃
+
   main.container(role='main')
     .jumbotron
       form(name=res, action='/reservation', method = 'post')
@@ -39,3 +41,13 @@ body
         br
         br
         input#res_bt(type='submit' name ='res_bt' value='예약하기')
+
+script.
+  function logout(){
+   var con = confirm("로그아웃 하시겠습니까?");
+   if(con){
+     location.href="/logout";
+   }
+   else{}
+
+  }

@@ -4,7 +4,6 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var session = require('express-session');
-//var ajax = require('./routes/ajax');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -14,8 +13,10 @@ var memberRouter = require('./routes/member');
 var reloginRouter = require('./routes/relogin');
 var reservationRouter = require('./routes/reservation');
 var myPageRouter = require('./routes/mypage');
-var reserve_sucRouter = require('./routes/reserve_suc');
-
+var mymenuRouter = require('./routes/mymenu');
+var addmenuRouter = require('./routes/addmenu');
+var successRouter = require('./routes/success');
+var logoutRouter = require('./routes/logout');
 
 var app = express();
 
@@ -35,6 +36,7 @@ app.use(session({
   resave: false,
   saveUninitialized: true
  }));
+
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/main', mainRouter);
@@ -43,8 +45,13 @@ app.use('/member', memberRouter);
 app.use('/relogin', reloginRouter);
 app.use('/reservation', reservationRouter);
 app.use('/mypage', myPageRouter);
-app.use('/reserve_suc' , reserve_sucRouter);
+app.use('/mymenu' , mymenuRouter);
+app.use('/addmenu' , addmenuRouter);
+app.use('/success' , successRouter);
+app.use('/logout' , logoutRouter);
 //app.use('/ajax', ajax);
+
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

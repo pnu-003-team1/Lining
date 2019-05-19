@@ -1,6 +1,10 @@
 
   input[type=text], select {
+<<<<<<< HEAD
   width: 40%;
+=======
+  width: 60%;
+>>>>>>> b9d0f81df734b4a5baae4fa384e8361ac78f49de
   padding: 12px 20px;
   margin: 8px 0;
   display: inline-block;
@@ -22,7 +26,11 @@
 
   }
   input[type=password]{
+<<<<<<< HEAD
   width: 40%;
+=======
+  width: 60%;
+>>>>>>> b9d0f81df734b4a5baae4fa384e8361ac78f49de
   padding: 12px 20px;
   margin: 8px 0;
   display: inline-block;
@@ -33,7 +41,11 @@
   border-radius: 4px;
   }
   input[type=email]{
+<<<<<<< HEAD
   width: 40%;
+=======
+  width: 60%;
+>>>>>>> b9d0f81df734b4a5baae4fa384e8361ac78f49de
   padding: 12px 20px;
   margin: 8px 0;
   display: inline-block;
@@ -47,7 +59,11 @@
   input[type=button]{
   background-color: #8AB8D0;
   color: white;
+<<<<<<< HEAD
   width: 15%;
+=======
+  width: 40%;
+>>>>>>> b9d0f81df734b4a5baae4fa384e8361ac78f49de
   height: 35px;
   margin-left: 20px;
   border: none;
