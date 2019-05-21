@@ -166,8 +166,39 @@ exports.myguest = (req, res) => {
 	
 	Reser.findguest(bemail)
 		.then((user) => {
-      if (!user.length) return res.status(404).send({ error: 'User not found' });
-      res.send(`find successfully: ${user}`);
+      		if(!user.length){
+      			var list = new Array();
+      			var result = {
+      				success: false,
+      				list: list
+      			};
+      			var jsonData = JSON.stringify(result);
+      			return res.status(200).send(jsonData);
+      		}
+      		else {
+      			var bInfo = new Object();
+	      		var list = new Array();
+	      		
+	      		user.forEach(function (item, index){
+	      			console.log('each item #', index, item.email);
+	      			console.log('each item #', index, item.phone);
+	      			console.log('each item #', index, item.total);
+	      			console.log('each item #', index, item.date);
+	      			
+	      			
+	      			list.push(item);
+	      				
+	      		});
+	      		
+	      		console.log("list length", list.length);
+	      		var result = {
+	      			success: true,
+	      			list : list
+	      		};
+	      		var jsonData = JSON.stringify(result);
+	      		
+	      		res.send(jsonData);	
+      		}	
     })
     .catch(err => res.status(500).send({ msg: 'errr', err: err}));
 };
