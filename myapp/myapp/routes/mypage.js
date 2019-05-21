@@ -15,7 +15,7 @@ var invoke_user_get = function(fcn, args, callback){
    object.headers = jsonheaders;
 
 
-   var api_url = 'http://54.164.52.65:3001/buser/'+fcn;
+   var api_url = 'http://54.164.52.65:3000/buser/'+fcn;
    var jsonContent = args;
    object.data = jsonContent;
 
@@ -35,7 +35,7 @@ var invoke_user = function(fcn, args, callback){
    object.headers = jsonheaders;
 
 
-   var api_url = 'http://54.164.52.65:3001/buser/'+fcn;
+   var api_url = 'http://54.164.52.65:3000/buser/'+fcn;
    var jsonContent = args;
    object.data = jsonContent;
 
@@ -78,7 +78,7 @@ router.get('/', function(req, res, next) {
 router.post('/modify', function(req, res, next){
   var sess = req.session;
   var email = sess.email;
-  
+
   var pw = req.body.pw;
   var bname = req.body.bname;
   var addr = req.body.addr;
