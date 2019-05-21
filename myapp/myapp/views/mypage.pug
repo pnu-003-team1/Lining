@@ -20,45 +20,49 @@ body
         button.btn.btn-outline-info.my-2.my-sm-0(type='button', onclick='logout()') 로그아웃
 
 
-
   main.container(role='main')
     .jumbotron
       br
       h3.mb-3 내 정보 수정하기
       br
-      form.needs-validation(novalidate='', name='mypage_fr', action='/mypage/modify', method='post', onsubmit='')
+      form.needs-validation(novalidate='', name='mypage_fr', action='/mypage/modify', method='post', onsubmit="return check();")
           .mb-3
             label(for='email') E-mail
-            input#email.form-control(type='email', name='email', required='', value=user_email, placeholder=user_email, disabled='')
+              input#email.form-control(type='email', name='email', required='', value=user_email, placeholder=user_email, disabled='')
           .mb-3
             label(for='pw') PASSWORD
             input#pw.form-control(type='password', name='pw', required='')
             .invalid-feedback
-              | Please enter your shipping address.
+              | 비밀번호를 입력하세요
 
           .mb-3
             label(for='px_chk') PASSWORD_CHECK
             input#pw_chk.form-control(type='password', name='pw_chk', required='')
             .invalid-feedback
-              | Please enter your shipping address.
+              | 비밀번호를 한번 더 입력하세요
+
+          #alert-success.alert.alert-success
+            | 비밀번호가 일치합니다.
+          #alert-danger.alert.alert-danger
+            | 비밀번호가 일치하지 않습니다.
 
           .mb-3
             label(for='bname') STORE_NAME
-            input#bname.form-control(type='text', name='bname', required='', value=store_name, placeholder=store_name)
+            input#bname.form-control(type='text', name='bname', required='', value=store_name, placeholder='STORE_NAME')
             .invalid-feedback
-              | Please enter your shipping address.
+              | 가게 이름을 입력하세요
 
           .mb-3
             label(for='tel') STORE_TEL
-            input#tel.form-control(type='text', name='tel', required='', value=store_tel, placeholder=store_tel)
+            input#tel.form-control(type='text', name='tel', required='', value=store_tel, placeholder='STORE_TEL')
             .invalid-feedback
-              | Please enter your shipping address.
+              | 가게 번호를 입력하세요
 
           .mb-3
             label(for='addr') STORE_ADDRESS
-            input#addr.form-control(type='text', name='addr', required='', value=store_add, placeholder=store_add)
+            input#addr.form-control(type='text', name='addr', required='', value=store_add, placeholder='STORE_ADDRESS')
             .invalid-feedback
-              | Please enter your shipping address.
+              | 가게 주소를 입력하세요
           br
           button.btn.btn-outline-info.btn-lg.btn-block(type='submit', onclick='onJoin()') 수정하기
 
