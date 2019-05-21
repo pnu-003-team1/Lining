@@ -78,7 +78,7 @@ router.get('/', function(req, res, next) {
   });
 });
 
- router.post('/delete',function(req,res,next){
+router.post('/delete',function(req,res,next){
   var sess = req.session;
   var email = sess.email;
   var food = req.body.food;
@@ -90,7 +90,6 @@ router.get('/', function(req, res, next) {
   invoke_user_post('remove',args,function(data){
     console.log("data.success : "+ data.success );
     if(data.success){
-
       res.redirect('/mymenu');
     }
     else{
@@ -98,8 +97,31 @@ router.get('/', function(req, res, next) {
       res.redirect('/mymenu');
     }
   });
+});
 
+router.post('/modify', function(req, res, next){
+  console.log("메뉴를 수정해보까");
+  var sess = req.session;
+  var email = sess.email;
+  var food = req.body.mfood;
+  var args = {
+    email : email,
+    food : food
+  };
 
+  invoke_user_get('getmenuinfo', args, function(data) {
+    console.log("email: " +args.email);
+    var success = JSON.parse(data).success;
+    if(success){
+      console.log("수정 정보 전송 성공");
+      var foodn = JSON.parse(data).list[0].food;
+      var foodp = JSON.parse(data).list[0].price;
+      console.log( "price : " + foodp );
+      var fn = encodeURIComponent(foodn);
+      var fp = encodeURIComponent(foodp);
+      res.redirect("/modifymenu/?fn=" +fn + "&fp=" +fp);
+    }
+  });
 });
 
 module.exports = router;

@@ -62,7 +62,7 @@ script.
 
       cell1.innerHTML = temp1;
       cell2.innerHTML = temp2;
-      cell3.innerHTML = "";
+      cell3.innerHTML = "<form action='/mymenu/modify' method ='post'><button value='"+temp1+"' type='submit' id='modify_menu' name='mfood'>수정</button>";
       cell4.innerHTML = "<form action='/mymenu/delete' method = 'post'><button value='"+temp1+"' type='submit' id='delete_menu' name='food'>삭제</button></form>";
       }
   });

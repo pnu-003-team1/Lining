@@ -1,0 +1,46 @@
+doctype html
+head
+  meta(charset='UTF-8')
+  title #{title}
+  link(rel='stylesheet', href='/stylesheets/bootstrap.css')
+  link(rel='stylesheet', href='/stylesheets/form-validation.css')
+
+body.bg-light
+  .container
+    br
+    h3.mb-3 메뉴 정보 수정하기
+    form.needs-validation(novalidate='', name='modifymenu', action='/modifymenu/modify', method='post', onsubmit="return check();")
+        .mb-3
+          label(for='food') Food Name
+          input#food.form-control(type='text', name='food', value=fd_name, required='', disabled='')
+          .invalid-feedback
+            | 음식 이름을 입력하세요
+
+          input#h_food(type='hidden', name='h_food', value=fd_name, required='')
+        .mb-3
+          label(for='price') Food Price
+          input#price.form-control(type='number', name='price', value=fd_price, required='')
+          .invalid-feedback
+            | 음식 가격을 입력하세요
+        input#h_price(type='hidden', name='h_price', value=fd_price, required='')
+
+        br
+        button.btn.btn-info.btn-lg.btn-block(type='submit' ) 메뉴 수정하기
+
+
+
+
+script(src='https://code.jquery.com/jquery-3.3.1.slim.min.js', integrity='sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo', crossorigin='anonymous')
+script.
+  window.jQuery || document.write('<script src="/docs/4.3/assets/js/vendor/jquery-slim.min.js"><\\/script>')
+script(src='/javascripts/bootstrap.js', integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o", crossorigin="anonymous" )
+script(src='/javascripts/form-validation.js')
+script.
+  function check(){
+    if (modifymenu.price.value ==modifymenu.h_price.value ){
+      alert("가격이 동일합니다");
+      modifymenu.price.focus();
+      return false;
+    }
+    return true;
+  }
