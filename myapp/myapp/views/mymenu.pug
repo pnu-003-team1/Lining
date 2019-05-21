@@ -23,9 +23,52 @@ body
     .jumbotron
      br
      button.btn.btn-outline-info.btn-lg.btn-block(type='button' name ='addmenu' onclick='location.href="/addmenu"' ) 메뉴 추가하기
+     div(claas='table-responsive')
+       table.table.table-striped.table-sm
+         thead
+           tr
+             th 음식 이름
+             th 가격
+             th 수정
+             th 삭제
+         tbody#tableBody
 
 
+
+script(src='http://code.jquery.com/jquery-1.10.2.js')
 script.
+  var temp1 = "";
+  var temp2 = "";
+
+  var food = new Array();
+  var price = new Array();
+  food = '#{foodArray}';
+  price = '#{priceArray}';
+
+  var foodname = food.split(',');
+  var foodprice = price.split(',');
+
+  $(document).ready(function(){
+    for(var i = 0; i < #{length}; i++) {
+      var tableBody = document.getElementById('tableBody');
+      var row = tableBody.insertRow(tableBody.rows.length);
+      var cell1 = row.insertCell(0);
+      var cell2 = row.insertCell(1);
+      var cell3 = row.insertCell(2);
+      var cell4 = row.insertCell(3);
+
+      temp1 = foodname[i];
+      temp2 = foodprice[i];
+
+      cell1.innerHTML = temp1;
+      cell2.innerHTML = temp2;
+      cell3.innerHTML = "";
+      cell4.innerHTML = "<form action='/mymenu/delete' method = 'post'><button value='"+temp1+"' type='submit' id='delete_menu' name='food'>삭제</button></form>";
+      }
+  });
+
+
+
  function logout(){
    var con = confirm("로그아웃 하시겠습니까?");
    if(con){
