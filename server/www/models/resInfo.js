@@ -6,7 +6,8 @@ var resInfoSchema = new Schema ({
    phone: {type : String, unique : true, required: true},
    total: Number,
    date: Date,
-   bemail: String
+   bemail: String,
+   bname: String
 });
 
 resInfoSchema.statics.addGuest = function (payload) {
@@ -19,6 +20,7 @@ resInfoSchema.statics.addGuest = function (payload) {
 		phone : payload.phone,
 		total : payload.total,
 		bemail: payload.bemail,
+		bname: payload.bname,
 		date : now
 	});
 		
@@ -34,7 +36,7 @@ resInfoSchema.statics.findAll = function(payload) {
 
 resInfoSchema.statics.checkPhone = function(phone) {
 	console.log("reserInfo-checkPhone")
-	return this.find({phone});
+	return this.find({phone}).select("-_id email phone total bemail date bname");
 };
 
 resInfoSchema.statics.deletephone = function (phone) {
@@ -43,6 +45,16 @@ resInfoSchema.statics.deletephone = function (phone) {
 
 resInfoSchema.statics.deleteAll = function (payload){
    return this.remove({});
+};
+
+resInfoSchema.statics.remain = function (bemail, date) {
+	console.log("resInfoSchema remain");
+	return this.find({'bemail': {'$lte': date}}).select("-_id email phone total bemail date bname");
+};
+
+resInfoSchema.statics.findguest = function(bemail) {
+	console.log(bemail);
+	return this.find({bemail}).select("-_id email phone total date").sort('date');
 };
 
 module.exports = mongoose.model('ReserInfo', resInfoSchema);

@@ -87,10 +87,6 @@ exports.login = (req, res) => {
 	}
 	
 	if (!pw.length) {
-		return res.status(200).send({success: false, error: 'email length 0'});
-	}
-	
-	if (!pw.length) {
 		return res.status(200).send({success: false, error: 'pw length 0'});
 	}
 	
@@ -104,9 +100,12 @@ exports.login = (req, res) => {
       	user.forEach(function (item, index){
   			console.log('each item #', index, item.phone);
   			console.log('each item #', index, item.email);
+  			console.log('each item #', index, item.name);
   			userInfo = {
   				phone: item.phone,
-  				email: item.email	
+  				email: item.email,
+  				pw: item.pw,
+  				name: item.name
   			};
   		});
   		console.log("userInfo-",userInfo.phone, userInfo.email);
@@ -118,7 +117,7 @@ exports.login = (req, res) => {
       	return res.status(200).send(jsonData);
       }
     })
-    .catch(err => res.status(500).send(err));
+    .catch(err => res.status(200).send({success: false}));
     
 };
 
@@ -323,6 +322,9 @@ exports.addFav = (req, res) => {
 	
 	const bemail = req.body.bemail;
 	const email = req.body.email;
+	const bphone = req.body.bphone;
+	const baddr = req.body.baddr;
+	const bname = req.body.bname;
 	
 	if (!bemail.length) {
 		return res.status(200).send({success: false, error: 'email length 0'});
@@ -330,6 +332,18 @@ exports.addFav = (req, res) => {
 	
 	if (!email.length) {
 		return res.status(200).send({success: false, error: 'bemail length 0'});
+	}
+	
+	if (!bphone.length) {
+		return res.status(200).send({success: false, error: 'bphone length 0'});
+	}
+	
+	if (!baddr.length) {
+		return res.status(200).send({success: false, error: 'baddr length 0'});
+	}
+	
+	if (!bname.length) {
+		return res.status(200).send({success: false, error: 'bname length 0'});
 	}
 	
 	Favor.checkPair(email, bemail)
@@ -352,7 +366,7 @@ exports.getFavList = (req, res) => {
 	console.log("User-getFavList", req.query.email);
 
 	const email = req.query.email;
-	//if(!email.length)	return res.send({success: false, error:'email length 0'});
+	if(!email.length)	return res.send({success: false, error:'email length 0'});
 
 	Favor.getList(email)
 		.then((result) => {
@@ -370,9 +384,16 @@ exports.getFavList = (req, res) => {
 		else {
 			console.log("find it");
 			var list = new Array();
+			var buserInfo = new Object();
 			result.forEach(function (item, index) {
 				console.log('each item #',index, item.bemail);
-				list.push(item);
+				buserInfo = {
+					bemail: item.bemail,
+					bphone: item.bphone,
+					baddr: item.baddr,
+					bname: item.bname
+				};
+				list.push(buserInfo);
 			});
 
 			console.log("list length: ", list.length);
@@ -384,7 +405,7 @@ exports.getFavList = (req, res) => {
 			return res.send(jsonData);
 		}
 })
-.catch(err => res.send({success: false, list: [], error: err}));
+//.catch(err => res.send({success: false, list: [], error: err}));
 };
 
 exports.delFavOne = (req, res) => {
@@ -400,8 +421,91 @@ exports.delFavOne = (req, res) => {
 	console.log(email, bemail);
 	Favor.delOne(email, bemail)
 		.then((fav) => {
-			if (fav.n === 0) return res.json({success: false});
-			else return res.json({success: true});
+			if (fav.n === 0)  {
+				console.log("delOne-false!");
+				return res.json({success: false});
+			}
+			else {
+				console.log("delOne-success!");
+				return res.json({success: true});
+			}
 		})
 		.catch(err => res.send({success:false, err: err}));
+};
+	
+exports.removeFavor = (req, res) => {
+	console.log("user-removeFavor");
+	Favor.deleteAll()
+		.then((user) => {
+      if (!user.length) return res.status(404).send({ err: 'User not found' });
+      res.send(`find successfully: ${user}`);
+    })
+    .catch(err => res.status(500).send({ msg: 'errr', err: err}));
+};
+
+exports.isFav = (req, res) => {
+	const email = req.body.email;
+	const bemail = req.body.bemail;
+	console.log("isFav");
+	if (!bemail.length) {
+		return res.status(200).send({success: false, error: 'bemail length 0'});
+	}
+	if (!email.length) {
+		return res.status(200).send({success: false, error: 'email length 0'});
+	}
+	
+	Favor.checkPair(email, bemail)
+		.then((result) => {
+			if(!result.length) {
+				console.log("isFav-no exist pair");
+				return res.send({success: true, isFav: false });
+			}
+			else {
+				console.log("isFav-exist pair");
+				return res.send({success: true, isFav: true });
+			}
+		})
+		.catch(err => res.status(200).send({success: false, error: 'Server error'}));
+};
+
+exports.searchBuser = (req, res) => {
+	const bname = req.query.bname;
+	
+	Buser.searchName(bname)
+			.then((user) => {
+	      		if(!user.length){
+	      			var list = new Array();
+	      			var result = {
+	      				success: true,
+	      				list: list
+	      			};
+	      			var jsonData = JSON.stringify(result);
+	      			return res.status(200).send(jsonData);
+	      		}
+	      		else {
+	      			var bInfo = new Object();
+		      		var list = new Array();
+		      		
+		      		user.forEach(function (item, index){
+		      			console.log('each item #', index, item.full);
+		      			console.log('each item #', index, item.bname);
+		      			console.log('each item #', index, item.tel);
+		      			console.log('each item #', index, item.addr);
+		      			console.log('each item #', index, item.email);
+		      			
+		      			list.push(item);
+		      				
+		      		});
+		      		
+		      		console.log("list length", list.length);
+		      		var result = {
+		      			success: true,
+		      			list : list
+		      		};
+		      		var jsonData = JSON.stringify(result);
+		      		
+		      		res.send(jsonData);	
+	      		}	      	
+	    })
+	    .catch(err => res.send({sccuess: false, list: [], error: err}));
 };

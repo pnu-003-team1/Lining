@@ -7,6 +7,6 @@ router.post('/dbtest', controller.dbtest);
 router.post('/remove', controller.remove);
 router.post('/modify', controller.modify);
 router.get('/getemailmenu', controller.getemailmenu);
-
+router.get('/getmenuinfo', controller.getmenuinfo);
 
 module.exports = router;

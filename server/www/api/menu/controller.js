@@ -87,3 +87,42 @@ exports.getemailmenu = (req, res) => {
     })
     .catch(err => res.send({sccuess: false, list: [], error: err}));
 };
+
+exports.getmenuinfo = (req, res) => {
+	Menu.getMenuinfo(req.body.email,req.body.food)
+		.then((user) => {
+      		if(!user.length){
+      			var list = new Array();
+      			var result = {
+      				success: false,
+      				list: list
+      			};
+      			var jsonData = JSON.stringify(result);
+      			return res.status(200).send(jsonData);
+      		}
+      		else {
+      			var bInfo = new Object();
+	      		var list = new Array();
+	      		
+	      		user.forEach(function (item, index){
+	      			console.log('each item #', index, item.email);
+	      			console.log('each item #', index, item.food);
+	      			console.log('each item #', index, item.price);
+	      			
+	      			
+	      			list.push(item);
+	      				
+	      		});
+	      		
+	      		console.log("list length", list.length);
+	      		var result = {
+	      			success: true,
+	      			list : list
+	      		};
+	      		var jsonData = JSON.stringify(result);
+	      		
+	      		res.send(jsonData);	
+      		}	      	
+    })
+    .catch(err => res.send({sccuess: false, list: [], error: err}));
+};
