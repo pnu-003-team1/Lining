@@ -62,8 +62,34 @@ body
           br
           button.btn.btn-outline-info.btn-lg.btn-block(type='submit', onclick='onJoin()') 수정하기
 
-script(src='/javascript/bootstrap.js')
+script(src='https://code.jquery.com/jquery-3.3.1.slim.min.js', integrity='sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo', crossorigin='anonymous')
 script.
+  window.jQuery || document.write('<script src="/docs/4.3/assets/js/vendor/jquery-slim.min.js"><\\/script>')
+script(src='/javascripts/bootstrap.js', integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o", crossorigin="anonymous" )
+script(src='/javascripts/form-validation.js')
+script.
+
+  $(function(){
+        $("#alert-success").hide();
+        $("#alert-danger").hide();
+        $("input").keyup(function(){
+            var pwd1=$("#pw").val();
+            var pwd2=$("#pw_chk").val();
+            if(pwd1 != "" || pwd2 != ""){
+                if(pwd1 == pwd2){
+                    $("#alert-success").show();
+                    $("#alert-danger").hide();
+                    $("#submit").removeAttr("disabled");
+                }else{
+                    $("#alert-success").hide();
+                    $("#alert-danger").show();
+                    $("#submit").attr("disabled", "disabled");
+                }
+            }
+        });
+    });
+
+
  function logout(){
    var con = confirm("로그아웃 하시겠습니까?");
    if(con){
@@ -71,4 +97,12 @@ script.
    }
    else{}
 
+ }
+ function check(){
+   if (mypage_fr.pw.value != mypage_fr.pw_chk.value ){
+     alert("비밀번호 확인이 일치하지 않습니다");
+     mypage_fr.pw_chk.focus();
+     return false;
+   }
+   return true;
  }
