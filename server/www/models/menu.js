@@ -31,4 +31,14 @@ menuSchema.statics.getMenuList = function (email) {
 	return this.find({email});
 }
 
+menuSchema.statics.getMenu = function (email) {
+	console.log("menuSchema getMenu");
+	return this.find({email}).select("-_id food price");
+}
+
+menuSchema.statics.getMenuinfo = function (email,food) {
+	console.log("menuSchema getMenu");
+	return this.find({email,food}).select("-_id email food price");
+}
+
 module.exports = mongoose.model('Menu', menuSchema);

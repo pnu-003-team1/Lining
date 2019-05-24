@@ -17,7 +17,8 @@ var mymenuRouter = require('./routes/mymenu');
 var addmenuRouter = require('./routes/addmenu');
 var successRouter = require('./routes/success');
 var logoutRouter = require('./routes/logout');
-//var renewRouter = require('./routes/renew');
+var modifymenuRouter = require('./routes/modifymenu');
+
 
 var app = express();
 
@@ -50,7 +51,7 @@ app.use('/mymenu' , mymenuRouter);
 app.use('/addmenu' , addmenuRouter);
 app.use('/success' , successRouter);
 app.use('/logout' , logoutRouter);
-//app.use('/renew' , renewRouter);
+app.use('/modifymenu' , modifymenuRouter);
 //app.use('/ajax', ajax);
 
 
