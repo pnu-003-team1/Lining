@@ -78,7 +78,7 @@ router.get('/', function(req, res, next) {
 router.post('/modify', function(req, res, next){
   var sess = req.session;
   var email = sess.email;
-  
+
   var pw = req.body.pw;
   var bname = req.body.bname;
   var addr = req.body.addr;

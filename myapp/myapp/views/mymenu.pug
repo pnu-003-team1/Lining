@@ -34,13 +34,35 @@ script.
   var temp1 = "";
   var temp2 = "";
 
-  var sibal = new Array();
-  var gaesibal = new Array();
-  sibal = '#{foodArray}';
-  gaesibal = '#{priceArray}';
-  
-  var fuck = sibal.split(',');
-  var fuxk = gaesibal.split(',');
+  main.container(role='main')
+    .jumbotron
+     br
+     button.btn.btn-outline-info.btn-lg.btn-block(type='button' name ='addmenu' onclick='location.href="/addmenu"' ) 메뉴 추가하기
+     div(claas='table-responsive')
+       table.table.table-striped.table-sm
+         thead
+           tr
+             th 음식 이름
+             th 가격
+             th 수정
+             th 삭제
+         tbody#tableBody
+
+
+
+script(src='http://code.jquery.com/jquery-1.10.2.js')
+script.
+  var temp1 = "";
+  var temp2 = "";
+
+  var food = new Array();
+  var price = new Array();
+  food = '#{foodArray}';
+  price = '#{priceArray}';
+
+  var foodname = food.split(',');
+  var foodprice = price.split(',');
+
   $(document).ready(function(){
     for(var i = 0; i < #{length}; i++) {
       var tableBody = document.getElementById('tableBody');
@@ -48,25 +70,26 @@ script.
       var cell1 = row.insertCell(0);
       var cell2 = row.insertCell(1);
       var cell3 = row.insertCell(2);
-      
-      temp1 = fuck[i];
-      temp2 = fuxk[i];
+      var cell4 = row.insertCell(3);
+
+      temp1 = foodname[i];
+      temp2 = foodprice[i];
 
       cell1.innerHTML = temp1;
       cell2.innerHTML = temp2;
-      //cell3.innerHTML = "<td><input value='삭제' type='button' class='theButton' id='deleteMenu' onclick='delete_menu(" + i + ",\"" + temp1 + "\")'></td>";
-      cell3.innerHTML = "<td><input value='삭제' type='button' class='theButton' id='deleteMenu' onclick='delete_menu(" + i + ")'></td>";
-    }
+      cell3.innerHTML = "<form action='/mymenu/modify' method ='post'><button value='"+temp1+"' type='submit' id='modify_menu' name='mfood'>수정</button>";
+      cell4.innerHTML = "<form action='/mymenu/delete' method = 'post'><button value='"+temp1+"' type='submit' id='delete_menu' name='food'>삭제</button></form>";
+      }
   });
-  function delete_menu(parameter1) {
-    var k = {
-      email: $('#email').val(),
-      food: fuck[parameter1]
-    };
-    
-    console.log("Fucking Email : " + $('#email').val());
-    console.log("Fucking Food : " + fuck[parameter1]);
-    console.log(k);
+
+
+
+ function logout(){
+   var con = confirm("로그아웃 하시겠습니까?");
+   if(con){
+     location.href="/logout";
+   }
+   else{}
 
     $(document).ready(function() {
       $('#deleteMenu').click(function() {
