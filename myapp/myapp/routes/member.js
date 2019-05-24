@@ -64,21 +64,25 @@ router.post('/', function(req, res, next) {
     addr : addr,
     tel : tel
   };
-  invoke_user('join', args, function(data){
-      console.log("repeition check : [" + emailChecked + "]");
-      if(data.success){
-        if(emailChecked){
-          emailChecked = true;
-          res.redirect('/');
-        }
-        else{
-          res.send('<script type="text/javascript">alert("이메일 중복 확인을 해주세요.");</script>');
-        }
-      }else{
-        res.send('<script type="text/javascript">alert("회원가입 실패");</script>');
-    }
-        });
-
+  if(emailChecked) {
+    invoke_user('join', args, function(data) {
+      console.log("repetition check : [" + emailChecked + "]");
+      if(data.success) {
+        // 이메일 체크 완료 & 회원가입 가능
+        res.redirect('/');
+      }
+      else{
+        // 이메일 체크 완료 & 회원가입 불가능
+        res.redirect('localhost:3000');
+      }
+    });
+  }
+  else{
+    // 이메일 체크 미완료
+    console.log("Checking Email is not completed");
+    res.redirect('localhost:3000/member');
+  }
 });
 
 module.exports = router;
+

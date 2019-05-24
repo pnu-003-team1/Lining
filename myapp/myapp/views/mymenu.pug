@@ -19,8 +19,8 @@ nav.navbar.navbar-expand-md.navbar-dark.fixed-top.bg-dark
 main.container(role='main')
   .jumbotron
     br
+    input#email(type="hidden", name='email', value=user_email)
     button.btn.btn-outline-info.btn-lg.btn-block(type='button', name='addmenu', onclick='location.href="/addmenu"') &#xBA54;&#xB274; &#xCD94;&#xAC00;&#xD558;&#xAE30;
-li #{foodArray}
 div(claas='table-responsive')
   table.table.table-striped.table-sm
     thead
@@ -54,6 +54,35 @@ script.
 
       cell1.innerHTML = temp1;
       cell2.innerHTML = temp2;
-      cell3.innerHTML = "kkk";
+      //cell3.innerHTML = "<td><input value='삭제' type='button' class='theButton' id='deleteMenu' onclick='delete_menu(" + i + ",\"" + temp1 + "\")'></td>";
+      cell3.innerHTML = "<td><input value='삭제' type='button' class='theButton' id='deleteMenu' onclick='delete_menu(" + i + ")'></td>";
     }
   });
+  function delete_menu(parameter1) {
+    var k = {
+      email: $('#email').val(),
+      food: fuck[parameter1]
+    };
+    
+    console.log("Fucking Email : " + $('#email').val());
+    console.log("Fucking Food : " + fuck[parameter1]);
+    console.log(k);
+
+    $(document).ready(function() {
+      $('#deleteMenu').click(function() {
+        $.ajax({
+        url: 'http://54.164.52.65:3000/menu/remove',
+        type: 'post',
+        dataType: 'json',
+        data: k,
+        success: function(data) {
+          console.log("데이터가 전송되었습니다.");
+        },
+        complete: function() {
+          alert("메뉴가 삭제되었습니다.");
+          location.reload();
+        }
+        });
+       });
+    });
+  }

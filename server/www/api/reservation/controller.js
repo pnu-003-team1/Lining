@@ -5,9 +5,14 @@ const Buser = require('../../models/buser');
 exports.addGuest = (req, res) => {
 	console.log("add Guest: ", req.body.email);
 	console.log(req.body.phone,req.body.total);
+	console.log(req.body.bemail);
+	
 	const email = req.body.email;
 	const phone = req.body.phone;
 	const total = req.body.total;
+	const bemail = req.body.bemail;
+	
+	console.log("bemail length: ", bemail.length);
 	
 	if (!email.length) {
 		return res.status(200).send({success: false, error: 'email length 0'});
@@ -17,6 +22,10 @@ exports.addGuest = (req, res) => {
 	}
 	if (!total.length) {
 		return res.status(200).send({success: false, error: 'total length 0'});
+	}
+	
+	if (!bemail.length) {
+		return res.status(200).send({success: false, error: 'bemail length 0'});
 	}
 	
     Reser.addGuest(req.body)

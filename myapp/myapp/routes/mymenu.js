@@ -45,6 +45,7 @@ router.get('/', function(req, res, next) {
     }
     res.render('mymenu', { 
       title: 'MyMenu',
+      user_email: email,
       foodArray: foodArray,
       priceArray: priceArray,
       length: length
@@ -54,6 +55,22 @@ router.get('/', function(req, res, next) {
     if(data.success) {
       console.log("email 전송 성공");
     }
+  });
+});
+
+router.post('/', function(req, res, next) {
+  var sess = req.session;
+  var email = sess.email;
+  var food = req.body.food;
+  var args = {
+    email: email,
+    food: food
+  };
+  console.log("Fuck Email : " + email);
+  console.log("Fuck Food :" + food);
+  invoke_user_get('remove', args, function(data) {
+    var msg = data.success;
+    console.log("Is Menu deleted? : " + msg);
   });
 });
 

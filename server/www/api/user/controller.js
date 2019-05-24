@@ -1,10 +1,3 @@
-/*
- * index(): GET /users
- * show(): GET /usres/:id
- * delete(): DELETE /users/:id
- * create(): POST /join
- * login(): POST/login
- */
 //req: 클라이언트로부터 넘어온 데이터 저장된 객체
 //res: 클라이언트로 결과를 넘겨주기 위한 객체
 
@@ -12,7 +5,7 @@ const router = require('express').Router();
 const User = require('../../models/user');
 const Buser = require('../../models/buser');
 const Menu = require('../../models/menu');
-
+const Favor = require('../../models/favor');
 exports.index = (req, res) => {
 	console.log("index");
 	console.log(req.params.id);
@@ -107,7 +100,22 @@ exports.login = (req, res) => {
       	return res.status(200).send({success: false, error: 'User not found' });
       }
       else {
-      	return res.status(200).send({success: true});
+      	var userInfo = new Object();
+      	user.forEach(function (item, index){
+  			console.log('each item #', index, item.phone);
+  			console.log('each item #', index, item.email);
+  			userInfo = {
+  				phone: item.phone,
+  				email: item.email	
+  			};
+  		});
+  		console.log("userInfo-",userInfo.phone, userInfo.email);
+  		var result = {
+  			success: true,
+  			userInfo: userInfo
+  		};
+  		var jsonData = JSON.stringify(result);
+      	return res.status(200).send(jsonData);
       }
     })
     .catch(err => res.status(500).send(err));
@@ -143,7 +151,6 @@ exports.dbtest = (req, res) => {
 
 
 exports.getbuserList = (req, res) => {
-<<<<<<< HEAD
 	console.log("user buserList");
 	Buser.getBusersInfo()
 		.then((user) => {
@@ -159,7 +166,6 @@ exports.getbuserList = (req, res) => {
       		else {
       			var bInfo = new Object();
 	      		var list = new Array();
-	      		var i = user.length;
 	      		
 	      		user.forEach(function (item, index){
 	      			console.log('each item #', index, item.full);
@@ -181,17 +187,36 @@ exports.getbuserList = (req, res) => {
 	      		
 	      		res.send(jsonData);	
       		}	      	
+    })
     .catch(err => res.send({sccuess: false, list: [], error: err}));
 };
 
 
 exports.modify = (req, res) => {
-	User.usermodify(req.body.email,req.body.name,req.body)
+	console.log("user modify", req.body.email);
+	
+	const pw = req.body.pw;
+	const phone = req.body.phone;
+	const name = req.body.name;
+	
+	if (!pw.length) {
+		return res.status(200).send({success: false, error: 'pw length 0'});
+	}
+	
+	if (!phone.length) {
+		return res.status(200).send({success: false, error: 'phone length 0'});
+	}
+	
+	if (!name.length) {
+		return res.status(200).send({success: false, error: 'name length 0'});
+	}
+	
+	
+	User.usermodify(req.body.email,req.body)
     .then((user) => {
-      if (req.body.pw === user.pw && req.body.phone === user.phone) return res.status(200).send({ success : false });
       res.send({ success : true });
     })
-    .catch(err => res.status(500).send({ msg: 'errr', err: err}));
+    .catch(err => res.status(500).send({ success: false, err: err}));
 };
 
 exports.remove = (req, res) => {
@@ -213,14 +238,14 @@ exports.removeall = (req, res) => {
 };
 
 exports.getMenuList = (req, res) => {
-	console.log("user getMenuList: ", req.body.email);
-	const bEmail = req.body.bEmail;
+	console.log("user getMenuList: ", req.query.bemail);
+	const bemail = req.query.bemail;
 	
-	if (!bEmail.length) {
+	if (!bemail.length) {
 		return res.status(200).send({success: false, error: 'email length 0'});
 	}
 	
-	Menu.getMenuList(bEmail)
+	Menu.getMenuList(bemail)
 		.then((user) => {
       		if(!user.length){
       			var list = new Array();
@@ -234,7 +259,6 @@ exports.getMenuList = (req, res) => {
       		else {
       			var menuInfo = new Object();
 	      		var list = new Array();
-	      		var i = user.length;
 	      		
 	      		user.forEach(function (item, index){
 	      			menuInfo = {
@@ -268,3 +292,179 @@ exports.menuDBtest = (req, res) => {
     .catch(err => res.status(500).send({ msg: 'errr', err: err}));
 };
 
+exports.getUserInfo = (req, res) => {
+	console.log("getUserInfo", req.query.email);
+	const email = req.query.email;
+	
+   	User.getUserInfo(email)
+      .then((user) => {
+      if (!user.length) return res.send({success: false, err: 'User not found' });
+      else {
+      	var info = new Object();
+            	
+  		user.forEach(function (item, index){
+      		info = {
+	    		email: item.email,
+		      	name: item.name,
+		      	pw: item.pw,
+		      	phone: item.phone	      				
+	    	};
+  		});
+      	console.log("info: ", info.email, info.name, info.pw, info.phone);
+
+	   	var jsonData = JSON.stringify(info);
+	    res.send(jsonData);
+      }
+    });
+    //.catch(err => res.status(500).send({ msg: 'errr', err: err}));
+};
+exports.addFav = (req, res) => {
+	console.log("User-addFav", req.body.email, req.body.bemail);
+	
+	const bemail = req.body.bemail;
+	const email = req.body.email;
+	const bphone = req.body.bphone;
+	const baddr = req.body.baddr;
+	const bname = req.body.bname;
+	
+	if (!bemail.length) {
+		return res.status(200).send({success: false, error: 'email length 0'});
+	}
+	
+	if (!email.length) {
+		return res.status(200).send({success: false, error: 'bemail length 0'});
+	}
+	
+	if (!bphone.length) {
+		return res.status(200).send({success: false, error: 'bphone length 0'});
+	}
+	
+	if (!baddr.length) {
+		return res.status(200).send({success: false, error: 'baddr length 0'});
+	}
+	
+	if (!bname.length) {
+		return res.status(200).send({success: false, error: 'bname length 0'});
+	}
+	
+	Favor.checkPair(email, bemail)
+		.then((result) => {
+			if(!result.length) {
+				console.log("no exist Pair");
+				Favor.add(req.body)
+				.then(fav => res.status(200).send({success: true}))
+				.catch(err => res.status(200).send({success: false, error: 'fail to add'}));
+			}
+			else {
+				console.log("already exist Pair");
+				return res.send({success: false, err: 'User already exist' });
+			}
+		})
+		.catch(err => res.status(500).send({msg: 'err', err: err}));
+};
+
+exports.getFavList = (req, res) => {
+	console.log("User-getFavList", req.query.email);
+
+	const email = req.query.email;
+	if(!email.length)	return res.send({success: false, error:'email length 0'});
+
+	Favor.getList(email)
+		.then((result) => {
+		if(!result.length) {
+			console.log("0 result");
+			var list = new Array();
+			var query = {
+				sucess: false,
+				list: list
+			};
+			var jsonData = JSON.stringify(query);
+			return res.send(jsonData);
+		}
+		
+		else {
+			console.log("find it");
+			var list = new Array();
+			var buserInfo = new Object();
+			result.forEach(function (item, index) {
+				console.log('each item #',index, item.bemail);
+				buserInfo = {
+					bemail: item.bemail,
+					bphone: item.bphone,
+					baddr: item.baddr,
+					bname: item.bname
+				};
+				list.push(buserInfo);
+			});
+
+			console.log("list length: ", list.length);
+			var query = {
+				success: true,
+				list: list
+			};
+			var jsonData = JSON.stringify(query);
+			return res.send(jsonData);
+		}
+})
+//.catch(err => res.send({success: false, list: [], error: err}));
+};
+
+exports.delFavOne = (req, res) => {
+	console.log("user-delFavOne", req.body.email, req.body.bemail);
+	const email = req.body.email;
+	const bemail = req.body.bemail;
+	if (!bemail.length) {
+		return res.status(200).send({success: false, error: 'bemail length 0'});
+	}
+	if (!email.length) {
+		return res.status(200).send({success: false, error: 'email length 0'});
+	}
+	console.log(email, bemail);
+	Favor.delOne(email, bemail)
+		.then((fav) => {
+			if (fav.n === 0)  {
+				console.log("delOne-false!");
+				return res.json({success: false});
+			}
+			else {
+				console.log("delOne-success!");
+				return res.json({success: true});
+			}
+		})
+		.catch(err => res.send({success:false, err: err}));
+};
+	
+exports.removeFavor = (req, res) => {
+	console.log("user-removeFavor");
+	Favor.deleteAll()
+		.then((user) => {
+      if (!user.length) return res.status(404).send({ err: 'User not found' });
+      res.send(`find successfully: ${user}`);
+    })
+    .catch(err => res.status(500).send({ msg: 'errr', err: err}));
+};
+
+exports.isFav = (req, res) => {
+	const email = req.body.email;
+	const bemail = req.body.bemail;
+	console.log("isFav");
+	if (!bemail.length) {
+		return res.status(200).send({success: false, error: 'bemail length 0'});
+	}
+	if (!email.length) {
+		return res.status(200).send({success: false, error: 'email length 0'});
+	}
+	
+	Favor.checkPair(email, bemail)
+		.then((result) => {
+			if(!result.length) {
+				console.log("isFav-no exist pair");
+				return res.send({success: true, isFav: false });
+			}
+			else {
+				console.log("isFav-exist pair");
+				return res.send({success: true, isFav: true });
+			}
+		})
+		.catch(err => res.status(200).send({success: false, error: 'Server error'}));
+};

@@ -26,11 +26,60 @@ body
       input#email(type="hidden", name='email', value=email)
       input#full(type='checkbox', name='full', onclick='check(this)')
       label(for='full') 만석시 체크해주세요.
+  div(claas='table-responsive')
+  table.table.table-striped.table-sm
+    thead
+      tr
+        th 이메일
+        th 전화번호
+        th 인원 수
+        th 예약 시간
+    tbody#tableBody
 
 
 
 script(src='http://code.jquery.com/jquery-1.10.2.js')
 script.
+  var temp1 = "";
+  var temp2 = "";
+  var temp3 = "";
+  var temp4 = "";
+
+  var userEmail = new Array();
+  var userPhone = new Array();
+  var userTotal = new Array();
+  var userDate = new Array();
+  userEmail = '#{emailArray}';
+  userPhone = '#{phoneArray}';
+  userTotal = '#{totalArray}';
+  userDate = '#{dateArray}';
+
+  var splitedUserEmail = userEmail.split(',');
+  var splitedUserPhone = userPhone.split(',');
+  var splitedUserTotal = userTotal.split(',');
+  var splitedUserDate = userDate.split(',');
+
+  $(document).ready(function() {
+    for(var i = 0; i < #{length}; i++) {
+      var tableBody = document.getElementById('tableBody');
+      var row = tableBody.insertRow(tableBody.rows.length);
+      var cell1 = row.insertCell(0);
+      var cell2 = row.insertCell(1);
+      var cell3 = row.insertCell(2);
+      var cell4 = row.insertCell(3);
+      var cell5 = row.insertCell(4);
+
+      temp1 = splitedUserEmail[i];
+      temp2 = splitedUserPhone[i];
+      temp3 = splitedUserTotal[i];
+      temp4 = splitedUserDate[i];
+
+      cell1.innerHTML = temp1;
+      cell2.innerHTML = temp2;
+      cell3.innerHTML = temp3;
+      cell4.innerHTML = temp4;
+    }
+  });
   var k = {
     email: $('#email').val(),
     full: true

@@ -24,10 +24,11 @@ buserSchema.statics.addbuser = function (payload) {
 
 buserSchema.statics.checkbid = function (email){
 	console.log("email: ", email);
-    return this.find({email});
+    return this.find({email}).select("-_id tel addr full email");;
 };
 buserSchema.statics.checkEmail = function(email) {
-	return this.find({email});
+	console.log("email: ", email);
+	return this.find({email}).select("-_id bname tel addr full email");;
 };
 buserSchema.statics.checkbpw = function (pw){
    return this.find({pw});
@@ -49,14 +50,19 @@ buserSchema.statics.buserlogin = function (email,pw) {
 	//console.log("ok");
 	return this.find({email,pw});		
 };
-buserSchema.statics.busermodify = function(email,bname,payload){
-	return this.findOneAndUpdate({email,bname}, payload,
-	{new : false});
+buserSchema.statics.busermodify = function(email,payload){
+	return this.findOneAndUpdate({email}, payload,
+	{new : true});
 };
 
 buserSchema.statics.getBusersInfo = function (payload) {
 	console.log("DB getBusersInfo");
 	return this.find({}).select("-_id bname tel addr full email");
+};
+
+buserSchema.statics.getallBusersInfo = function (payload) {
+	console.log("DB getBusersInfo");
+	return this.find({}).select("-_id bname tel addr full");
 };
 	
 module.exports = mongoose.model('Buser', buserSchema);
