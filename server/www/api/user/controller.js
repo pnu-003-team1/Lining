@@ -195,7 +195,7 @@ exports.getbuserList = (req, res) => {
 
 exports.modify = (req, res) => {
 	console.log("user modify", req.body.email);
-	
+	console.log(req.body.pw, req.body.phone, req.body.name);
 	const pw = req.body.pw;
 	const phone = req.body.phone;
 	const name = req.body.name;
