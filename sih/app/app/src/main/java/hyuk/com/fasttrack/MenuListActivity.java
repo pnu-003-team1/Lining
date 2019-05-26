@@ -38,8 +38,6 @@ import java.util.List;
 
 public class MenuListActivity extends AppCompatActivity{
 
-    private int count=0;
-
     private final int MAX_NUM_OF_PEOPLE = 300;
     private final int MIN_NUM_OF_PEOPLE = 1;
 
@@ -156,8 +154,7 @@ public class MenuListActivity extends AppCompatActivity{
                 };
                 FavoriteAddRequest favoriteAddRequest = new FavoriteAddRequest(bemail, bname, baddr, bphone, email, listener);
                 RequestQueue queue = Volley.newRequestQueue(MenuListActivity.this);
-                count++;
-                Log.d("확인", "즐겨찾기 추가 : " + Integer.toString(count));
+                Log.d("확인", "즐겨찾기 추가");
                 queue.add(favoriteAddRequest);
             }
         });
@@ -186,8 +183,7 @@ public class MenuListActivity extends AppCompatActivity{
                 };
                 FavoriteDelRequest favoriteDelRequest = new FavoriteDelRequest(bemail, email, listener);
                 RequestQueue queue = Volley.newRequestQueue(MenuListActivity.this);
-                count++;
-                Log.d("확인", "즐겨찾기 제거 : " + Integer.toString(count));
+                Log.d("확인", "즐겨찾기 제거");
                 queue.add(favoriteDelRequest);
             }
         });
