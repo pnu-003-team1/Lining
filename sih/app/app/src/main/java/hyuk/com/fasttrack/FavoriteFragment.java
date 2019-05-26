@@ -91,6 +91,14 @@ public class FavoriteFragment extends Fragment {
     }
 
     @Override
+    public void onStart(){
+        super.onStart();
+
+        favoriteList.clear();
+        new BackgroundTast().execute();
+    }
+
+    @Override
     public void onActivityCreated(Bundle b){
         super.onActivityCreated(b);
 
@@ -101,14 +109,17 @@ public class FavoriteFragment extends Fragment {
         adapter = new LicenseListAdapter(getActivity().getApplicationContext(), favoriteList);
         favoriteListView.setAdapter(adapter);
 
-        new BackgroundTast().execute();
-
         TextView search = (TextView) getActivity().findViewById(R.id.refreshButton);
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 favoriteList.clear();
                 new BackgroundTast().execute();
+
+                if(favoriteList.isEmpty()) { // 수정해야함 실행안됨
+                    noListItemText.setVisibility(View.VISIBLE);
+                    favoriteListView.setVisibility(View.GONE);
+                }
             }
         });
 
