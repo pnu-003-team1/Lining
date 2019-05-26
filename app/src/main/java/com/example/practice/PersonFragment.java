@@ -1,5 +1,6 @@
 package com.example.practice;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -28,7 +29,6 @@ public class PersonFragment extends ListFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
 
         adapter = new ListViewAdapter();
         setListAdapter(adapter);
@@ -78,9 +78,33 @@ public class PersonFragment extends ListFragment {
             Toast.makeText(getActivity(), "예약내역", Toast.LENGTH_SHORT).show();
         }
         else if(str.equals("내 정보 수정")){
-            Toast.makeText(getActivity(), "내 정보 수정", Toast.LENGTH_SHORT).show();
-            Intent modifyIntent = new Intent(getActivity(), ModifyActivity.class);
-            startActivity(modifyIntent);
+            //Toast.makeText(getActivity(), "내 정보 수정", Toast.LENGTH_SHORT).show();
+            Bundle bundle = getArguments();
+            final String email = bundle.getString("email");
+            final String phone = bundle.getString("phone");
+            final String name = bundle.getString("name");
+            final String pw = bundle.getString("pw");
+
+            if(email==null) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setMessage("로그인이 필요합니다.")
+                        .setNegativeButton("다시 시도", null)
+                        .create()
+                        .show();
+            }
+
+            else {
+                Log.d("person_phone", phone);
+                Intent intent = new Intent(getActivity(), ModifyActivity.class);
+                intent.putExtra("email", email);
+                intent.putExtra("phone", phone);
+                intent.putExtra("name", name);
+                intent.putExtra("pw", pw);
+
+                getActivity().startActivity(intent);
+            }
+            //Intent modifyIntent = new Intent(getActivity(), ModifyActivity.class);
+            //startActivity(modifyIntent);
         }
         /*
         else if(str.equals("알림메시지함")){

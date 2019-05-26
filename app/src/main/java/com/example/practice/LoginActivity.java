@@ -18,6 +18,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -84,7 +85,15 @@ public class LoginActivity extends AppCompatActivity {
                         try {
                             JSONObject jsonResponse = new JSONObject(response);
                             boolean success = jsonResponse.getBoolean("success");
+
                             if (success) {
+                                JSONObject userInfo = jsonResponse.getJSONObject("userInfo");
+                                final String phone = userInfo.getString("phone");
+                                final String email = userInfo.getString("email");
+                                final String name = userInfo.getString("name");
+                                final String pw = userInfo.getString("pw");
+
+                                Log.d("login_phone", phone);
                                 //checkbox 체크 & 로그인성공 => sharedpreferences에 email, pw값 추가
                                 if(checkBox.isChecked() == true){
                                     SharedPreferences autologin = getSharedPreferences("autologin", MODE_PRIVATE);
@@ -102,6 +111,11 @@ public class LoginActivity extends AppCompatActivity {
                                 // 4/28추가
                                 //intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
+                                intent.putExtra("email", email);
+                                intent.putExtra("phone", phone);
+                                intent.putExtra("name", name);
+                                intent.putExtra("pw", pw);
+
                                 LoginActivity.this.startActivity(intent);
                                 finish();
                             } else {
@@ -117,8 +131,6 @@ public class LoginActivity extends AppCompatActivity {
                             e.printStackTrace();
                         }
                     }
-
-
                 };
 
                 LoginRequest loginRequest = new LoginRequest(userID, userPassword, responseListener);

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
@@ -43,6 +44,11 @@ public class MainActivity extends AppCompatActivity {
     private FavoritesFragment favoritesFragment = new FavoritesFragment();
     private PersonFragment personFragment = new PersonFragment();
 
+    private String email;
+    private String phone;
+    private String name;
+    private String pw;
+
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -62,6 +68,18 @@ public class MainActivity extends AppCompatActivity {
                     return true;
 
                 case R.id.navigation_person:
+                    Bundle bundle = new Bundle();
+                    bundle.putString("email", email);
+                    bundle.putString("phone", phone);
+                    bundle.putString("name", name);
+                    bundle.putString("pw", pw);
+                    personFragment.setArguments(bundle);
+
+                    FragmentManager fragmentManager = getSupportFragmentManager();
+                    final FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.frame_layout, personFragment);
+                    fragmentTransaction.commit();
+
                     transaction.replace(R.id.frame_layout, personFragment).commitAllowingStateLoss();
                     return true;
 
@@ -111,6 +129,13 @@ public class MainActivity extends AppCompatActivity {
         Intent getintent = getIntent();
         final int loginsuccess = getintent.getIntExtra("LOGIN", 0);
         final String userid = getintent.getStringExtra("USERID");
+        email = getintent.getStringExtra("email");
+        phone = getintent.getStringExtra("phone");
+        name = getintent.getStringExtra("name");
+        pw = getintent.getStringExtra("pw");
+        //Log.d("main_phone", phone);
+        //Log.d("USERID", userid);
+
         //4/28 추가 Activity에서 값 넘기기, setText
         if(loginsuccess == 1){
             mainloginBtn.setText("로그아웃");
@@ -119,13 +144,32 @@ public class MainActivity extends AppCompatActivity {
             }
             else{
                 mainregisterBtn.setText(userid + " 님");
+                Log.d("USERID", userid);
+                Log.d("main_phone", phone);
             }
 
+
+            //PersonFragment fragment = new PersonFragment();
+            /*Bundle bundle = new Bundle();
+            bundle.putString("email", email);
+            bundle.putString("phone", phone);
+            bundle.putString("name", name);
+            bundle.putString("pw", pw);
+            personFragment.setArguments(bundle);
+
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            final FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.frame_layout, personFragment);
+            fragmentTransaction.commit();*/
         }
         else{
             mainloginBtn.setText("로그인");
             mainregisterBtn.setText("회원가입");
         }
+
+        //Fragment에 사용자 정보 넘기기
+
+
         //main login textview 추가 4/27
         mainloginBtn.setOnClickListener(new TextView.OnClickListener(){
 

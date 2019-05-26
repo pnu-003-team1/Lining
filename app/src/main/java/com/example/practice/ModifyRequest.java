@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ModifyRequest extends StringRequest {
-    final static private String URL = "http://54.164.52.65:3001/users/modify";
+    final static private String URL = "http://54.164.52.65:3000/users/modify";
     private Map<String, String> parameters;
 
     public ModifyRequest(String userID, String userPassword, String userTel, String userName, Response.Listener<String> listener) {
