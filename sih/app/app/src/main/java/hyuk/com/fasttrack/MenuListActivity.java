@@ -1,8 +1,11 @@
 package hyuk.com.fasttrack;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.v7.app.AlertDialog;
@@ -33,7 +36,7 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MenuListActivity extends AppCompatActivity {
+public class MenuListActivity extends AppCompatActivity{
 
     private int count=0;
 
