@@ -55,7 +55,7 @@ resInfoSchema.statics.remain = function (bemail, date) {
 
 resInfoSchema.statics.findguest = function(bemail) {
 	console.log(bemail);
-	return this.find({bemail}).select("-_id email phone total date").sort('date');
+	return this.find({bemail}).select("-_id email bname phone total date").sort('date');
 };
 
 module.exports = mongoose.model('ReserInfo', resInfoSchema);
