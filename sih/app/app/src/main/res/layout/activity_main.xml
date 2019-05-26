@@ -37,6 +37,13 @@
             android:text="즐겨찾기"
             android:layout_weight="1"/>
 
+        <Button
+            android:id="@+id/waitButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="예약조회"
+            android:layout_weight="1"/>
+
     </LinearLayout>
 
 </LinearLayout>

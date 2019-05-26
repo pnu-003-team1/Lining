@@ -59,6 +59,20 @@ public class MainActivity extends AppCompatActivity {
                 fragmentTransaction.commit();
             }
         });
+
+        // 임시 프래그먼트 전환
+        Button waitButton = (Button) findViewById(R.id.waitButton);
+        waitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final WaitListFragment waitListFragment = new WaitListFragment();
+
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                final FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.fragment, waitListFragment);
+                fragmentTransaction.commit();
+            }
+        });
     }
 
     private long lastTimeBackPressed;
