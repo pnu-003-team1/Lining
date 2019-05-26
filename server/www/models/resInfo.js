@@ -49,7 +49,8 @@ resInfoSchema.statics.deleteAll = function (payload){
 
 resInfoSchema.statics.remain = function (bemail, date) {
 	console.log("resInfoSchema remain");
-	return this.find({'bemail': {'$lte': date}}).select("-_id email phone total bemail date bname");
+	console.log("bemail: ", bemail, "date: ", date);	
+	return this.find({bemail, "date": {"$lt": date}}).select("-_id email phone total bemail date bname");
 };
 
 resInfoSchema.statics.findguest = function(bemail) {
