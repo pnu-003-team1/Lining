@@ -68,7 +68,7 @@ exports.isRes = (req, res) => {
 	Reser.checkPhone(req.body.phone)
 		.then((user) => {
 			console.log("result len", user.length);
-      if (user.length < 1) return res.status(200).send({success: true, isRes: true});
+      if (user.length < 1) return res.status(200).send({success: true, possible: true});
       else {
       	var info = new Object();
       	user.forEach(function (item, index){
