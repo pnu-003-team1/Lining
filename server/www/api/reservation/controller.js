@@ -161,7 +161,6 @@ exports.remain = (req, res) => {
 				Reser.remain(info.bemail, info.date)
 					.then((result) => {
 						var count = result.length;
-						
 						/*
 						var list = new Array(); 
 						result.forEach(function (item, index) {
