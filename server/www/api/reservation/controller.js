@@ -132,6 +132,7 @@ exports.myRes = (req, res) => {
 exports.remain = (req, res) => {
 	console.log("busr remain: ", req.query.phone);
 	const phone = req.query.phone;
+	var info = new Object();
 	
 	if (!phone.length) {
 		return res.status(200).send({success: false, error: 'phone length 0'});
@@ -149,8 +150,41 @@ exports.remain = (req, res) => {
 				return res.status(200).send(jsonData);
 			}
 			else {
-				var bname;
-				
+				user.forEach(function (item, index){
+	      			info = {
+			    		email: item.email,
+			    		bemail: item.bemail,
+				      	bname: item.bname,
+				      	date: item.date	      				
+			    	};		
+	      		});
+				Reser.remain(info.bemail, info.date)
+					.then((result) => {
+						var count = result.length;
+						/*
+						var list = new Array(); 
+						result.forEach(function (item, index) {
+							console.log("each item #", item.email);
+							console.log("each item #", item.date);
+							console.log("each item #", item.phone);
+							console.log("each item #", item.bname);
+							
+							list.push(item);					
+						});*/
+						var result = {
+							success: true,
+							isRes: true,
+							email: info.email,
+							bemail: info.bemail,
+							bname: info.bname,
+							date: info.date,
+							count: String(count)
+						};		
+						
+						console.log("result: ", result);
+						var jsonData = JSON.stringify(result);
+						return res.status(200).send(jsonData);					
+				});				
 			}
 		})
 		.catch(err => res.status (200).send({success: false, error: err}));
