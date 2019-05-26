@@ -157,8 +157,8 @@ exports.remain = (req, res) => {
 };
 
 exports.myguest = (req, res) => {
-	console.log("busr email: ", req.query.bemail);
-	const bemail = req.query.bemail;
+	console.log("busr email: ", req.body.bemail);
+	const bemail = req.body.bemail;
 	
 	if (!bemail.length) {
 		return res.status(200).send({success: false, error: 'phone length 0'});
