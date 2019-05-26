@@ -68,8 +68,20 @@ exports.isRes = (req, res) => {
 	Reser.checkPhone(req.body.phone)
 		.then((user) => {
 			console.log("result len", user.length);
-      if (user.length < 1) return res.status(200).send({success: true});
-      else res.status(200).send({success: false, error: 'already reservation'});
+      if (user.length < 1) return res.status(200).send({success: true, isRes: true});
+      else {
+      	var info = new Object();
+      	user.forEach(function (item, index){
+  			info = {
+				success: true,
+  				possible: false,
+  				RESERVED_STORE_NAME: item.bname
+  			};
+ 				
+  		});
+		var jsonData = JSON.stringify(info);
+		res.send(jsonData); 
+      }
     })
     .catch(err => res.status(500).send({success: false, error: 'server error'}));
 };
