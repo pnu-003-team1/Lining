@@ -162,7 +162,7 @@ exports.remain = (req, res) => {
 			}
 			else {
 				var bname;
-				
+				//console.log();
 			}
 		})
 		.catch(err => res.status (200).send({success: false, error: err}));
