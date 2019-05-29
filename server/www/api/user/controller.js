@@ -151,9 +151,10 @@ exports.dbtest = (req, res) => {
 
 exports.getbuserList = (req, res) => {
 	console.log("user buserList");
-	Buser.getBusersInfo()
+	Buser.getallBusersInfo()
 		.then((user) => {
       		if(!user.length){
+      			console.log("user length 0");
       			var list = new Array();
       			var result = {
       				success: false,
@@ -163,6 +164,7 @@ exports.getbuserList = (req, res) => {
       			return res.status(200).send(jsonData);
       		}
       		else {
+      			console.log("user length != 0");
       			var bInfo = new Object();
 	      		var list = new Array();
 	      		
@@ -193,7 +195,7 @@ exports.getbuserList = (req, res) => {
 
 exports.modify = (req, res) => {
 	console.log("user modify", req.body.email);
-	
+	console.log(req.body.pw, req.body.phone, req.body.name);
 	const pw = req.body.pw;
 	const phone = req.body.phone;
 	const name = req.body.name;

@@ -68,8 +68,20 @@ exports.isRes = (req, res) => {
 	Reser.checkPhone(req.body.phone)
 		.then((user) => {
 			console.log("result len", user.length);
-      if (user.length < 1) return res.status(200).send({success: true});
-      else res.status(200).send({success: false, error: 'already reservation'});
+      if (user.length < 1) return res.status(200).send({success: true, possible: true});
+      else {
+      	var info = new Object();
+      	user.forEach(function (item, index){
+  			info = {
+				success: true,
+  				possible: false,
+  				RESERVED_STORE_NAME: item.bname
+  			};
+ 				
+  		});
+		var jsonData = JSON.stringify(info);
+		res.send(jsonData); 
+      }
     })
     .catch(err => res.status(500).send({success: false, error: 'server error'}));
 };
@@ -132,6 +144,7 @@ exports.myRes = (req, res) => {
 exports.remain = (req, res) => {
 	console.log("busr remain: ", req.query.phone);
 	const phone = req.query.phone;
+	var info = new Object();
 	
 	if (!phone.length) {
 		return res.status(200).send({success: false, error: 'phone length 0'});
@@ -149,16 +162,40 @@ exports.remain = (req, res) => {
 				return res.status(200).send(jsonData);
 			}
 			else {
-				var bname;
-				
+				user.forEach(function (item, index){
+	      			info = {
+			    		email: item.email,
+			    		bemail: item.bemail,
+				      	bname: item.bname,
+				      	date: item.date	      				
+			    	};		
+	      		});
+				Reser.remain(info.bemail, info.date)
+					.then((result) => {
+						var count = result.length;
+
+						var result = {
+							success: true,
+							isRes: true,
+							email: info.email,
+							bemail: info.bemail,
+							bname: info.bname,
+							date: info.date,
+							count: String(count)
+						};		
+						
+						console.log("result: ", result);
+						var jsonData = JSON.stringify(result);
+						return res.status(200).send(jsonData);					
+				});				
 			}
 		})
 		.catch(err => res.status (200).send({success: false, error: err}));
 };
 
 exports.myguest = (req, res) => {
-	console.log("busr email: ", req.query.bemail);
-	const bemail = req.query.bemail;
+	console.log("busr email: ", req.body.bemail);
+	const bemail = req.body.bemail;
 	
 	if (!bemail.length) {
 		return res.status(200).send({success: false, error: 'phone length 0'});
@@ -181,6 +218,7 @@ exports.myguest = (req, res) => {
 	      		
 	      		user.forEach(function (item, index){
 	      			console.log('each item #', index, item.email);
+	      			console.log('each item #', index, item.bname);
 	      			console.log('each item #', index, item.phone);
 	      			console.log('each item #', index, item.total);
 	      			console.log('each item #', index, item.date);
