@@ -3,7 +3,7 @@ var router = express.Router();
 var Client = require('node-rest-client').Client;
 var client =  new Client();
 var object = {};
-var storeName ='';
+var storeName = '';
 
 var AWS = require('aws-sdk');
 AWS.config.loadFromPath('./config.json');
@@ -74,6 +74,8 @@ router.get('/', function(req, res) {
         totalArray[i] = JSON.parse(data).list[i].total;
         dateArray[i] = JSON.parse(data).list[i].date;
       }
+      console.log("Store Name : " + storeName);
+      console.log("Phone Array : " + phoneArray[1]);
     }
     res.render('main', {
     title: '사업자',
