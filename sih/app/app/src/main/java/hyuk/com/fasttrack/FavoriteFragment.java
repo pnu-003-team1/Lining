@@ -234,7 +234,7 @@ public class FavoriteFragment extends Fragment {
                     noListItemText.setVisibility(View.GONE);
                     int count = 0;
 
-//                    boolean full;
+                    boolean full;
                     String bemail;
                     String bname;
                     String baddr;
@@ -243,13 +243,13 @@ public class FavoriteFragment extends Fragment {
                     while (count < jsonArray.length()) {
                         JSONObject object = jsonArray.getJSONObject(count);
 
-//                        full = object.getBoolean("full");
+                        full = object.getBoolean("full");
                         bemail = object.getString("bemail");
                         bname = object.getString("bname");
                         baddr = object.getString("baddr");
                         bphone = object.getString("bphone");
 
-                        License license = new License(bemail, bname, baddr, bphone);
+                        License license = new License(full, bemail, bname, baddr, bphone);
                         favoriteList.add(license);
                         count++;
                     }

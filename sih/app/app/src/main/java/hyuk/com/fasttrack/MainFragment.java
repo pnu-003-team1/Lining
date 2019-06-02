@@ -116,6 +116,7 @@ public class MainFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int i, long id) {
                 Intent menuIntent = new Intent(getActivity(), MenuListActivity.class);
+                menuIntent.putExtra("full", licenseList.get(i).isFull());
                 menuIntent.putExtra("bemail", licenseList.get(i).getEmail());
                 menuIntent.putExtra("bname", licenseList.get(i).getBname());
                 menuIntent.putExtra("baddr", licenseList.get(i).getAddr());
@@ -217,7 +218,7 @@ public class MainFragment extends Fragment {
                     noListItemText.setVisibility(View.GONE);
                     int count = 0;
 
-//                    boolean full;
+                    boolean full;
                     String email;
                     String bname;
                     String addr;
@@ -225,13 +226,13 @@ public class MainFragment extends Fragment {
                     while (count < jsonArray.length()) {
                         JSONObject object = jsonArray.getJSONObject(count);
 
-//                        full = object.getBoolean("full");
+                        full = object.getBoolean("full");
                         email = object.getString("email");
                         bname = object.getString("bname");
                         addr = object.getString("addr");
                         tel = object.getString("tel");
 
-                        License license = new License(email, bname, addr, tel);
+                        License license = new License(full, email, bname, addr, tel);
                         licenseList.add(license);
                         count++;
                     }

@@ -45,6 +45,7 @@ public class MenuListActivity extends AppCompatActivity{
     private int total;
 
     // 사업자 정보
+    private boolean full;
     private String bemail;
     private String bname;
     private String bphone;
@@ -76,6 +77,7 @@ public class MenuListActivity extends AppCompatActivity{
 
         // 사업자 정보 받아오기
         Intent intent = getIntent();
+        full = intent.getBooleanExtra("full", false);
         bemail = intent.getStringExtra("bemail");
         bname = intent.getStringExtra("bname");
         baddr = intent.getStringExtra("baddr");
@@ -405,6 +407,11 @@ public class MenuListActivity extends AppCompatActivity{
                 }
             }
         });
+
+        if(!full){
+            reservationButton.setVisibility(View.GONE);
+            cancelButton.setVisibility(View.GONE);
+        }
     }
 
     class BackgroundTast extends AsyncTask<Void, Void, String> {
