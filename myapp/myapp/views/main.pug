@@ -34,6 +34,8 @@ body
         th 전화번호
         th 인원 수
         th 예약 시간
+        th 호출
+        th 삭제
     tbody#tableBody
 
 
@@ -68,6 +70,7 @@ script.
       var cell3 = row.insertCell(2);
       var cell4 = row.insertCell(3);
       var cell5 = row.insertCell(4);
+      var cell6 = row.insertCell(5);
 
       temp1 = splitedUserEmail[i];
       temp2 = splitedUserPhone[i];
@@ -78,6 +81,8 @@ script.
       cell2.innerHTML = temp2;
       cell3.innerHTML = temp3;
       cell4.innerHTML = temp4;
+      cell5.innerHTML = "<form action='/main/call' method='post'><button value='"+temp2+"' type='submit' id='call_user'>호출</button></form>";
+      cell6.innerHTML = "<form action='/main/delete' method='post'><button value='"+temp2+"' type='submit' id='delete_reservation' name='dphone'>삭제</button></form>";
     }
   });
   var k = {

@@ -22,6 +22,27 @@ var invoke_user = function(fcn, args, callback){
   });
 };
 
+var invoke_user_post = function(fcn, args, callback){
+  var jsonheaders = {
+     "Content-Type" : "application/json"
+     };
+  object.headers = jsonheaders;
+
+
+  var api_url = 'http://54.164.52.65:3000/reservation/'+fcn;
+  var jsonContent = args;
+  object.data = jsonContent;
+
+  client.registerMethod("invokeUserMethod", api_url, "POST");
+   client.methods.invokeUserMethod(object, function (data, response) {
+
+
+     var result = JSON.stringify(data);
+     console.log("data : " + result);
+     callback(data);
+  });
+};
+
 var reservation = function(fcn, args, callback){
    var jsonheaders = {
       "Content-Type" : "application/json"
@@ -29,7 +50,7 @@ var reservation = function(fcn, args, callback){
    object.headers = jsonheaders;
 
 
-   var api_url = 'http://54.164.52.65:3001/reservation/'+fcn;
+   var api_url = 'http://54.164.52.65:3000/reservation/'+fcn;
    var jsonContent = args;
    object.data = jsonContent;
 
@@ -97,7 +118,9 @@ router.post('/fullCheck', function(req, res, next){
 
   });
 });
- 
+
+
+
 router.post('/logout  ', function(req, res, next) {
   console.log("hello logout")
   req.session.destroy(function(){
@@ -105,5 +128,6 @@ router.post('/logout  ', function(req, res, next) {
   });
   res.redirect('/index');
 });
+
 
 module.exports = router;
