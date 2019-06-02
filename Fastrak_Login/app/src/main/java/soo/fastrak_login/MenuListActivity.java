@@ -1,13 +1,10 @@
 package soo.fastrak_login;
 
 
-import android.app.Activity;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.content.SharedPreferences;
+import android.location.Geocoder;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -26,7 +23,6 @@ import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -46,17 +42,22 @@ public class MenuListActivity extends AppCompatActivity{
     private int total;
 
     // 사업자 정보
+    private boolean full;
     private String bemail;
     private String bname;
     private String bphone;
     private String baddr;
+    private double latitude;
+    private double longitude;
 
     // 현재 예약정보
     private String RESERVED_STORE_NAME = "NONE";
 
     // 사용자 정보
-    private String email = "asd@asd.com";
-    private String phone = "010-1313-1313";
+    private String email;
+    private String phone;
+//    private String email = "asd@asd.com";
+//    private String phone = "010-1313-1313";
 
     private ListView menuListView;
     private MenuListAdapter adapter;
@@ -69,6 +70,7 @@ public class MenuListActivity extends AppCompatActivity{
     private TextView cancelButton;
     private Button favorite_ON;
     private Button favorite_OFF;
+    private Button showMapButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,15 +79,36 @@ public class MenuListActivity extends AppCompatActivity{
 
         // 사업자 정보 받아오기
         Intent intent = getIntent();
+        latitude = intent.getDoubleExtra("latitude", 35.230983);
+        longitude = intent.getDoubleExtra("longitude", 129.0816943);
+        full = intent.getBooleanExtra("full", false);
         bemail = intent.getStringExtra("bemail");
         bname = intent.getStringExtra("bname");
         baddr = intent.getStringExtra("baddr");
         bphone = intent.getStringExtra("bphone");
         if (bemail == null) finish();
-        // 사용자 이메일, 이름 받아오기
-//        email = intent.getStringExtra("email");
-//        phone = intent.getStringExtra("phone");
 
+        // 사용자 이메일, 이름 받아오기
+        email = intent.getStringExtra("email");
+        phone = intent.getStringExtra("phone");
+
+        // 지도이용
+        final Geocoder geocoder = new Geocoder(this);
+        showMapButton = (Button) findViewById(R.id.showMapButton);
+        showMapButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String info = "geo:" + latitude + "," + longitude;
+                if(latitude != 35.230983  && longitude != 129.0816943)
+                    info = info
+                            + "?q=" + latitude + "," + longitude
+                            + "(" + bname + ")";
+
+                Intent mapIntent = new Intent(Intent.ACTION_VIEW,
+                        Uri.parse(info));
+                startActivity(mapIntent);
+            }
+        });
 
         // ListView 변수 초기화
         menuListView = (ListView) findViewById(R.id.menuListView);
@@ -406,6 +429,11 @@ public class MenuListActivity extends AppCompatActivity{
                 }
             }
         });
+
+        if(!full){
+            reservationButton.setVisibility(View.GONE);
+            cancelButton.setVisibility(View.GONE);
+        }
     }
 
     class BackgroundTast extends AsyncTask<Void, Void, String> {

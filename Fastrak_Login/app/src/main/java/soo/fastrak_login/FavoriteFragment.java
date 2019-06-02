@@ -127,6 +127,7 @@ public class FavoriteFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int i, long id) {
                 Intent menuIntent = new Intent(getActivity(), MenuListActivity.class);
+                menuIntent.putExtra("full", favoriteList.get(i).isFull());
                 menuIntent.putExtra("bemail", favoriteList.get(i).getEmail());
                 menuIntent.putExtra("bname", favoriteList.get(i).getBname());
                 menuIntent.putExtra("baddr", favoriteList.get(i).getAddr());
@@ -234,22 +235,26 @@ public class FavoriteFragment extends Fragment {
                     noListItemText.setVisibility(View.GONE);
                     int count = 0;
 
-//                    boolean full;
+                    boolean full;
                     String bemail;
                     String bname;
                     String baddr;
                     String bphone;
+                    double latitude;
+                    double longitude;
 
                     while (count < jsonArray.length()) {
                         JSONObject object = jsonArray.getJSONObject(count);
 
-//                        full = object.getBoolean("full");
+                        full = object.getBoolean("full");
                         bemail = object.getString("bemail");
                         bname = object.getString("bname");
                         baddr = object.getString("baddr");
                         bphone = object.getString("bphone");
+                        latitude = object.getDouble("latitude");
+                        longitude = object.getDouble("longitude");
 
-                        License license = new License(bemail, bname, baddr, bphone);
+                        License license = new License(full, bemail, bname, baddr, bphone, latitude, longitude);
                         favoriteList.add(license);
                         count++;
                     }

@@ -136,10 +136,13 @@ public class SearchFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int i, long id) {
                 Intent menuIntent = new Intent(getActivity(), MenuListActivity.class);
+                menuIntent.putExtra("full", licenseList.get(i).isFull());
                 menuIntent.putExtra("bemail", licenseList.get(i).getEmail());
                 menuIntent.putExtra("bname", licenseList.get(i).getBname());
                 menuIntent.putExtra("baddr", licenseList.get(i).getAddr());
                 menuIntent.putExtra("bphone", licenseList.get(i).getTel());
+                menuIntent.putExtra("latitude", licenseList.get(i).getLatitude());
+                menuIntent.putExtra("longitude", licenseList.get(i).getLongitude());
                 menuIntent.putExtra("email", email);
                 menuIntent.putExtra("phone", phone);
                 startActivity(menuIntent);
@@ -256,21 +259,28 @@ public class SearchFragment extends Fragment {
                 JSONArray jsonArray = jsonResponse.getJSONArray("list");
                 if (jsonResponse.getBoolean("success")) {
                     int count = 0;
+
+                    boolean full;
                     String bname;
                     String email;
                     String addr;
                     String tel;
+                    double latitude;
+                    double longitude;
                     while (count < jsonArray.length()) {
                         JSONObject object = jsonArray.getJSONObject(count);
+                        full = object.getBoolean("full");
                         bname = object.getString("bname");
                         email = object.getString("email");
                         addr = object.getString("addr");
                         tel = object.getString("tel");
+                        latitude = object.getDouble("latitude");
+                        longitude = object.getDouble("longitude");
 
                         Store store = new Store(bname);
                         arraylist.add(store);
 
-                        License license = new License(email, bname, addr, tel);
+                        License license = new License(full, email, bname, addr, tel, latitude, longitude);
                         licenseArrayList.add(license);
                         count++;
                     }
