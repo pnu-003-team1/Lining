@@ -23,6 +23,17 @@ public class MainActivity extends AppCompatActivity {
         email = intent.getStringExtra("email");
         phone = intent.getStringExtra("phone");
 
+        // Google Map test
+        Button mapButton = (Button) findViewById(R.id.mapButton);
+        mapButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent mapIntent = new Intent(MainActivity.this, MapActivity.class);
+                startActivity(mapIntent);
+            }
+        });
+
+
         // fragment 로 전송할 변수
         Bundle bundle = new Bundle();
         bundle.putString("email", email);
