@@ -156,5 +156,22 @@ router.post('/logout  ', function(req, res, next) {
   res.redirect('/index');
 });
 
+router.post('/delete',function(req,res,next){
 
+  var phone = req.body.dphone;
+
+  var args = {
+    phone:phone
+  };
+  invoke_user_post('remove',args,function(data){
+    console.log("data.success : "+ data.success );
+    if(data.success){
+      res.redirect('/main');
+    }
+    else{
+      console.log("fail delete");
+      res.redirect('/main');
+    }
+  });
+});
 module.exports = router;
