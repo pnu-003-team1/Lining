@@ -10,7 +10,6 @@
         android:layout_height="wrap_content"
         android:id="@+id/customlistfragment"
         android:layout_weight="1"
-        android:name=".PersonFragment"
         tools:layout="@layout/fragment_person">
 
 
