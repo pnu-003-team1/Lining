@@ -68,8 +68,20 @@ exports.isRes = (req, res) => {
 	Reser.checkPhone(req.body.phone)
 		.then((user) => {
 			console.log("result len", user.length);
-      if (user.length < 1) return res.status(200).send({success: true});
-      else res.status(200).send({success: false, error: 'already reservation'});
+      if (user.length < 1) return res.status(200).send({success: true, possible: true});
+      else {
+      	var info = new Object();
+      	user.forEach(function (item, index){
+  			info = {
+				success: true,
+  				possible: false,
+  				RESERVED_STORE_NAME: item.bname
+  			};
+ 				
+  		});
+		var jsonData = JSON.stringify(info);
+		res.send(jsonData); 
+      }
     })
     .catch(err => res.status(500).send({success: false, error: 'server error'}));
 };
@@ -161,16 +173,7 @@ exports.remain = (req, res) => {
 				Reser.remain(info.bemail, info.date)
 					.then((result) => {
 						var count = result.length;
-						/*
-						var list = new Array(); 
-						result.forEach(function (item, index) {
-							console.log("each item #", item.email);
-							console.log("each item #", item.date);
-							console.log("each item #", item.phone);
-							console.log("each item #", item.bname);
-							
-							list.push(item);					
-						});*/
+
 						var result = {
 							success: true,
 							isRes: true,
@@ -215,6 +218,7 @@ exports.myguest = (req, res) => {
 	      		
 	      		user.forEach(function (item, index){
 	      			console.log('each item #', index, item.email);
+	      			console.log('each item #', index, item.bname);
 	      			console.log('each item #', index, item.phone);
 	      			console.log('each item #', index, item.total);
 	      			console.log('each item #', index, item.date);

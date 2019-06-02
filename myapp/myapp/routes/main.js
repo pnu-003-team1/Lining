@@ -3,6 +3,11 @@ var router = express.Router();
 var Client = require('node-rest-client').Client;
 var client =  new Client();
 var object = {};
+var storeName = '';
+
+var AWS = require('aws-sdk');
+AWS.config.loadFromPath('./config.json');
+AWS.config.update({region: 'us-west-2'});
 
 var invoke_user = function(fcn, args, callback){
   var jsonheaders = {
@@ -85,10 +90,13 @@ router.get('/', function(req, res) {
       console.log(length);
       for(var i = 0; i < length; i++) {
         emailArray[i] = JSON.parse(data).list[i].email;
+        storeName = JSON.parse(data).list[i].bname;
         phoneArray[i] = JSON.parse(data).list[i].phone;
         totalArray[i] = JSON.parse(data).list[i].total;
         dateArray[i] = JSON.parse(data).list[i].date;
       }
+      console.log("Store Name : " + storeName);
+      console.log("Phone Array : " + phoneArray[1]);
     }
     res.render('main', {
     title: '사업자',
@@ -119,7 +127,26 @@ router.post('/fullCheck', function(req, res, next){
   });
 });
 
+router.post('/call', function(req, res, next) {
+  var user_phoneNumber = req.body.call_user;
+  console.log("User Phone Number : " + user_phoneNumber);
+  var splitedPhoneNumber = user_phoneNumber.split('-');
+  var params3 = {
+  Message: '기다려주셔서 감사 드립니다. ' + storeName + '입니다.지금 입장해주시면 자리 안내 도와드리도록 하겠습니다.',
+  PhoneNumber: '+8210' + splitedPhoneNumber[1] + splitedPhoneNumber[2],
+  };
 
+  var publishTextPromise = new AWS.SNS({apiVersion: '2010-03-31'}).publish(params3).promise();
+  publishTextPromise.then(
+  function(data) {
+    console.log("MessageID is " + data.MessageId);
+  }).catch(
+    function(err) {
+      console.error(err, err.stack);
+    });
+
+  res.redirect('/main');
+});
 
 router.post('/logout  ', function(req, res, next) {
   console.log("hello logout")
