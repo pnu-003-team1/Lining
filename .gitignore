@@ -328,6 +328,14 @@ Homestead.json
 
 
 
-
+*.iml
+.gradle
+/local.properties
+/.idea/workspace.xml
+/.idea/libraries
+.DS_Store
+/build
+/captures
+.externalNativeBuild
 
 # End of https://www.gitignore.io/api/go,laravel,aptanastudio,hyperledgercomposer

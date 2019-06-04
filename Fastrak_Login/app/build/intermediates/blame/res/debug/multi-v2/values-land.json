@@ -1,0 +1,55 @@
+{
+    "logs": [
+        {
+            "outputFile": "C:\\Users\\dlsgu\\Documents\\GitHub\\Lining\\Fastrak_Login\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-land\\values-land.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\dlsgu\\.gradle\\caches\\transforms-2\\files-2.1\\1b8e60899eea89ffad7c33042b4a17c7\\res\\values-land\\values-land.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endLines": "5",
+                        "endColumns": "12",
+                        "endOffsets": "232"
+                    },
+                    "to": {
+                        "startLines": "7",
+                        "startColumns": "4",
+                        "startOffsets": "389",
+                        "endLines": "10",
+                        "endColumns": "12",
+                        "endOffsets": "566"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\dlsgu\\.gradle\\caches\\transforms-2\\files-2.1\\3246d72525f1778df7e0ad643031f441\\res\\values-land\\values-land.xml",
+                    "from": {
+                        "startLines": "2,3,4,5",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "55,125,189,260",
+                        "endColumns": "69,63,70,67",
+                        "endOffsets": "120,184,255,323"
+                    },
+                    "to": {
+                        "startLines": "3,4,5,6",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "116,186,250,321",
+                        "endColumns": "69,63,70,67",
+                        "endOffsets": "181,245,316,384"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\dlsgu\\.gradle\\caches\\transforms-2\\files-2.1\\049ffdfdf4fea06a3709ef90151a47f0\\res\\values-land\\values-land.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "60",
+                        "endOffsets": "111"
+                    }
+                }
+            ]
+        }
+    ]
+}
