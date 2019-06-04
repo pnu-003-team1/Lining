@@ -37,7 +37,8 @@ router.post('/',function(req, res, next){
     "bemail" : email,
     "phone" : phone,
     "total" : total,
-    "email": "hello"
+    "email": "offline",
+    "bname" : "offline"
   };
 
   console.log("email  : " + email + " | phone : " + phone + " | total : "+ total);
