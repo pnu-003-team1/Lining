@@ -126,12 +126,3 @@ exports.getmenuinfo = (req, res) => {
     })
     .catch(err => res.send({sccuess: false, list: [], error: err}));
 };
-
-exports.removeall = (req, res) => {
-   Menu.deleteAll()
-      .then((user) => {
-      if (!user.length) return res.status(404).send({ err: 'User not found' });
-      res.send(`find successfully: ${user}`);
-   })
-   .catch(err => res.status(500).send({ msg: 'errr', err: err}));
-};
