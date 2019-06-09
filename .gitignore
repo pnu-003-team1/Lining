@@ -339,14 +339,27 @@ Homestead.json
 .externalNativeBuild
 
 # End of https://www.gitignore.io/api/go,laravel,aptanastudio,hyperledgercomposer
+<<<<<<< HEAD
 
+=======
+Fastrak_Login/.gradle/5.1.1/executionHistory/executionHistory.bin
+Fastrak_Login/.gradle/5.1.1/executionHistory/executionHistory.bin
+>>>>>>> 672c700f6cc343e298beeb3c047cfb053a75aa54
 Fastrak_Login/.gradle/5.1.1/executionHistory/executionHistory.bin
 Fastrak_Login/.gradle/5.1.1/executionHistory/executionHistory.lock
 Fastrak_Login/.gradle/5.1.1/fileHashes/fileHashes.bin
 Fastrak_Login/.gradle/5.1.1/fileHashes/fileHashes.lock
 Fastrak_Login/.gradle/buildOutputCleanup/buildOutputCleanup.lock
+<<<<<<< HEAD
 Fastrak_Login/app/build/intermediates/bundle_manifest/debug/processDebugManifest/bundle-manifest/AndroidManifest.xml
 Fastrak_Login/app/build/intermediates/instant_app_manifest/debug/AndroidManifest.xml
 Fastrak_Login/app/build/intermediates/merged_manifests/debug/AndroidManifest.xml
 Fastrak_Login/app/build/intermediates/processed_res/debug/processDebugResources/out/resources-debug.ap_
 Fastrak_Login/app/build/outputs/apk/debug/app-debug.apk
+=======
+>>>>>>> 672c700f6cc343e298beeb3c047cfb053a75aa54
+*.bin
+*.lock
+*.bin
+*.lock
+*.lock
