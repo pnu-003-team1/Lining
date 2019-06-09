@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -76,6 +77,8 @@ public class MainFragment extends Fragment {
     private String email;
     private String name;
     private String phone;
+    private double latitude;
+    private double longitude;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -86,20 +89,25 @@ public class MainFragment extends Fragment {
             email = getArguments().getString("email");
             name = getArguments().getString("name");
             phone = getArguments().getString("phone");
+
         }
     }
 
     @Override
     public void onActivityCreated(Bundle b){
         super.onActivityCreated(b);
+        latitude = getArguments().getDouble("latitude");
+        longitude = getArguments().getDouble("longitude");
         noListItemText = (TextView) getActivity().findViewById(R.id.noListItemText);
 
         licenseListView = (ListView) getActivity().findViewById(R.id.licenseListView);
         licenseList = new ArrayList<License>();
         adapter = new LicenseListAdapter(getActivity().getApplicationContext(), licenseList);
         licenseListView.setAdapter(adapter);
-
+        Log.d("확인3", String.valueOf(latitude));
+        Log.d("확인4", String.valueOf(longitude));
         new BackgroundTast().execute();
+
 
         TextView search = (TextView) getActivity().findViewById(R.id.refreshButton);
         search.setOnClickListener(new View.OnClickListener() {
@@ -127,6 +135,48 @@ public class MainFragment extends Fragment {
             }
         });
     }
+
+    public void gpsbasedsort(List<License> data, int x, int y){
+        if(x >= y) {
+            return;
+        }
+
+        int pivot = x;
+        int left = pivot + 1;
+        int right = y;
+        License temp1;
+        License temp2;
+
+        while(left < right){
+            while(left <= y && data.get(left).getPositon() < data.get(pivot).getPositon()){
+                left++;
+            }
+            while(right >= pivot && data.get(pivot).getPositon() < data.get(right).getPositon()){
+                right--;
+            }
+
+            if(left < right){
+                temp1 = data.get(left);
+                temp2 = data.get(right);
+                data.remove(left);
+                data.add(left, temp2);
+                data.remove(right);
+                data.add(right, temp1);
+            } else{
+                temp1 = data.get(pivot);
+                temp2 = data.get(right);
+                data.remove(pivot);
+                data.add(pivot, temp2);
+                data.remove(right);
+                data.add(right, temp1);
+            }
+            gpsbasedsort(data, x, right - 1);
+            gpsbasedsort(data, right + 1, y);
+        }
+        Log.d("확인2", String.valueOf(data));
+        adapter.notifyDataSetChanged();
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -224,6 +274,7 @@ public class MainFragment extends Fragment {
                     String tel;
                     double bLatitude;
                     double bLongitude;
+                    int num = 10;
                     while (count < jsonArray.length()) {
                         JSONObject object = jsonArray.getJSONObject(count);
 
@@ -232,13 +283,20 @@ public class MainFragment extends Fragment {
                         bname = object.getString("bname");
                         addr = object.getString("addr");
                         tel = object.getString("tel");
+                        //bLatitude = 35.2271699 + (num - count)*0.01;
+                        //bLongitude = 129.0903442 + (num - count)*0.01;
+
                         bLatitude = Double.parseDouble(object.getString("bLatitude"));
                         bLongitude = Double.parseDouble(object.getString("bLongitude"));
 
                         License license = new License(full, email, bname, addr, tel, bLatitude, bLongitude);
+                        license.setPositon(latitude, longitude);
                         licenseList.add(license);
+                        Log.d("확인5", String.valueOf(license.getPositon()));
+                        Log.d("확인6", String.valueOf(license.getPositon()));
                         count++;
                     }
+                    gpsbasedsort(licenseList, 0, licenseList.size() - 1);
                 }
                 else{
                     licenseListView.setVisibility(View.GONE);

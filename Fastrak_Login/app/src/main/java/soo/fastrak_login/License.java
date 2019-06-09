@@ -8,6 +8,7 @@ public class License {
     private String tel;
     private double bLatitude;
     private double bLongitude;
+    private double position;
 
     public License(boolean full, String email, String bname, String addr, String tel, double bLatitude, double bLongitude){
         this.full = full;
@@ -74,4 +75,14 @@ public class License {
     public void setbLongitude(double bLongitude) {
         this.bLongitude = bLongitude;
     }
+
+    public void setPositon(double latitude, double longitude){
+        double x = latitude - bLatitude;
+        double y = longitude - bLongitude;
+        x = x>0?x:x*-1;
+        y = y>0?y:y*-1;
+        position = x + y;
+    }
+
+    public double getPositon(){ return position;}
 }
