@@ -33,6 +33,7 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.PriorityQueue;
 
 public class MenuListActivity extends AppCompatActivity{
 
@@ -215,40 +216,46 @@ public class MenuListActivity extends AppCompatActivity{
 
         new BackgroundTast().execute();
 
-        final Response.Listener<String> listener = new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                try {
-                    JSONObject jsonObject = new JSONObject(response);
-                    boolean success = jsonObject.getBoolean("success");
-                    if (success) {
-                        boolean possible = jsonObject.getBoolean("possible");
-                        if (possible) {
-                            // 예약되지 않은 경우
-                            reservationButton.setVisibility(View.VISIBLE);
-                            cancelButton.setVisibility(View.GONE);
-                        }
-                        else {
-                            // 예약되어 있는 경우
-                            RESERVED_STORE_NAME = jsonObject.getString("RESERVED_STORE_NAME");
-                            if(RESERVED_STORE_NAME.equals(bname)){
-                                reservationButton.setVisibility(View.GONE);
-                                cancelButton.setVisibility(View.VISIBLE);
-                            }
-                            else{
+        if(full) {
+            final Response.Listener<String> listener = new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    try {
+                        JSONObject jsonObject = new JSONObject(response);
+                        boolean success = jsonObject.getBoolean("success");
+                        if (success) {
+                            boolean possible = jsonObject.getBoolean("possible");
+                            if (possible) {
+                                // 예약되지 않은 경우
                                 reservationButton.setVisibility(View.VISIBLE);
                                 cancelButton.setVisibility(View.GONE);
+                            } else {
+                                // 예약되어 있는 경우
+                                RESERVED_STORE_NAME = jsonObject.getString("RESERVED_STORE_NAME");
+                                if (RESERVED_STORE_NAME.equals(bname)) {
+                                    reservationButton.setVisibility(View.GONE);
+                                    cancelButton.setVisibility(View.VISIBLE);
+                                } else {
+                                    reservationButton.setVisibility(View.VISIBLE);
+                                    cancelButton.setVisibility(View.GONE);
+                                }
                             }
                         }
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
                 }
-            }
-        };
-        ReservCheckRequest reservCheckRequest = new ReservCheckRequest(phone, listener);
-        RequestQueue requestQueue = Volley.newRequestQueue(MenuListActivity.this);
-        queue.add(reservCheckRequest);
+            };
+            ReservCheckRequest reservCheckRequest = new ReservCheckRequest(phone, listener);
+            RequestQueue requestQueue = Volley.newRequestQueue(MenuListActivity.this);
+            queue.add(reservCheckRequest);
+        }
+        else{
+            reservationButton.setVisibility(View.GONE);
+            cancelButton.setVisibility(View.GONE);
+            TextView fullView = (TextView) findViewById(R.id.fullView);
+            fullView.setVisibility(View.VISIBLE);
+        }
 
         // 인원수 조정
         total = 1;
@@ -429,11 +436,6 @@ public class MenuListActivity extends AppCompatActivity{
                 }
             }
         });
-
-        if(!full){
-            reservationButton.setClickable(false);
-            cancelButton.setClickable(false);
-        }
     }
 
     class BackgroundTast extends AsyncTask<Void, Void, String> {
