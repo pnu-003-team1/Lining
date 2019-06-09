@@ -79,7 +79,7 @@ public class PersonFragment extends Fragment {
     private EditText bnameText;
     private EditText numberText;
     private Button cancelButton;
-    private TextView modifyButton;
+    private Button modifyButton;
 
     private String email;
     private String phone;
@@ -113,7 +113,7 @@ public class PersonFragment extends Fragment {
         numberText = (EditText) getActivity().findViewById(R.id.numberText);
 
         cancelButton = (Button) getActivity().findViewById(R.id.WaitList_cancelButton);
-        modifyButton = (TextView) getActivity().findViewById(R.id.MyInfoModify);
+        modifyButton = (Button) getActivity().findViewById(R.id.MyInfoModify);
 
         modifyButton.setOnClickListener(new TextView.OnClickListener(){
 
