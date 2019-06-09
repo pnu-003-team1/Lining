@@ -88,10 +88,12 @@ public class MenuListActivity extends AppCompatActivity{
         baddr = intent.getStringExtra("baddr");
         bphone = intent.getStringExtra("bphone");
         if (bemail == null) finish();
+        Log.d("사업자 정보", "\nfull : " + full + "\nbemail : " + bemail + "\nbname : " + bname + "\nbaddr : " + baddr + "\nphone :" + bphone);
 
         // 사용자 이메일, 이름 받아오기
         email = intent.getStringExtra("email");
         phone = intent.getStringExtra("phone");
+        Log.d("사용자 정보", "\nemail : " + email + "\nphone" + phone);
 
         // 지도이용
         final Geocoder geocoder = new Geocoder(this);
@@ -127,6 +129,8 @@ public class MenuListActivity extends AppCompatActivity{
         Response.Listener<String> favoriteListener = new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+                TextView testing = (TextView) findViewById(R.id.testing);
+                testing.setText(response);
                 try{
                     JSONObject jsonObject = new JSONObject(response);
                     if(jsonObject.getBoolean("success")){
@@ -150,6 +154,7 @@ public class MenuListActivity extends AppCompatActivity{
         };
         FavoriteChkRequest favoriteChkRequest = new FavoriteChkRequest(bemail, bname, baddr, bphone, email, favoriteListener);
         RequestQueue queue = Volley.newRequestQueue(MenuListActivity.this);
+        Log.d("확인", "즐겨찾기 여부");
         queue.add(favoriteChkRequest);
 
 
@@ -165,6 +170,8 @@ public class MenuListActivity extends AppCompatActivity{
                         Log.d("확인", "add : " + response);
                         try{
                             JSONObject jsonObject = new JSONObject(response);
+                            TextView testing = (TextView) findViewById(R.id.testing);
+                            testing.setText(response);
                             boolean success = jsonObject.getBoolean("success");
                             if(success){
                                 Toast.makeText(MenuListActivity.this, "즐겨찾기 추가", Toast.LENGTH_SHORT).show();
@@ -222,6 +229,7 @@ public class MenuListActivity extends AppCompatActivity{
                 public void onResponse(String response) {
                     try {
                         JSONObject jsonObject = new JSONObject(response);
+                        Log.d("예약조회", response);
                         boolean success = jsonObject.getBoolean("success");
                         if (success) {
                             boolean possible = jsonObject.getBoolean("possible");
@@ -249,6 +257,7 @@ public class MenuListActivity extends AppCompatActivity{
             ReservCheckRequest reservCheckRequest = new ReservCheckRequest(phone, listener);
             RequestQueue requestQueue = Volley.newRequestQueue(MenuListActivity.this);
             queue.add(reservCheckRequest);
+            Log.d("확인", "예약조회");
         }
         else{
             reservationButton.setVisibility(View.GONE);
