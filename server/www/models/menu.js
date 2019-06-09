@@ -31,6 +31,10 @@ menuSchema.statics.getMenuList = function (email) {
 	return this.find({email});
 }
 
+menuSchema.statics.deleteAll = function (payload){
+   return this.remove({});
+};
+
 menuSchema.statics.getMenu = function (email) {
 	console.log("menuSchema getMenu");
 	return this.find({email}).select("-_id food price");
