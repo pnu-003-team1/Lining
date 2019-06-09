@@ -69,11 +69,11 @@ router.post('/', function(req, res, next) {
       console.log("repetition check : [" + emailChecked + "]");
       if(data.success) {
         // 이메일 체크 완료 & 회원가입 가능
-        res.redirect('/');
+        res.redirect('/completejoin');
       }
       else{
         // 이메일 체크 완료 & 회원가입 불가능
-        res.redirect('localhost:3000');
+        res.redirect('/failedjoin');
       }
     });
   }

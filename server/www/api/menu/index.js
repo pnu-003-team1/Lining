@@ -8,5 +8,6 @@ router.post('/remove', controller.remove);
 router.post('/modify', controller.modify);
 router.get('/getemailmenu', controller.getemailmenu);
 router.get('/getmenuinfo', controller.getmenuinfo);
+router.post('/removeall', controller.removeall);
 
 module.exports = router;
