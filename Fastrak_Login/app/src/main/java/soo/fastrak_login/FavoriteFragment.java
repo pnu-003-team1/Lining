@@ -240,8 +240,8 @@ public class FavoriteFragment extends Fragment {
                     String bname;
                     String baddr;
                     String bphone;
-                    double latitude;
-                    double longitude;
+                    double bLatitude;
+                    double bLongitude;
 
                     while (count < jsonArray.length()) {
                         JSONObject object = jsonArray.getJSONObject(count);
@@ -251,10 +251,10 @@ public class FavoriteFragment extends Fragment {
                         bname = object.getString("bname");
                         baddr = object.getString("baddr");
                         bphone = object.getString("bphone");
-                        latitude = object.getDouble("latitude");
-                        longitude = object.getDouble("longitude");
+                        bLatitude = object.getDouble("bLatitude");
+                        bLongitude = object.getDouble("bLongitude");
 
-                        License license = new License(full, bemail, bname, baddr, bphone, latitude, longitude);
+                        License license = new License(full, bemail, bname, baddr, bphone, bLatitude, bLongitude);
                         favoriteList.add(license);
                         count++;
                     }
