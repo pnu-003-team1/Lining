@@ -251,8 +251,8 @@ public class FavoriteFragment extends Fragment {
                         bname = object.getString("bname");
                         baddr = object.getString("baddr");
                         bphone = object.getString("bphone");
-                        bLatitude = object.getDouble("bLatitude");
-                        bLongitude = object.getDouble("bLongitude");
+                        bLatitude = Double.parseDouble(object.getString("bLatitude"));
+                        bLongitude = Double.parseDouble(object.getString("bLongitude"));
 
                         License license = new License(full, bemail, bname, baddr, bphone, bLatitude, bLongitude);
                         favoriteList.add(license);
