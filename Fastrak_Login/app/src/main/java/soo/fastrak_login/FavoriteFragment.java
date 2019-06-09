@@ -5,13 +5,15 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.android.volley.Response;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -75,7 +77,7 @@ public class FavoriteFragment extends Fragment {
     private TextView noListItemText;
 
     // user
-    private String email = "asd@asd.com";
+    private String email;
     private String name;
     private String phone;
 
@@ -85,8 +87,6 @@ public class FavoriteFragment extends Fragment {
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
-//            email = getArguments().getString("email");
-            phone = getArguments().getString("phone");
         }
     }
 
@@ -101,6 +101,9 @@ public class FavoriteFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle b){
         super.onActivityCreated(b);
+
+        email = getArguments().getString("email");
+        phone = getArguments().getString("phone");
 
         noListItemText = (TextView) getActivity().findViewById(R.id.noListItemText);
 
@@ -176,12 +179,13 @@ public class FavoriteFragment extends Fragment {
 
     class BackgroundTast extends AsyncTask<Void, Void, String> {
 
-        String target;
+        String target_YJ;
+        String target2_YH;
 
         @Override
         protected void onPreExecute() {
             try {
-                target = "http://54.164.52.65:3000/users/favorite?email=" + URLEncoder.encode(email, "UTF-8");
+                target_YJ = "http://54.164.52.65:3000/users/favorite?email=" + URLEncoder.encode(email, "UTF-8");
             }
             catch (Exception e){
                 e.printStackTrace();
@@ -191,7 +195,7 @@ public class FavoriteFragment extends Fragment {
         @Override
         protected String doInBackground(Void... voids) {
             try {
-                URL url = new URL(target);
+                URL url = new URL(target_YJ);
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
 //                if(httpURLConnection != null){
 //                    httpURLConnection.setConnectTimeout(10000);
@@ -246,7 +250,7 @@ public class FavoriteFragment extends Fragment {
                     while (count < jsonArray.length()) {
                         JSONObject object = jsonArray.getJSONObject(count);
 
-                        full = object.getBoolean("full");
+                        full = true;
                         bemail = object.getString("bemail");
                         bname = object.getString("bname");
                         baddr = object.getString("baddr");
@@ -256,6 +260,28 @@ public class FavoriteFragment extends Fragment {
 
                         License license = new License(full, bemail, bname, baddr, bphone, bLatitude, bLongitude);
                         favoriteList.add(license);
+
+                        final int count2 = count;
+                        Response.Listener<String> listener = new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                try{
+                                    JSONObject jsonObject = new JSONObject(response);
+                                    boolean success = jsonObject.getBoolean("success");
+                                    if(success){
+                                        favoriteList.get(count2).setFull(jsonObject.getBoolean("isFull"));
+                                    }
+                                    else{
+                                        Log.d("에러", jsonObject.getString("error"));
+                                    }
+                                }
+                                catch (Exception e){
+                                    e.printStackTrace();
+                                }
+                            }
+                        };
+                        String targetYH = "http://54.164.52.65:3000/users/isFull?bemail=" + URLEncoder.encode(bemail, "UTF-8");
+                        FavoYHRequest favoYHRequest = new FavoYHRequest(targetYH, listener);
                         count++;
                     }
                 }

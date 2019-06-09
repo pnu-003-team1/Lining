@@ -272,7 +272,7 @@ public class SearchFragment extends Fragment {
 
         @Override
         protected void onPreExecute() {
-            //target = "http://54.164.52.65:3000/users/search?bname=" + keyword;
+            //target_YJ = "http://54.164.52.65:3000/users/search?bname=" + keyword;
             target = "http://54.164.52.65:3000/users/buserList";
         }
 

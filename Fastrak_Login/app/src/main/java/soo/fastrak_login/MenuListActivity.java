@@ -129,8 +129,6 @@ public class MenuListActivity extends AppCompatActivity{
         Response.Listener<String> favoriteListener = new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                TextView testing = (TextView) findViewById(R.id.testing);
-                testing.setText(response);
                 try{
                     JSONObject jsonObject = new JSONObject(response);
                     if(jsonObject.getBoolean("success")){
@@ -170,8 +168,6 @@ public class MenuListActivity extends AppCompatActivity{
                         Log.d("확인", "add : " + response);
                         try{
                             JSONObject jsonObject = new JSONObject(response);
-                            TextView testing = (TextView) findViewById(R.id.testing);
-                            testing.setText(response);
                             boolean success = jsonObject.getBoolean("success");
                             if(success){
                                 Toast.makeText(MenuListActivity.this, "즐겨찾기 추가", Toast.LENGTH_SHORT).show();
