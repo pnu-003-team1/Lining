@@ -183,6 +183,10 @@ exports.getemailbuser = (req, res) => {
 	      			console.log('each item #', index, item.bname);
 	      			console.log('each item #', index, item.tel);
 	      			console.log('each item #', index, item.addr);
+	      			console.log('each item #', index, item.postnum);
+	      			console.log('each item #', index, item.longitude);
+	      			console.log('each item #', index, item.latitude);
+	      			console.log('each item #', index, item.postnum);
 	      			console.log('each item #', index, item.email);
 	      			
 	      			

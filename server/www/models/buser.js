@@ -7,6 +7,8 @@ var buserSchema = new Schema ({
    pw : {type : String, required : true},
    tel : {type : String, required : true},
    addr : {type : String, required : true},
+   longitude : {type : String},
+   latitude : {type : String},
    full : {type : Boolean, default: false}
 });
 
@@ -28,7 +30,7 @@ buserSchema.statics.checkbid = function (email){
 };
 buserSchema.statics.checkEmail = function(email) {
 	console.log("email: ", email);
-	return this.find({email}).select("-_id bname tel addr full email");;
+	return this.find({email}).select("-_id bname tel addr postnum longitude latitude full email");;
 };
 buserSchema.statics.checkbpw = function (pw){
    return this.find({pw});
