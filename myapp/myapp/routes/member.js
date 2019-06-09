@@ -57,23 +57,27 @@ router.post('/', function(req, res, next) {
   var bname = req.body.bname;
   var addr = req.body.addr;
   var tel = req.body.tel;
+  var longitude = req.body.longitude;
+  var latitude = req.body.latitude;
   var args = {
     email : email,
     pw : pw,
     bname : bname,
     addr : addr,
-    tel : tel
+    tel : tel,
+    longitude : longitude,
+    latitude : latitude
   };
   if(emailChecked) {
     invoke_user('join', args, function(data) {
       console.log("repetition check : [" + emailChecked + "]");
       if(data.success) {
         // 이메일 체크 완료 & 회원가입 가능
-        res.redirect('/');
+        res.redirect('/completejoin');
       }
       else{
         // 이메일 체크 완료 & 회원가입 불가능
-        res.redirect('localhost:3000');
+        res.redirect('/failedjoin');
       }
     });
   }
@@ -85,4 +89,3 @@ router.post('/', function(req, res, next) {
 });
 
 module.exports = router;
-
