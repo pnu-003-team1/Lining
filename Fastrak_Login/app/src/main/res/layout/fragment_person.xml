@@ -1,41 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".temp">
+    android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:weightSum="1"
-        android:layout_marginTop="30dp"
-        android:layout_marginLeft="20dp">
-        <TextView
-            android:layout_width="30dp"
-            android:layout_height="match_parent"
-            android:background="@drawable/ic_person_black_24dp"/>
-        <TextView
-            android:id="@+id/MyInfoModify"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="20dp"
-            android:text="내 정보 수정"
-            android:textSize="25dp"/>
-    </LinearLayout>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="13dp"
+        android:layout_marginRight="13dp"
         android:gravity="center"
-        android:text="예약현황"
-        android:layout_marginTop="30dp"/>
+        android:text="나의 예약 정보"
+        android:textColor="@color/white"
+        android:textSize="17dp"
+        android:background="@color/colorMain"
+        android:layout_marginTop="30dp"
+        />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_margin="10dp"
         android:weightSum="1">
 
@@ -43,17 +28,23 @@
             android:id="@+id/bnameText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="0.9"
             android:gravity="center"
-            android:hint="예약을 해주세요"
-            android:layout_weight="0.9" />
+            android:hint="예약을 해주세요" />
 
         <Button
             android:id="@+id/WaitList_cancelButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
+            android:layout_weight="0.1"
+            android:background="@color/colorMain"
+            android:shadowColor="@color/listeditbox"
+            android:shadowDx="10"
+            android:shadowDy="10"
             android:text="예약 취소"
-            android:layout_weight="0.1"/>
+            android:textSize="17dp"
+            android:textColor="@color/white" />
 
     </LinearLayout>
 
@@ -86,6 +77,31 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.3"/>
 
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/MyInfoModify"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="60dp"
+                android:layout_marginRight="60dp"
+                android:layout_marginBottom="3dp"
+                android:background="@color/colorMain"
+                android:shadowColor="@color/listeditbox"
+                android:shadowDx="10"
+                android:shadowDy="10"
+                android:text="정보 수정"
+                android:textColor="@color/white"
+                android:textSize="17dp" />
+        </RelativeLayout>
     </LinearLayout>
 
 </LinearLayout>
