@@ -37,7 +37,7 @@ script.
   main.container(role='main')
     .jumbotron
      br
-     button.btn.btn-outline-info.btn-lg.btn-block(type='button' name ='addmenu' onclick='location.href="/addmenu"' ) 메뉴 추가하기
+     button.btn.btn-outline-info.btn-lg.btn-block(type='button' name ='addmenu' onclick='location.href="/addmenu"') 메뉴 추가하기
      div(claas='table-responsive')
        table.table.table-striped.table-sm
          thead
@@ -77,7 +77,7 @@ script.
 
       cell1.innerHTML = temp1;
       cell2.innerHTML = temp2;
-      cell3.innerHTML = "<form action='/mymenu/modify' method ='post'><button value='"+temp1+"' type='submit' id='modify_menu' name='mfood'>수정</button>";
+      cell3.innerHTML = "<form action='/mymenu/modify' method ='post'><button value='"+temp1+"' type='submit' id='modify_menu' name='mfood'>수정</button></form>";
       cell4.innerHTML = "<form action='/mymenu/delete' method = 'post'><button value='"+temp1+"' type='submit' id='delete_menu' name='food'>삭제</button></form>";
       }
   });
