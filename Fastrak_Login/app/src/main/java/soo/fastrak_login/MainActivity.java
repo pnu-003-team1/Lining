@@ -139,8 +139,17 @@ public class MainActivity extends AppCompatActivity {
         }
         /////////////////////////////////////////
 
+        gps = new GpsInfo(MainActivity.this);
         // 5/12 : bottombar 네비게이션 바, fragment 이동
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigation);
+        bundle = new Bundle();
+        double myLatitude = gps.getLatitude();
+        double myLongitude = gps.getLongitude();
+        bundle.putDouble("latitude", myLatitude);
+        bundle.putDouble("longitude", myLongitude);
+        Log.d("전송", String.valueOf(myLatitude) + ", " + String.valueOf(myLongitude));
+        mainFragment.setArguments(bundle);
+        searchFragment.setArguments(bundle);
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.frame_layout, mainFragment);
         transaction.commit();
@@ -255,7 +264,6 @@ public class MainActivity extends AppCompatActivity {
                     return;
                 }
 
-                gps = new GpsInfo(MainActivity.this);
                 // GPS 사용유무 가져오기
                 if (gps.isGetLocation()) {
 
@@ -267,6 +275,7 @@ public class MainActivity extends AppCompatActivity {
                         Bundle bundle = new Bundle();
                         bundle.putDouble("latitude", mylatitude);
                         bundle.putDouble("longitude", mylongitude);
+                        Log.d("전송", String.valueOf(mylatitude) + ", " + String.valueOf(mylongitude));
                         mainFragment.setArguments(bundle);
                         searchFragment.setArguments(bundle);
                     } catch (IOException e) {
