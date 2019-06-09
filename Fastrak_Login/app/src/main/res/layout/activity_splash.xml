@@ -5,12 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="#FFFFFF"
     tools:context="soo.fastrak_login.SplashActivity">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1" />
+        android:layout_weight="0.55" />
 
     <ImageView
         android:id="@+id/imageView"
@@ -22,5 +23,5 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="0.4" />
+        android:layout_weight="0.5" />
 </LinearLayout>
