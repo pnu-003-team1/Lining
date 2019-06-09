@@ -275,12 +275,10 @@ public class MainActivity extends AppCompatActivity {
                         Bundle bundle = new Bundle();
                         bundle.putDouble("latitude", mylatitude);
                         bundle.putDouble("longitude", mylongitude);
-                        Log.d("전송", String.valueOf(mylatitude) + ", " + String.valueOf(mylongitude));
                         mainFragment.setArguments(bundle);
                         searchFragment.setArguments(bundle);
-                        FragmentTransaction transaction = fragmentManager.beginTransaction();
-                        transaction.replace(R.id.frame_layout, mainFragment);
-                        transaction.commit();
+                        Log.d("전송", String.valueOf(mylatitude) + ", " + String.valueOf(mylongitude));
+
                     } catch (IOException e) {
                         e.printStackTrace();
                         Log.e("test", "입출력 오류 - 서버에서 주소변환시 에러발생");
@@ -300,6 +298,10 @@ public class MainActivity extends AppCompatActivity {
                     //txtLon.setText(String.valueOf(longitude));
 
                     Toast.makeText(getApplicationContext(), "내 위치 \n위도: " + mylatitude + "\n경도: " + mylongitude, Toast.LENGTH_LONG).show();
+
+                    FragmentTransaction transaction = fragmentManager.beginTransaction();
+                    transaction.detach(mainFragment).attach(mainFragment);
+                    transaction.commit();
                 }
                 else {
                     // GPS 를 사용할수 없으므로
@@ -340,7 +342,11 @@ public class MainActivity extends AppCompatActivity {
                         bundle.putDouble("longitude", longitude);
                         mainFragment.setArguments(bundle);
                         searchFragment.setArguments(bundle);
+
                     }
+                    FragmentTransaction transaction = fragmentManager.beginTransaction();
+                    transaction.detach(mainFragment).attach(mainFragment);
+                    transaction.commit();
                 }
             }
         });
