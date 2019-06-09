@@ -431,8 +431,8 @@ public class MenuListActivity extends AppCompatActivity{
         });
 
         if(!full){
-            reservationButton.setVisibility(View.GONE);
-            cancelButton.setVisibility(View.GONE);
+            reservationButton.setClickable(false);
+            cancelButton.setClickable(false);
         }
     }
 
