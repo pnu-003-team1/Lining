@@ -6,7 +6,9 @@ var favorSchema = new Schema({
 	bemail: {type: String},
 	bphone: {type: String},
 	baddr: {type: String},
-	bname: {type: String}
+	bname: {type: String},
+	bLatitude: {type: String},
+    bLongitude: {type: String}, 
 });
 
 favorSchema.statics.checkPair = function (email, bemail) {
@@ -22,7 +24,7 @@ favorSchema.statics.add = function (payload) {
 
 favorSchema.statics.getList = function (email) {
 	console.log("favSchema-getList");
-	return this.find({email}).select("-_id bemail bphone baddr bname");
+	return this.find({email}).select("-_id bemail bphone baddr bname bLatitude bLongitude");
 }
 
 favorSchema.statics.delOne = function (email, bemail) {

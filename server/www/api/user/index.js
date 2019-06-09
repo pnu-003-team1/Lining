@@ -17,6 +17,7 @@ router.get('/removeall', controller.removeall);
 router.get('/userInfo', controller.getUserInfo);
 router.get('/favorite', controller.getFavList);
 router.get('/search', controller.searchBuser);
+router.get('/isFull', controller.isFull);
 
 router.post('/remove', controller.remove);
 router.post('/modify', controller.modify);

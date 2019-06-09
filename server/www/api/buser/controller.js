@@ -6,6 +6,7 @@
 
 const router = require('express').Router();
 const Buser = require('../../models/buser');
+const Favor = require('../../models/favor');
 
 exports.create = (req, res) => {
 	console.log("busr create: ", req.body.bname);
@@ -67,6 +68,7 @@ exports.fullCheck = (req, res) => {
     })
     .catch(err => res.status(400).send(err));
 };
+
 
 exports.login = (req, res) => {
 	console.log("busr login: ", req.body.email , req.body.pw);
@@ -186,10 +188,8 @@ exports.getemailbuser = (req, res) => {
 	      			console.log('each item #', index, item.bname);
 	      			console.log('each item #', index, item.tel);
 	      			console.log('each item #', index, item.addr);
-	      			console.log('each item #', index, item.postnum);
 	      			console.log('each item #', index, item.longitude);
 	      			console.log('each item #', index, item.latitude);
-	      			console.log('each item #', index, item.postnum);
 	      			console.log('each item #', index, item.email);
 	      			
 	      			

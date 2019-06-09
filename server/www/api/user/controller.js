@@ -170,29 +170,18 @@ exports.getbuserList = (req, res) => {
 			
 	      		user.forEach(function (item, index){
 	      			console.log('each item #', index, item.bname);
-	      			if(item.email == "010-8260-5571@naver.com" || item.email == "010-5555-5555@naver.com") {
-	      				buserInfo = {
-						full: item.full,
-						email: item.email,
-						bname: item.bname,
-						tel: item.tel,
-						addr: item.addr,
-						bLatitude: item.latitude,
-						bLongitude: item.longitude
-						};	
-	      			}
-	      			else {
-	      				console.log('I');
-	      				buserInfo = {
-						full: item.full,
-						email: item.email,
-						bname: item.bname,
-						tel: item.tel,
-						addr: item.addr,
-						bLatitude: "35.166265",
-						bLongitude: "129.065123"
-						};
-	      			}
+	      			console.log('each item #', index, item.latitude);
+	      			console.log('each item #', index, item.longitude);
+      				buserInfo = {
+					full: item.full,
+					email: item.email,
+					bname: item.bname,
+					tel: item.tel,
+					addr: item.addr,
+					bLatitude: item.latitude,
+					bLongitude: item.longitude
+					};
+						
 	      			list.push(buserInfo);
 	      		});
 	      		
@@ -344,6 +333,8 @@ exports.addFav = (req, res) => {
 	const bphone = req.body.bphone;
 	const baddr = req.body.baddr;
 	const bname = req.body.bname;
+	const bLatitude = req.body.bLatitude;
+	const bLongitude = req.body.bLongitude;
 	
 	if (!bemail.length) {
 		return res.status(200).send({success: false, error: 'email length 0'});
@@ -410,7 +401,10 @@ exports.getFavList = (req, res) => {
 					bemail: item.bemail,
 					bphone: item.bphone,
 					baddr: item.baddr,
-					bname: item.bname
+					bname: item.bname,
+					bLatitude : item.bLatitude,
+					bLongitude : item.bLongitude,
+					bfull : item.full					
 				};
 				list.push(buserInfo);
 			});
@@ -486,6 +480,43 @@ exports.isFav = (req, res) => {
 		})
 		.catch(err => res.status(200).send({success: false, error: 'Server error'}));
 };
+
+
+exports.isFull = (req, res) => {
+	const bemail = req.body.bemail;
+	console.log("isFull");
+	if (!bemail.length) {
+		return res.status(200).send({success: false, error: 'bemail length 0'});
+	}
+	
+	Buser.getFull(bemail)
+		.then((result) => {
+			if(!result.length) {
+				console.log("isFav-no exist pair");
+				return res.send({success: true, isFav: false });
+			}
+			else {
+				result.forEach(function (item, index) {
+					console.log('each item #',index, item.bemail);
+					buserInfo = {
+						bfull : item.full					
+					};
+				});
+				
+				var query = {
+					success: true,
+					isFull: buserInfo.bfull
+				};
+				
+				var jsonData = JSON.stringify(query);
+				
+				return res.status(200).send(jsonData);
+				
+			}
+		})
+		.catch(err => res.status(200).send({success: false, error: 'Server error'}));
+};
+
 
 exports.searchBuser = (req, res) => {
 	const bname = req.query.bname;

@@ -71,6 +71,10 @@ buserSchema.statics.searchName = function (bname) {
 	console.log("searchName DB");
 	return this.find({'bname': {'$regex': bname, '$options': 'i'}}).select("-_id bname tel addr full email");
 };
-	
+
+buserSchema.statics.getFull = function (email) {
+	return this.find({email}).select("-_id full");
+};
+
 module.exports = mongoose.model('Buser', buserSchema);
 
