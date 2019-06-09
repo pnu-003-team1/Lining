@@ -7,10 +7,12 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
@@ -39,7 +41,9 @@ public class SearchFragment extends Fragment {
     private List<Store> list;
     private ListView storelistView;
     private StoreListViewAdapter adapter;
+    private LicenseListAdapter adapter2;
     private EditText editSearch;
+    private Button searchButton;
     private ArrayList<Store> arraylist;
     //private String keyword;
 
@@ -47,6 +51,8 @@ public class SearchFragment extends Fragment {
     private List<License> licenseList;
     private String email;
     private String phone;
+    private Double latitude;
+    private Double longitude;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -95,9 +101,12 @@ public class SearchFragment extends Fragment {
 
     public void onActivityCreated(Bundle b){
         super.onActivityCreated(b);
+        latitude = getArguments().getDouble("latitude");
+        longitude = getArguments().getDouble("longitude");
         licenseArrayList = new ArrayList<License>();
         licenseList = new ArrayList<License>();
 
+        searchButton = (Button) getActivity().findViewById(R.id.searchButton);
         editSearch = (EditText) getActivity().findViewById(R.id.editSearch);
         storelistView = (ListView) getActivity().findViewById(R.id.searchlistView);
         arraylist = new ArrayList<Store>();
@@ -106,6 +115,7 @@ public class SearchFragment extends Fragment {
         new BackgroundTast().execute();
 
         list.addAll(arraylist);
+        licenseList.addAll(licenseArrayList);
         adapter = new StoreListViewAdapter(getActivity().getApplicationContext(), list);
         storelistView.setAdapter(adapter);
 
@@ -124,8 +134,16 @@ public class SearchFragment extends Fragment {
             public void afterTextChanged(Editable s) {
                 String text = editSearch.getText().toString();
                 //keyword = text;
+                /*adapter = new StoreListViewAdapter(getActivity().getApplicationContext(), list);
+                storelistView.setAdapter(adapter);*/
                 search(text);
             }
+        });
+
+        searchButton.setOnClickListener((view) -> {
+/*            adapter2 = new LicenseListAdapter(getActivity().getApplicationContext(), licenseList);
+            storelistView.setAdapter(adapter2);
+            adapter2.notifyDataSetChanged();*/
         });
 
 
@@ -170,6 +188,47 @@ public class SearchFragment extends Fragment {
             }
         }
         // 리스트 데이터가 변경되었으므로 아답터를 갱신하여 검색된 데이터를 화면에 보여준다.
+        adapter.notifyDataSetChanged();
+}
+
+    public void gpsbasedsort(List<License> data, int x, int y){
+        if(x >= y) {
+            return;
+        }
+
+        int pivot = x;
+        int left = pivot + 1;
+        int right = y;
+        License temp1;
+        License temp2;
+
+        while(left < right){
+            while(left <= y && data.get(left).getPositon() < data.get(pivot).getPositon()){
+                left++;
+            }
+            while(right >= pivot && data.get(pivot).getPositon() < data.get(right).getPositon()){
+                right--;
+            }
+
+            if(left < right){
+                temp1 = data.get(left);
+                temp2 = data.get(right);
+                data.remove(left);
+                data.add(left, temp2);
+                data.remove(right);
+                data.add(right, temp1);
+            } else{
+                temp1 = data.get(pivot);
+                temp2 = data.get(right);
+                data.remove(pivot);
+                data.add(pivot, temp2);
+                data.remove(right);
+                data.add(right, temp1);
+            }
+            gpsbasedsort(data, x, right - 1);
+            gpsbasedsort(data, right + 1, y);
+        }
+        Log.d("확인2", String.valueOf(data));
         adapter.notifyDataSetChanged();
     }
 
@@ -274,12 +333,18 @@ public class SearchFragment extends Fragment {
                         bLatitude = Double.parseDouble(object.getString("bLatitude"));
                         bLongitude = Double.parseDouble(object.getString("bLongitude"));
 
-                        Store store = new Store(bname);
-                        arraylist.add(store);
+                        //Store store = new Store(bname);
+                        //arraylist.add(store);
 
                         License license = new License(full, email, bname, addr, tel, bLatitude, bLongitude);
+                        license.setPositon(latitude, longitude);
                         licenseArrayList.add(license);
                         count++;
+                    }
+                    gpsbasedsort(licenseArrayList, 0, licenseArrayList.size() - 1);
+                    for(int i = 0; i < licenseArrayList.size(); i++){
+                        Store store = new Store(licenseArrayList.get(i).getBname());
+                        arraylist.add(store);
                     }
                 }
                 else{

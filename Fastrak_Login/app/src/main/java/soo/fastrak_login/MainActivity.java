@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
     private String phone;
     private String name;
     private String pw;
+    Bundle bundle;
     private ArrayList<String> Items = new ArrayList<>();
 
     //4/29/////////////
@@ -82,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
         pw = intent.getStringExtra("pw");
 
         // 5/12 : bundle로 fragment로 변수 전송
-        Bundle bundle = new Bundle();
+        bundle = new Bundle();
         bundle.putString("email", email);
         bundle.putString("phone", phone);
         bundle.putString("name", name);
@@ -142,7 +143,6 @@ public class MainActivity extends AppCompatActivity {
         gps = new GpsInfo(MainActivity.this);
         // 5/12 : bottombar 네비게이션 바, fragment 이동
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigation);
-        bundle = new Bundle();
         double myLatitude = gps.getLatitude();
         double myLongitude = gps.getLongitude();
         bundle.putDouble("latitude", myLatitude);
@@ -272,7 +272,6 @@ public class MainActivity extends AppCompatActivity {
 
                     try {
                         list = geocoder.getFromLocation(mylatitude, mylongitude, 10);
-                        Bundle bundle = new Bundle();
                         bundle.putDouble("latitude", mylatitude);
                         bundle.putDouble("longitude", mylongitude);
                         mainFragment.setArguments(bundle);
@@ -300,6 +299,7 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "내 위치 \n위도: " + mylatitude + "\n경도: " + mylongitude, Toast.LENGTH_LONG).show();
 
                     FragmentTransaction transaction = fragmentManager.beginTransaction();
+                    transaction.replace(R.id.frame_layout, mainFragment);
                     transaction.detach(mainFragment).attach(mainFragment);
                     transaction.commit();
                 }
@@ -337,7 +337,6 @@ public class MainActivity extends AppCompatActivity {
                         longitude = list.get(0).getLongitude();
                         Toast.makeText(getApplicationContext(), "내 위치 \n위도: " + latitude + "\n경도: " + longitude, Toast.LENGTH_LONG).show();
 
-                        Bundle bundle = new Bundle();
                         bundle.putDouble("latitude", latitude);
                         bundle.putDouble("longitude", longitude);
                         mainFragment.setArguments(bundle);
@@ -345,6 +344,7 @@ public class MainActivity extends AppCompatActivity {
 
                     }
                     FragmentTransaction transaction = fragmentManager.beginTransaction();
+                    transaction.replace(R.id.frame_layout, mainFragment);
                     transaction.detach(mainFragment).attach(mainFragment);
                     transaction.commit();
                 }
