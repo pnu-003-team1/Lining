@@ -57,12 +57,16 @@ router.post('/', function(req, res, next) {
   var bname = req.body.bname;
   var addr = req.body.addr;
   var tel = req.body.tel;
+  var longitude = req.body.longitude;
+  var latitude = req.body.latitude;
   var args = {
     email : email,
     pw : pw,
     bname : bname,
     addr : addr,
-    tel : tel
+    tel : tel,
+    longitude : longitude,
+    latitude : latitude
   };
   if(emailChecked) {
     invoke_user('join', args, function(data) {
@@ -85,4 +89,3 @@ router.post('/', function(req, res, next) {
 });
 
 module.exports = router;
-

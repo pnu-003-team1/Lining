@@ -60,6 +60,7 @@
             android:text="등록된 메뉴가 없어요." />
 
         <ListView
+            android:layout_marginTop="@dimen/list_bottom_margin"
             android:id="@+id/menuListView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -102,10 +103,15 @@
 
     </LinearLayout>
 
+
     <Button
         android:id="@+id/showMapButton"
+        android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/colorMain"
+        android:textColor="@color/white"
+        android:textSize="17dp"
         android:text="위치확인"/>
 
     <LinearLayout

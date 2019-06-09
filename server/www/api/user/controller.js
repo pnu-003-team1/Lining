@@ -170,29 +170,17 @@ exports.getbuserList = (req, res) => {
 			
 	      		user.forEach(function (item, index){
 	      			console.log('each item #', index, item.bname);
-	      			if(item.email == "010-8260-5571@naver.com" || item.email == "010-5555-5555@naver.com") {
-	      				buserInfo = {
-						full: item.full,
-						email: item.email,
-						bname: item.bname,
-						tel: item.tel,
-						addr: item.addr,
-						bLatitude: item.latitude,
-						bLongitude: item.longitude
-						};	
-	      			}
-	      			else {
-	      				console.log('I');
-	      				buserInfo = {
-						full: item.full,
-						email: item.email,
-						bname: item.bname,
-						tel: item.tel,
-						addr: item.addr,
-						bLatitude: "35.166265",
-						bLongitude: "129.065123"
-						};
-	      			}
+	      			console.log('each item #', index, item.latitude);
+	      			console.log('each item #', index, item.longitude);
+      				buserInfo = {
+					full: item.full,
+					email: item.email,
+					bname: item.bname,
+					tel: item.tel,
+					addr: item.addr,
+					bLatitude: item.latitude,
+					bLongitude: item.longitude
+					};	
 	      			list.push(buserInfo);
 	      		});
 	      		
