@@ -97,36 +97,6 @@ public class MainActivity extends AppCompatActivity {
         loginID = autologin.getString("email", null);
         loginPW = autologin.getString("pw", null);
 
-        // 5/12 : bottombar 네비게이션 바, fragment 이동
-        bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigation);
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.replace(R.id.frame_layout, mainFragment);
-        transaction.commit();
-        BottomNavigationHelper.disableShiftMode(bottomNavigationView);
-        bottomNavigationView.setOnNavigationItemSelectedListener(
-                new BottomNavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                        FragmentTransaction transaction = fragmentManager.beginTransaction();
-                        switch(item.getItemId()) {
-                            case R.id.navigation_home:
-                                transaction.replace(R.id.frame_layout, mainFragment).commitAllowingStateLoss();
-                                break;
-                            case R.id.navigation_search:
-                                transaction.replace(R.id.frame_layout, searchFragment).commitAllowingStateLoss();
-                                break;
-                            case R.id.navigation_favorites:
-                                transaction.replace(R.id.frame_layout, favoriteFragment).commitAllowingStateLoss();
-                                break;
-                            case R.id.navigation_person:
-                                transaction.replace(R.id.frame_layout, personFragment).commitAllowingStateLoss();
-                                break;
-                        }
-                        return true;
-                    }
-                });
-        ////////////////////////////////////////////////////
-
         //4/29/////////////
         TextView mainloginBtn = (TextView)findViewById(R.id.mainlogin);
         TextView mainregisterBtn = (TextView)findViewById(R.id.mainregister);
@@ -168,6 +138,52 @@ public class MainActivity extends AppCompatActivity {
             mainregisterBtn.setText("회원가입");
         }
         /////////////////////////////////////////
+
+        // 5/12 : bottombar 네비게이션 바, fragment 이동
+        bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigation);
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.replace(R.id.frame_layout, mainFragment);
+        transaction.commit();
+        BottomNavigationHelper.disableShiftMode(bottomNavigationView);
+        bottomNavigationView.setOnNavigationItemSelectedListener(
+                new BottomNavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                        FragmentTransaction transaction = fragmentManager.beginTransaction();
+                        switch(item.getItemId()) {
+                            case R.id.navigation_home:
+                                transaction.replace(R.id.frame_layout, mainFragment).commitAllowingStateLoss();
+                                break;
+                            case R.id.navigation_search:
+                                transaction.replace(R.id.frame_layout, searchFragment).commitAllowingStateLoss();
+                                break;
+                            case R.id.navigation_favorites:
+                                if(loginsuccess==1)
+                                    transaction.replace(R.id.frame_layout, favoriteFragment).commitAllowingStateLoss();
+                                else{
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                                    builder.setMessage("로그인이 필요합니다.")
+                                            .setNegativeButton("다시 시도", null)
+                                            .create()
+                                            .show();
+                                }
+                                break;
+                            case R.id.navigation_person:
+                                if(loginsuccess==1)
+                                    transaction.replace(R.id.frame_layout, personFragment).commitAllowingStateLoss();
+                                else{
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                                    builder.setMessage("로그인이 필요합니다.")
+                                            .setNegativeButton("다시 시도", null)
+                                            .create()
+                                            .show();
+                                }
+                                break;
+                        }
+                        return true;
+                    }
+                });
+        ////////////////////////////////////////////////////
 
         // 4/27 : 로그아웃 상태일 때, 로그인화면 이동 & 로그인 상태일 때, 로그아웃 기능
         mainloginBtn.setOnClickListener(new TextView.OnClickListener(){
