@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "C:\\Users\\dlsgu\\Documents\\GitHub\\Lining\\Fastrak_Login\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-v24\\values-v24.xml",
+            "outputFile": "C:\\Users\\Soo\\Documents\\GitHub\\Lining\\Fastrak_Login\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-v24\\values-v24.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\dlsgu\\.gradle\\caches\\transforms-2\\files-2.1\\3246d72525f1778df7e0ad643031f441\\res\\values-v24\\values-v24.xml",
+                    "source": "C:\\Users\\Soo\\.gradle\\caches\\transforms-2\\files-2.1\\98bcb098f087609c63d6590e981c2ff3\\res\\values-v24\\values-v24.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7",
                         "startColumns": "4,4,4,4,4,4",
@@ -14,7 +14,7 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\dlsgu\\.gradle\\caches\\transforms-2\\files-2.1\\89c2c8ed0079e20944d16fc582fa80e8\\res\\values-v24\\values-v24.xml",
+                    "source": "C:\\Users\\Soo\\.gradle\\caches\\transforms-2\\files-2.1\\3e735554e6594ecf27a6407dce098b38\\res\\values-v24\\values-v24.xml",
                     "from": {
                         "startLines": "2,3,4,5",
                         "startColumns": "4,4,4,4",

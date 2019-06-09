@@ -482,6 +482,7 @@ color button_material_dark
 color button_material_light
 color colorAccent
 color colorCustom
+color colorMain
 color colorPrimary
 color colorPrimaryDark
 color design_bottom_navigation_shadow_color
@@ -504,6 +505,7 @@ color foreground_material_dark
 color foreground_material_light
 color highlighted_text_material_dark
 color highlighted_text_material_light
+color listeditbox
 color material_blue_grey_800
 color material_blue_grey_900
 color material_blue_grey_950
@@ -541,6 +543,7 @@ color switch_thumb_normal_material_dark
 color switch_thumb_normal_material_light
 color tooltip_background_dark
 color tooltip_background_light
+color white
 dimen abc_action_bar_content_inset_material
 dimen abc_action_bar_content_inset_with_nav
 dimen abc_action_bar_default_height_material
