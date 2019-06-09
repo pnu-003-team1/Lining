@@ -116,6 +116,7 @@ public class SearchFragment extends Fragment {
 
         list.addAll(arraylist);
         licenseList.addAll(licenseArrayList);
+
         adapter = new StoreListViewAdapter(getActivity().getApplicationContext(), list);
         storelistView.setAdapter(adapter);
 
@@ -134,16 +135,15 @@ public class SearchFragment extends Fragment {
             public void afterTextChanged(Editable s) {
                 String text = editSearch.getText().toString();
                 //keyword = text;
-                /*adapter = new StoreListViewAdapter(getActivity().getApplicationContext(), list);
-                storelistView.setAdapter(adapter);*/
+                adapter = new StoreListViewAdapter(getActivity().getApplicationContext(), list);
+                storelistView.setAdapter(adapter);
                 search(text);
             }
         });
 
         searchButton.setOnClickListener((view) -> {
-/*            adapter2 = new LicenseListAdapter(getActivity().getApplicationContext(), licenseList);
+            adapter2 = new LicenseListAdapter(getActivity().getApplicationContext(), licenseList);
             storelistView.setAdapter(adapter2);
-            adapter2.notifyDataSetChanged();*/
         });
 
 
