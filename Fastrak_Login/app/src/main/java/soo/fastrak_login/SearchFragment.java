@@ -1,6 +1,5 @@
 package soo.fastrak_login;
 
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -8,7 +7,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +23,6 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -141,8 +138,8 @@ public class SearchFragment extends Fragment {
                 menuIntent.putExtra("bname", licenseList.get(i).getBname());
                 menuIntent.putExtra("baddr", licenseList.get(i).getAddr());
                 menuIntent.putExtra("bphone", licenseList.get(i).getTel());
-                menuIntent.putExtra("latitude", licenseList.get(i).getLatitude());
-                menuIntent.putExtra("longitude", licenseList.get(i).getLongitude());
+                menuIntent.putExtra("bLatitude", licenseList.get(i).getbLatitude());
+                menuIntent.putExtra("bLongitude", licenseList.get(i).getbLongitude());
                 menuIntent.putExtra("email", email);
                 menuIntent.putExtra("phone", phone);
                 startActivity(menuIntent);
@@ -265,8 +262,8 @@ public class SearchFragment extends Fragment {
                     String email;
                     String addr;
                     String tel;
-                    double latitude;
-                    double longitude;
+                    double bLatitude;
+                    double bLongitude;
                     while (count < jsonArray.length()) {
                         JSONObject object = jsonArray.getJSONObject(count);
                         full = object.getBoolean("full");
@@ -274,13 +271,13 @@ public class SearchFragment extends Fragment {
                         email = object.getString("email");
                         addr = object.getString("addr");
                         tel = object.getString("tel");
-                        latitude = object.getDouble("latitude");
-                        longitude = object.getDouble("longitude");
+                        bLatitude = object.getDouble("bLatitude");
+                        bLongitude = object.getDouble("bLongitude");
 
                         Store store = new Store(bname);
                         arraylist.add(store);
 
-                        License license = new License(full, email, bname, addr, tel, latitude, longitude);
+                        License license = new License(full, email, bname, addr, tel, bLatitude, bLongitude);
                         licenseArrayList.add(license);
                         count++;
                     }

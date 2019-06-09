@@ -47,8 +47,8 @@ public class MenuListActivity extends AppCompatActivity{
     private String bname;
     private String bphone;
     private String baddr;
-    private double latitude;
-    private double longitude;
+    private double bLatitude;
+    private double bLongitude;
 
     // 현재 예약정보
     private String RESERVED_STORE_NAME = "NONE";
@@ -79,8 +79,8 @@ public class MenuListActivity extends AppCompatActivity{
 
         // 사업자 정보 받아오기
         Intent intent = getIntent();
-        latitude = intent.getDoubleExtra("latitude", 35.230983);
-        longitude = intent.getDoubleExtra("longitude", 129.0816943);
+        bLatitude = intent.getDoubleExtra("bLatitude", 35.230983);
+        bLongitude = intent.getDoubleExtra("bLongitude", 129.0816943);
         full = intent.getBooleanExtra("full", false);
         bemail = intent.getStringExtra("bemail");
         bname = intent.getStringExtra("bname");
@@ -98,10 +98,10 @@ public class MenuListActivity extends AppCompatActivity{
         showMapButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String info = "geo:" + latitude + "," + longitude;
-                if(latitude != 35.230983  && longitude != 129.0816943)
+                String info = "geo:" + bLatitude + "," + bLongitude;
+                if(bLatitude != 35.230983  && bLongitude != 129.0816943)
                     info = info
-                            + "?q=" + latitude + "," + longitude
+                            + "?q=" + bLatitude + "," + bLongitude
                             + "(" + bname + ")";
 
                 Intent mapIntent = new Intent(Intent.ACTION_VIEW,

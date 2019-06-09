@@ -1,12 +1,10 @@
 package soo.fastrak_login;
 
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -121,8 +119,8 @@ public class MainFragment extends Fragment {
                 menuIntent.putExtra("bname", licenseList.get(i).getBname());
                 menuIntent.putExtra("baddr", licenseList.get(i).getAddr());
                 menuIntent.putExtra("bphone", licenseList.get(i).getTel());
-                menuIntent.putExtra("latitude", licenseList.get(i).getLatitude());
-                menuIntent.putExtra("longitude", licenseList.get(i).getLongitude());
+                menuIntent.putExtra("bLatitude", licenseList.get(i).getbLatitude());
+                menuIntent.putExtra("bLongitude", licenseList.get(i).getbLongitude());
                 menuIntent.putExtra("email", email);
                 menuIntent.putExtra("phone", phone);
                 startActivity(menuIntent);
@@ -224,8 +222,8 @@ public class MainFragment extends Fragment {
                     String bname;
                     String addr;
                     String tel;
-                    double latitude;
-                    double longitude;
+                    double bLatitude;
+                    double bLongitude;
                     while (count < jsonArray.length()) {
                         JSONObject object = jsonArray.getJSONObject(count);
 
@@ -234,10 +232,12 @@ public class MainFragment extends Fragment {
                         bname = object.getString("bname");
                         addr = object.getString("addr");
                         tel = object.getString("tel");
-                        latitude = object.getDouble("latitude");
-                        longitude = object.getDouble("longitude");
+                        bLatitude = 35.2271699;
+                        bLongitude = 129.0903442;
+//                        bLatitude = Double.parseDouble(object.getString("bLatitude"));
+//                        bLongitude = Double.parseDouble(object.getString("bLongitude"));
 
-                        License license = new License(full, email, bname, addr, tel, latitude, longitude);
+                        License license = new License(full, email, bname, addr, tel, bLatitude, bLongitude);
                         licenseList.add(license);
                         count++;
                     }

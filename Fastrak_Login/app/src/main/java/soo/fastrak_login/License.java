@@ -6,17 +6,17 @@ public class License {
     private String bname;
     private String addr;
     private String tel;
-    private double latitude;
-    private double longitude;
+    private double bLatitude;
+    private double bLongitude;
 
-    public License(boolean full, String email, String bname, String addr, String tel, double latitude, double longitude){
+    public License(boolean full, String email, String bname, String addr, String tel, double bLatitude, double bLongitude){
         this.full = full;
         this.email = email;
         this.bname = bname;
         this.addr = addr;
         this.tel = tel;
-        this.latitude = latitude;
-        this.longitude = longitude;
+        this.bLatitude = bLatitude;
+        this.bLongitude = bLongitude;
     }
 
     public boolean isFull() {
@@ -59,19 +59,19 @@ public class License {
         this.tel = tel;
     }
 
-    public double getLatitude() {
-        return latitude;
+    public double getbLatitude() {
+        return bLatitude;
     }
 
-    public void setLatitude(double latitude) {
-        this.latitude = latitude;
+    public void setbLatitude(double bLatitude) {
+        this.bLatitude = bLatitude;
     }
 
-    public double getLongitude() {
-        return longitude;
+    public double getbLongitude() {
+        return bLongitude;
     }
 
-    public void setLongitude(double longitude) {
-        this.longitude = longitude;
+    public void setbLongitude(double bLongitude) {
+        this.bLongitude = bLongitude;
     }
 }
