@@ -14,7 +14,10 @@ exports.create = (req, res) => {
 	const pw = req.body.pw;
 	const tel = req.body.tel;
 	const addr = req.body.addr;
-
+	const longitude = req.body.longitude;
+	const latitude = req.body.latitude;
+	
+	
 	if (!bname.length) {
 		return res.status(200).send({success: false, error: 'bname length 0'});
 	}
