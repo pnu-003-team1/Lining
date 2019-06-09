@@ -6,7 +6,7 @@ android:layout_width="match_parent"
 android:layout_height="match_parent"
 android:orientation="vertical"
 android:background="#FFFFFF"
-tools:context="soo.fastrak_login.LoginActivity">
+tools:context="soo.fastrak_login.MainActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -36,7 +36,29 @@ tools:context="soo.fastrak_login.LoginActivity">
             android:textColor="#000000"/>
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
+        <EditText
+            android:id="@+id/address"
+            android:layout_width="256dp"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/addr_setting"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="주소설정" />
+
+        <Button
+            android:id="@+id/gpsBtn"
+            android:layout_width="66dp"
+            android:layout_height="wrap_content"
+            android:text="내 위치" />
+
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/frame_layout"
