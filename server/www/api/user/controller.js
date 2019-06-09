@@ -167,16 +167,33 @@ exports.getbuserList = (req, res) => {
       			console.log("user length != 0");
       			var bInfo = new Object();
 	      		var list = new Array();
-	      		
+			
 	      		user.forEach(function (item, index){
-	      			console.log('each item #', index, item.full);
 	      			console.log('each item #', index, item.bname);
-	      			console.log('each item #', index, item.tel);
-	      			console.log('each item #', index, item.addr);
-	      			console.log('each item #', index, item.email);
-	      			
-	      			list.push(item);
-	      				
+	      			if(item.email == "010-8260-5571@naver.com" || item.email == "010-5555-5555@naver.com") {
+	      				buserInfo = {
+						full: item.full,
+						email: item.email,
+						bname: item.bname,
+						tel: item.tel,
+						addr: item.addr,
+						bLatitude: item.latitude,
+						bLongitude: item.longitude
+						};	
+	      			}
+	      			else {
+	      				console.log('I');
+	      				buserInfo = {
+						full: item.full,
+						email: item.email,
+						bname: item.bname,
+						tel: item.tel,
+						addr: item.addr,
+						bLatitude: "35.166265",
+						bLongitude: "129.065123"
+						};
+	      			}
+	      			list.push(buserInfo);
 	      		});
 	      		
 	      		console.log("list length", list.length);
