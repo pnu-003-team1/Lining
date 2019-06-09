@@ -278,6 +278,9 @@ public class MainActivity extends AppCompatActivity {
                         Log.d("전송", String.valueOf(mylatitude) + ", " + String.valueOf(mylongitude));
                         mainFragment.setArguments(bundle);
                         searchFragment.setArguments(bundle);
+                        FragmentTransaction transaction = fragmentManager.beginTransaction();
+                        transaction.replace(R.id.frame_layout, mainFragment);
+                        transaction.commit();
                     } catch (IOException e) {
                         e.printStackTrace();
                         Log.e("test", "입출력 오류 - 서버에서 주소변환시 에러발생");

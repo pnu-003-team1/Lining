@@ -178,7 +178,7 @@ public class MenuListActivity extends AppCompatActivity{
                         }
                     }
                 };
-                FavoriteAddRequest favoriteAddRequest = new FavoriteAddRequest(bemail, bname, baddr, bphone, email, listener);
+                FavoriteAddRequest favoriteAddRequest = new FavoriteAddRequest(bemail, bname, baddr, bphone, email, bLatitude, bLongitude, listener);
                 RequestQueue queue = Volley.newRequestQueue(MenuListActivity.this);
                 Log.d("확인", "즐겨찾기 추가");
                 queue.add(favoriteAddRequest);
