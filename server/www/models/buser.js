@@ -7,7 +7,7 @@ var buserSchema = new Schema ({
    pw : {type : String, required : true},
    tel : {type : String, required : true},
    addr : {type : String, required : true},
-   longitude : {type : Stringm required : true},
+   longitude : {type : String, required : true},
    latitude : {type : String, required : true},
    full : {type : Boolean, default: false}
 });
