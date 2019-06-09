@@ -43,8 +43,9 @@ tools:context="soo.fastrak_login.MainActivity">
 
         <EditText
             android:id="@+id/address"
-            android:layout_width="256dp"
-            android:layout_height="wrap_content" />
+            android:layout_width="205dp"
+            android:layout_height="match_parent"
+            android:hint="현재 주소를 입력하세요." />
 
         <Button
             android:id="@+id/addr_setting"
