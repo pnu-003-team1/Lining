@@ -384,3 +384,4 @@ Thumbs.db
 ./Fastrak_Login/.idea/dataSources.ids
 
 # End of https://www.gitignore.io/api/go,laravel,aptanastudio,hyperledgercomposer
+Fastrak_Login/.idea/workspace.xml

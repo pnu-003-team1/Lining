@@ -232,10 +232,8 @@ public class MainFragment extends Fragment {
                         bname = object.getString("bname");
                         addr = object.getString("addr");
                         tel = object.getString("tel");
-                        bLatitude = 35.2271699;
-                        bLongitude = 129.0903442;
-//                        bLatitude = Double.parseDouble(object.getString("bLatitude"));
-//                        bLongitude = Double.parseDouble(object.getString("bLongitude"));
+                        bLatitude = Double.parseDouble(object.getString("bLatitude"));
+                        bLongitude = Double.parseDouble(object.getString("bLongitude"));
 
                         License license = new License(full, email, bname, addr, tel, bLatitude, bLongitude);
                         licenseList.add(license);
