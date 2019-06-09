@@ -18,6 +18,8 @@ var addmenuRouter = require('./routes/addmenu');
 var successRouter = require('./routes/success');
 var logoutRouter = require('./routes/logout');
 var modifymenuRouter = require('./routes/modifymenu');
+var completejoinRouter = require('./routes/completejoin');
+var failedjoinRouter = require('./routes/failedjoin');
 
 
 var app = express();
@@ -52,6 +54,8 @@ app.use('/addmenu' , addmenuRouter);
 app.use('/success' , successRouter);
 app.use('/logout' , logoutRouter);
 app.use('/modifymenu' , modifymenuRouter);
+app.use('/completejoin', completejoinRouter);
+app.use('/failedjoin', failedjoinRouter);
 //app.use('/ajax', ajax);
 
 

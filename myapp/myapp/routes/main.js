@@ -80,14 +80,14 @@ router.get('/', function(req, res) {
     var success = JSON.parse(data).success;
     console.log(success);
 
+    var length = 0;
     var emailArray = new Array();
     var phoneArray = new Array();
     var totalArray = new Array();
     var dateArray = new Array();
 
     if(success) {
-      var length = JSON.parse(data).list.length;
-      console.log(length);
+      length = JSON.parse(data).list.length;
       for(var i = 0; i < length; i++) {
         emailArray[i] = JSON.parse(data).list[i].email;
         storeName = JSON.parse(data).list[i].bname;

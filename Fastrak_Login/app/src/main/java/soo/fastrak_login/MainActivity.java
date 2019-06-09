@@ -1,8 +1,13 @@
 package soo.fastrak_login;
 
+import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentActivity;
@@ -15,6 +20,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,7 +36,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.Text;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private String loginID, loginPW;
@@ -49,7 +57,18 @@ public class MainActivity extends AppCompatActivity {
 
     private BottomNavigationView bottomNavigationView;
 
+    private Button MyGpsButton;
+    private Button AddrSetButton;
+    //private TextView txtLat;
+    //private TextView txtLon;
+    private final int PERMISSIONS_ACCESS_FINE_LOCATION = 1000;
+    private final int PERMISSIONS_ACCESS_COARSE_LOCATION = 1001;
+    private boolean isAccessFineLocation = false;
+    private boolean isAccessCoarseLocation = false;
+    private boolean isPermission = false;
 
+    // GPSTracker class
+    private GpsInfo gps;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -200,6 +219,106 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         ///////////////////////////////////////////////////////
+
+        AddrSetButton = (Button) findViewById(R.id.addr_setting);
+        MyGpsButton = (Button) findViewById(R.id.gpsBtn);
+        final EditText addressText = (EditText)findViewById(R.id.address);
+
+        final Geocoder geocoder = new Geocoder(this);
+
+        // GPS 정보를 보여주기 위한 이벤트 클래스 등록
+        // 내 위치 gps 받아와서 주소로 변환
+        MyGpsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                List<Address> list = null;
+                // 권한 요청을 해야 함
+                if (!isPermission) {
+                    callPermission();
+                    return;
+                }
+
+                gps = new GpsInfo(MainActivity.this);
+                // GPS 사용유무 가져오기
+                if (gps.isGetLocation()) {
+
+                    double mylatitude = gps.getLatitude();
+                    double mylongitude = gps.getLongitude();
+
+                    try {
+                        list = geocoder.getFromLocation(mylatitude, mylongitude, 10);
+                        Bundle bundle = new Bundle();
+                        bundle.putDouble("latitude", mylatitude);
+                        bundle.putDouble("longitude", mylongitude);
+                        mainFragment.setArguments(bundle);
+                        searchFragment.setArguments(bundle);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        Log.e("test", "입출력 오류 - 서버에서 주소변환시 에러발생");
+                    }
+
+                    if (list != null) {
+                        if(list.size()==0) {
+                            Toast.makeText(getApplicationContext(), "해당되는 주소 정보는 없습니다.", Toast.LENGTH_LONG).show();
+                        }
+                        else {
+//                            addressText.setText(list.get(0).toString());
+                            addressText.setText(list.get(0).getAddressLine(0));
+                        }
+                    }
+
+                    //txtLat.setText(String.valueOf(latitude));
+                    //txtLon.setText(String.valueOf(longitude));
+
+                    Toast.makeText(getApplicationContext(), "내 위치 \n위도: " + mylatitude + "\n경도: " + mylongitude, Toast.LENGTH_LONG).show();
+                }
+                else {
+                    // GPS 를 사용할수 없으므로
+                    gps.showSettingsAlert();
+                }
+            }
+        });
+
+        // 설정한 주소를 위,경도로 변환
+        AddrSetButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                List<Address> list = null;
+
+                String str = addressText.getText().toString();
+                double latitude;
+                double longitude;
+
+                try {
+                    list = geocoder.getFromLocationName(str, 10);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    Log.e("test","입출력 오류 - 서버에서 주소변환시 에러발생");
+                }
+
+                if (list != null) {
+                    if(list.size()==0) {
+                        Toast.makeText(getApplicationContext(), "해당되는 주소 정보는 없습니다.", Toast.LENGTH_LONG).show();
+                    }
+                    else {
+                        addressText.setText(list.get(0).getAddressLine(0));
+                        latitude = list.get(0).getLatitude();
+                        longitude = list.get(0).getLongitude();
+                        Toast.makeText(getApplicationContext(), "내 위치 \n위도: " + latitude + "\n경도: " + longitude, Toast.LENGTH_LONG).show();
+
+                        Bundle bundle = new Bundle();
+                        bundle.putDouble("latitude", latitude);
+                        bundle.putDouble("longitude", longitude);
+                        mainFragment.setArguments(bundle);
+                        searchFragment.setArguments(bundle);
+                    }
+                }
+            }
+        });
+
+        callPermission();  // 권한 요청을 해야 함
+
     }
     // App 종료 시, 두 번 눌러 종료
     private long lastTimeBackPressed;
@@ -213,4 +332,45 @@ public class MainActivity extends AppCompatActivity {
         lastTimeBackPressed = System.currentTimeMillis();
     }
     ////////////////////////////////////
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        if (requestCode == PERMISSIONS_ACCESS_FINE_LOCATION
+                && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+            isAccessFineLocation = true;
+
+        } else if (requestCode == PERMISSIONS_ACCESS_COARSE_LOCATION
+                && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+
+            isAccessCoarseLocation = true;
+        }
+
+        if (isAccessFineLocation && isAccessCoarseLocation) {
+            isPermission = true;
+        }
+    }
+
+    // 전화번호 권한 요청
+    private void callPermission() {
+        // Check the SDK version and whether the permission is already granted or not.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
+                && checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            requestPermissions(
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                    PERMISSIONS_ACCESS_FINE_LOCATION);
+
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
+                && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED){
+
+            requestPermissions(
+                    new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
+                    PERMISSIONS_ACCESS_COARSE_LOCATION);
+        } else {
+            isPermission = true;
+        }
+    }
 }

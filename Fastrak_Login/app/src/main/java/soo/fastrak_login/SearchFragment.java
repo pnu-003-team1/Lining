@@ -271,8 +271,8 @@ public class SearchFragment extends Fragment {
                         email = object.getString("email");
                         addr = object.getString("addr");
                         tel = object.getString("tel");
-                        bLatitude = object.getDouble("bLatitude");
-                        bLongitude = object.getDouble("bLongitude");
+                        bLatitude = Double.parseDouble(object.getString("bLatitude"));
+                        bLongitude = Double.parseDouble(object.getString("bLongitude"));
 
                         Store store = new Store(bname);
                         arraylist.add(store);
