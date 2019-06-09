@@ -59,19 +59,18 @@ buserSchema.statics.busermodify = function(email,payload){
 
 buserSchema.statics.getBusersInfo = function (email) {
 	console.log("DB getBusersInfo");
-	return this.find({email}).select("-_id bname tel addr full");
+	return this.find({email}).select("-_id bname tel addr full addr longitude latitude");
 };
 
 buserSchema.statics.getallBusersInfo = function (payload) {
 	console.log("DB getBusersInfo");
-	return this.find({}).select("-_id bname tel addr full email");
+	return this.find({}).select("-_id bname tel addr full email longitude latitude");
 };
 
 buserSchema.statics.searchName = function (bname) {
 	console.log("searchName DB");
 	return this.find({'bname': {'$regex': bname, '$options': 'i'}}).select("-_id bname tel addr full email");
 };
-
 	
 module.exports = mongoose.model('Buser', buserSchema);
 
