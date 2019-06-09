@@ -19,8 +19,8 @@ public class FavoriteAddRequest extends StringRequest{
         parameters.put("baddr", baddr);
         parameters.put("bphone", bphone);
         parameters.put("email", email);
-        parameters.put("latitude", latitude + "");
-        parameters.put("longitude", longitude + "");
+        parameters.put("bLatitude", Double.toString(latitude));
+        parameters.put("bLongitude", Double.toString(longitude));
     }
 
     public Map<String, String> getParams() {
