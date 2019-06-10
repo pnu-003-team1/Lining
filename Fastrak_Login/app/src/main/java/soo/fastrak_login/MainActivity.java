@@ -227,6 +227,7 @@ public class MainActivity extends AppCompatActivity {
                 else{
                     Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                     MainActivity.this.startActivity(intent);
+                    finish();
                 }
             }
         });
