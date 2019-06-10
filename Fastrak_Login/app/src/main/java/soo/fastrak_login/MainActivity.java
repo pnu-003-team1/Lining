@@ -41,11 +41,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    private String loginID, loginPW;
+    private String loginID, loginPW, loginPhone, loginName;
     private String email;
     private String phone;
     private String name;
     private String pw;
+    private String autoemail;
+    private String autophone;
+    private String autoname;
+    private String autopw;
     Bundle bundle;
     private ArrayList<String> Items = new ArrayList<>();
 
@@ -97,6 +101,12 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences autologin = getSharedPreferences("autologin", MODE_PRIVATE);
         loginID = autologin.getString("email", null);
         loginPW = autologin.getString("pw", null);
+        loginName = autologin.getString("name", null);
+        loginPhone = autologin.getString("phone", null);
+        bundle.putString("autoemail", loginID);
+        bundle.putString("autopw", loginPW);
+        bundle.putString("autoname", loginName);
+        bundle.putString("autophone", loginPhone);
 
         //4/29/////////////
         TextView mainloginBtn = (TextView)findViewById(R.id.mainlogin);

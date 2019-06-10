@@ -2,6 +2,7 @@ package soo.fastrak_login;
 
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -81,6 +82,10 @@ public class ModifyActivity extends AppCompatActivity {
                                                 .create()
                                                 .show();
                                         Intent intent = new Intent(ModifyActivity.this, MainActivity.class);
+                                        SharedPreferences autologin = getSharedPreferences("autologin", MODE_PRIVATE);
+                                        SharedPreferences.Editor autologinEditor = autologin.edit();
+                                        autologinEditor.clear();
+                                        autologinEditor.commit();
                                         ModifyActivity.this.startActivity(intent);
                                         finish();
                                     }

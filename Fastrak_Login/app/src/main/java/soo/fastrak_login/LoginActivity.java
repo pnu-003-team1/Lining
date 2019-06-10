@@ -82,8 +82,9 @@ public class LoginActivity extends AppCompatActivity {
                                     SharedPreferences.Editor autologinEditor = autologin.edit();
                                     autologinEditor.putString("email", userID);
                                     autologinEditor.putString("pw", userPassword);
-                                    /*autologinEditor.putString("name", name);
-                                    autologinEditor.putString("phone", phone);*/
+                                    autologinEditor.putString("name", name);
+                                    autologinEditor.putString("phone", phone);
+
                                     autologinEditor.commit();
                                 }
 

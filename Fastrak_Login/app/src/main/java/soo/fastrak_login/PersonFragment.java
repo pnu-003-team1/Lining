@@ -85,6 +85,10 @@ public class PersonFragment extends Fragment {
     private String phone;
     private String name;
     private String pw;
+    private String autoemail;
+    private String autophone;
+    private String autoname;
+    private String autopw;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -108,6 +112,10 @@ public class PersonFragment extends Fragment {
         phone = bundle.getString("phone");
         name = bundle.getString("name");
         pw = bundle.getString("pw");
+        autoemail = bundle.getString("autoemail");
+        autophone = bundle.getString("autophone");
+        autoname = bundle.getString("autoname");
+        autopw = bundle.getString("autopw");
 
         bnameText = (EditText) getActivity().findViewById(R.id.bnameText);
         numberText = (EditText) getActivity().findViewById(R.id.numberText);
@@ -119,7 +127,7 @@ public class PersonFragment extends Fragment {
 
             @Override
             public void onClick(View v) {
-                if(email == null) {
+                if(email == null && autoemail==null) {
                     android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(getActivity());
                     builder.setMessage("로그인이 필요합니다.")
                             .setNegativeButton("다시 시도", null)
@@ -127,12 +135,22 @@ public class PersonFragment extends Fragment {
                             .show();
                 }
                 else {
-                    Intent intent = new Intent(getActivity(), ModifyActivity.class);
-                    intent.putExtra("email", email);
-                    intent.putExtra("phone", phone);
-                    intent.putExtra("name", name);
-                    intent.putExtra("pw", pw);
-                    getActivity().startActivity(intent);
+                    if(autoemail==null) {
+                        Intent intent = new Intent(getActivity(), ModifyActivity.class);
+                        intent.putExtra("email", email);
+                        intent.putExtra("phone", phone);
+                        intent.putExtra("name", name);
+                        intent.putExtra("pw", pw);
+                        getActivity().startActivity(intent);
+                    }
+                    else {
+                        Intent intent = new Intent(getActivity(), ModifyActivity.class);
+                        intent.putExtra("email", autoemail);
+                        intent.putExtra("phone", autophone);
+                        intent.putExtra("name", autoname);
+                        intent.putExtra("pw", autopw);
+                        getActivity().startActivity(intent);
+                    }
                 }
             }
         });
