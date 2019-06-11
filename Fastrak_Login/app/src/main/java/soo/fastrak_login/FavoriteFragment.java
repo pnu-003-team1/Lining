@@ -104,6 +104,10 @@ public class FavoriteFragment extends Fragment {
 
         email = getArguments().getString("email");
         phone = getArguments().getString("phone");
+        if(email==null){
+            email = getArguments().getString("autoemail");
+            phone = getArguments().getString("autophone");
+        }
 
         noListItemText = (TextView) getActivity().findViewById(R.id.noListItemText);
 

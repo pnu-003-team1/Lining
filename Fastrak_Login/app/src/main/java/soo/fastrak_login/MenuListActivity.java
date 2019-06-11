@@ -72,6 +72,7 @@ public class MenuListActivity extends AppCompatActivity{
     private Button favorite_ON;
     private Button favorite_OFF;
     private Button showMapButton;
+    private TextView bnameText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,6 +126,9 @@ public class MenuListActivity extends AppCompatActivity{
         subtractButton = (ImageButton) findViewById(R.id.subtractButton);
         totalText = (TextView) findViewById(R.id.totalText);
         additionButton = (ImageButton) findViewById(R.id.additionButton);
+        bnameText = (TextView) findViewById(R.id.bnameText);
+
+        bnameText.setText(bname);
 
         Response.Listener<String> favoriteListener = new Response.Listener<String>() {
             @Override

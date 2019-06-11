@@ -89,6 +89,11 @@ public class MainFragment extends Fragment {
             email = getArguments().getString("email");
             name = getArguments().getString("name");
             phone = getArguments().getString("phone");
+            if(email==null){
+                email = getArguments().getString("autoemail");
+                name = getArguments().getString("autoname");
+                phone = getArguments().getString("autophone");
+            }
 
         }
     }
