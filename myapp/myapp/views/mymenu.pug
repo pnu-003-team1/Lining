@@ -3,6 +3,7 @@ head
   meta(charset='UTF-8')
   title
   link(rel='stylesheet', href='/stylesheets/bootstrap.css')
+  link(rel='stylesheet', href='/stylesheets/table.css')
 nav.navbar.navbar-expand-md.navbar-dark.fixed-top.bg-dark
     #navbarCollapse.collapse.navbar-collapse
       ul.navbar-nav.mr-auto
@@ -11,9 +12,9 @@ nav.navbar.navbar-expand-md.navbar-dark.fixed-top.bg-dark
         li.nav-item
           a.nav-link(href='/reservation') 오프라인 예약
         li.nav-item
-          a.nav-link.disabled(href='/mypage') 내 정보 수정
+          a.nav-link(href='/mypage') 내 정보 수정
         li.nav-item
-          a.nav-link(href='/mymenu') 우리가게 메뉴
+          a.nav-link.disabled(href='/mymenu') 우리가게 메뉴
       form#fr.form-inline.mt-2.mt-md-0(action='/logout')
         button.btn.btn-outline-info.my-2.my-sm-0(type='button', onclick='logout()') 로그아웃
 main.container(role='main')
@@ -21,14 +22,18 @@ main.container(role='main')
     br
     input#email(type="hidden", name='email', value=user_email)
     button.btn.btn-outline-info.btn-lg.btn-block(type='button', name='addmenu', onclick='location.href="/addmenu"') &#xBA54;&#xB274; &#xCD94;&#xAC00;&#xD558;&#xAE30;
-div(claas='table-responsive')
-  table.table.table-striped.table-sm
-    thead
-      tr
-        th &#xC74C;&#xC2DD; &#xC774;&#xB984;
-        th &#xC74C;&#xC2DD; &#xAC00;&#xACA9;
-        th &#xC218;&#xC815; &#xBC0F; &#xC0AD;&#xC81C;
-    tbody#tableBody
+    br
+    br
+    br
+    div(claas='table-responsive')
+      table.table.table-striped.table-sm
+        thead
+          tr
+            th 음식 이름
+            th 음식 가격
+            th 수정
+            th 삭제
+        tbody#tableBody
 script(src='http://code.jquery.com/jquery-1.10.2.js')
 script.
   var temp1 = "";

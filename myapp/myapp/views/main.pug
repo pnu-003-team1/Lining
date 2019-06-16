@@ -4,6 +4,7 @@ head
   title fastrack
   link(rel='stylesheet', href='/stylesheets/full_style.css')
   link(rel='stylesheet', href='/stylesheets/bootstrap.css')
+  link(rel='stylesheet', href='/stylesheets/table.css')
 
 
 body
@@ -23,20 +24,25 @@ body
 
   main.container(role='main')
     .jumbotron
+      br
       input#email(type="hidden", name='email', value=email)
       input#full(type='checkbox', name='full', onclick='check(this)')
       label(for='full') 만석시 체크해주세요.
-  div(claas='table-responsive')
-  table.table.table-striped.table-sm
-    thead
-      tr
-        th 이메일
-        th 전화번호
-        th 인원 수
-        th 예약 시간
-        th 호출
-        th 삭제
-    tbody#tableBody
+      br
+      br
+      br
+      a(onclick='window.location.reload()' style='cursor: pointer;') [새로고침]
+      div(claas='table-responsive')
+      table.table.table-striped.table-sm
+        thead
+          tr
+            th 이메일
+            th 전화번호
+            th 인원 수
+            th 예약 시간
+            th 호출
+            th 삭제
+        tbody#tableBody
 
 
 
