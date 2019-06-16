@@ -116,6 +116,12 @@ public class PersonFragment extends Fragment {
         autophone = bundle.getString("autophone");
         autoname = bundle.getString("autoname");
         autopw = bundle.getString("autopw");
+        if(email == null){
+            email = autoemail;
+            phone = autophone;
+            name = autoname;
+            pw = autopw;
+        }
 
         bnameText = (EditText) getActivity().findViewById(R.id.bnameText);
         numberText = (EditText) getActivity().findViewById(R.id.numberText);
